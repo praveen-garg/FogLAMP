@@ -1,3 +1,5 @@
+deployment: dev # prod, test
+
 ####################
 # DATABASE #
 ####################
