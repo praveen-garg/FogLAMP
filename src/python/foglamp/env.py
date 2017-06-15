@@ -2,6 +2,7 @@ import os
 import yaml
 import pkg_resources
 import logging
+import logging.config
 
 # TODO: write tests
 
@@ -61,3 +62,15 @@ def get_db_connection_string():
     )
     return db_conn_str
 
+def setup_logging(default_level=logging.INFO):
+    """Setup logging configuration"""
+
+    logging.basicConfig(level=default_level)
+
+    path = os.getenv('LOG_CFG', None)
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+            logger_config = yaml.safe_load(f.read())
+    else:
+        logger_config = config['logger']
+    logging.config.dictConfig(logger_config)
