@@ -35,6 +35,7 @@ def load_config():
 
     global db_connection_string
     db_connection_string = get_db_connection_string()
+    setup_logging()
 
 
 # this could have been a DbConfig class extending BaseConfig/ Config class
@@ -48,7 +49,7 @@ def get_db_connection_string():
     config_params = config['database']['dev']
 
     password = os.environ.get('FOGLAMP_DB_PASSWORD')
-    if password is "":
+    if password == "":
         # TODO log warning
         print("FOGLAMP_DB_PASSWORD env variable is set, but with empty string")
     elif password is None:
@@ -65,12 +66,13 @@ def get_db_connection_string():
 def setup_logging(default_level=logging.INFO):
     """Setup logging configuration"""
 
-    logging.basicConfig(level=default_level)
+    # logging.basicConfig(level=default_level)
 
-    path = os.getenv('LOG_CFG', None)
-    if os.path.exists(path):
+    path = os.environ.get('LOG_CFG')
+    if (path is not None) and (path != "") and os.path.exists(path):
         with open(path, 'rt') as f:
             logger_config = yaml.safe_load(f.read())
     else:
         logger_config = config['logger']
+        print(logger_config)
     logging.config.dictConfig(logger_config)

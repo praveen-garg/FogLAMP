@@ -33,11 +33,15 @@ database:
 ####################
 
 logger:
+  version: 1
   disable_existing_loggers: False
   formatters:
     simple:
-      format: "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
-      format_2: "%(asctime)s - %(levelname)s - %(module)s.%(funcName)s: %(message)s"
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      datefmt: '%d/%m/%Y %H:%M:%S'
+    standard:
+      format: "%(asctime)s - %(levelname)s > %(module)s.%(funcName)s: %(message)s"
+      datefmt: '%d/%m/%Y %H:%M:%S'
 
   handlers:
     console:
@@ -51,7 +55,7 @@ logger:
       class: logging.handlers.RotatingFileHandler
       level: INFO
       formatter: simple
-      filename: info.log
+      filename: logs/info.log
       maxBytes: 10485760 # 10MB
       backupCount: 20
       encoding: utf8
@@ -60,8 +64,8 @@ logger:
     error_file_handler:
       class: logging.handlers.RotatingFileHandler
       level: ERROR
-      formatter: simple
-      filename: errors.log
+      formatter: standard
+      filename: logs/errors.log
       maxBytes: 10485760 # 10MB
       backupCount: 20
       encoding: utf8
@@ -70,15 +74,13 @@ logger:
       class: logging.handlers.SysLogHandler
       level: ERROR
       formatter: simple
-      address: /dev/log
-      encoding: utf8
+      address: /var/run/syslog # /dev/log for Linux; /var/run/syslog for OSX this will print to /var/log/system.log
 
-loggers:
-    my_module:
-      level: ERROR
-      handlers: [console]
-      propagate: no
+  loggers:
+    x_logger:
+      level: INFO
+      handlers: [console, info_file_handler, error_file_handler, syslog_handler]
 
-root:
-    level: INFO
-    handlers: [console, info_file_handler, error_file_handler]
+  root:
+    level: ERROR
+    handlers: [console, error_file_handler]

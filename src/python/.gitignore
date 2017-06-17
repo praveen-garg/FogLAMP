@@ -48,3 +48,6 @@ pylint_*.log
 
 # tox
 .tox
+
+# logs
+*.log
