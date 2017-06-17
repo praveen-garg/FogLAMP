@@ -72,7 +72,7 @@ logger:
 
     syslog_handler:
       class: logging.handlers.SysLogHandler
-      level: ERROR
+      level: WARNING
       formatter: simple
       address: /var/run/syslog # /dev/log for Linux; /var/run/syslog for OSX this will print to /var/log/system.log
 
@@ -80,6 +80,9 @@ logger:
     x_logger:
       level: INFO
       handlers: [console, info_file_handler, error_file_handler, syslog_handler]
+    y_logger:
+      level: WARNING
+      handlers: [syslog_handler]
 
   root:
     level: ERROR

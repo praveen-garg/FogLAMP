@@ -31,9 +31,3 @@ How to run
 if you are installing and want to use in API (or run it), make sure to call `make develop` to get `aiohttp_cors` dependency.
 
 Note: `setup_logging()` is being called via `load_config()`
-
-
-TODO
-----
-
-DB Handler: register it,
