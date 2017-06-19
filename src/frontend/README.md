@@ -43,6 +43,12 @@ $ npm -v
 3.10.10
 
 ```
+### Install package.json depedencies:
+
+`npm install`
+
+
+_Ignore these warnings_
 
 ```
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
@@ -52,7 +58,7 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 
 I had Jenkins running on my Ubuntu machine, so had to kill `sudo kill $(sudo lsof -t -i:8080)`
 
-`npm run dev` will serve the app on localhost:8080; Login into UI when API is not up > expect Network error.
+`npm run dev` will serve the app on localhost:8080; Login into UI when API is not up > expect Network error notification in UI.
 
 ### To start API
 
@@ -61,3 +67,6 @@ source build.sh -i
 make develop # install cors dependency
 foglamp
 ```
+
+
+Note: check [info.md](info.md) for other dev notes.
