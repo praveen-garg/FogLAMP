@@ -1,7 +1,8 @@
 Project init
 ^^^^^^^^^^^^
-vue init webpack Foglamp-Admin-Interface
-----------------------------------------
+
+`vue init webpack Foglamp-Admin-Interface`
+
 
 - Project name Foglamp-Admin-Interface
 - Project description Foglamp Admin Interface, Using Vuejs and Webpack
@@ -18,6 +19,7 @@ vue-cli · Generated "Foglamp-Admin-Interface".
 
 To get started:
 ---------------
+
 - cd frontend
 - npm install
 - npm run dev
@@ -31,8 +33,9 @@ Documentation can be found at https://vuejs-templates.github.io/webpack
     DONE  Compiled successfully in 2347ms
 
     > Listening at http://localhost:8080
-    > First time compilation take 2000+ ms.
-    > Once packages (under node_modules) are installed, it will be =~250ms
+
+**Note:** First time compilation take 2000+ ms.
+Once packages (under node_modules) are installed, it will be =~250ms
 
 aiohttp web api
 ^^^^^^^^^^^^^^^
@@ -88,3 +91,5 @@ TODO:
 2. Have an nginx.conf that serve the static files and act as a reverse proxy for API calls
 
 3. Write e2e test using nightwatch + selenium chrome driver
+
+4. convert README.md to README.rst
