@@ -69,4 +69,4 @@ foglamp
 ```
 
 
-Note: check [info.md](info.md) for other dev notes.
+Note: check [info.rst](info.rst) for other dev notes.
