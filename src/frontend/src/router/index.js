@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Guard from '../services/auth/middleware'
 
 Vue.use(Router)
 
@@ -14,7 +15,8 @@ const router = new Router({
       name: 'login',
       component: function (resolve) {
         require(['@/components/Login.vue'], resolve)
-      }
+      },
+      beforeEnter: Guard.guest
     },
     {
       path: '/signup',
@@ -24,12 +26,18 @@ const router = new Router({
       }
     },
     {
+      path: '*',
+      component: function (resolve) {
+        require(['@/components/NotFound.vue'], resolve)
+      }
+    },
+    {
       path: '/',
       name: 'dashboard',
       component: function (resolve) {
         require(['@/components/Dashboard.vue'], resolve)
       },
-      // beforeEnter: guardRoute
+      beforeEnter: Guard.auth
     }
   ]
 })

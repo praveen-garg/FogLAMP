@@ -44,8 +44,9 @@
 </div>
 </template>
 <script>
-import auth from '../auth'
+import auth from '../services/auth'
 import { Validator } from 'vee-validate';
+
 export default {
   name: 'Login',
   validator: null,
@@ -87,3 +88,4 @@ export default {
   }
 }
 </script>
+

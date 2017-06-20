@@ -5,7 +5,6 @@
         <i class="fa fa-dashboard"></i> Dashboard
       </a>
     </div>
-
     <div class="nav-right">
       <span class="nav-item">
          <div v-if="userInfo">
@@ -20,7 +19,7 @@
   </nav>
 </template>
 <script>
-import auth from '../auth'
+import auth from '../services/auth'
 import router from '../router'
 import { mapGetters } from 'vuex'
 

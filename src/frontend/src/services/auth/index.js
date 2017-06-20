@@ -1,6 +1,6 @@
-import router from '../router'
+import router from '../../router'
 import axios from 'axios'
-import store from '../store'
+import store from '../../store'
 // URL and endpoint constants
 const API_URL = 'http://localhost:8081/api'
 const LOGIN_URL = API_URL + '/auth/login'
