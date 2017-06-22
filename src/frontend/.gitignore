@@ -1,0 +1,29 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+.DS_Store
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules
+jspm_packages
+typings
+
+# Optional npm cache directory
+.npm
+
+
+# Generated files
+dist
+
+# Eclipse settings
+.settings/
+.project
+
+# Visual Studio Code settings
+.vscode/
+ 
