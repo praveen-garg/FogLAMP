@@ -1,4 +1,5 @@
 <template lang="html">
+<div>
   <nav class="nav has-shadow" >
     <div class="nav-left">
       <a class="nav-item is-tab" to="/dashboard">
@@ -17,6 +18,27 @@
       </span>
     </div>
   </nav>
+
+  <section class="section">
+    <div class="container">
+      <div v-if="assets" class="panel">
+        <p class="panel-heading">Values</p>
+        <div v-for="(asset, index) in assets" class="panel-block">
+           <input v-model="assets[index]" class="input" type="text">
+        </div>
+        <div class="field is-grouped panel-heading">
+          <p class="control">
+            <a class="button is-primary"> Start </a>
+          </p>
+          <p class="control">
+            <a class="button is-danger"> Stop </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
 </template>
 <script>
 import auth from '../services/auth'
@@ -37,11 +59,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userInfo: 'getUser'
+      userInfo: 'getUser',
+      assets: 'getAssetsData'
     })
   },
   created () {
     auth.getWhoami()
+    auth.getData()
   }
 }
 </script>

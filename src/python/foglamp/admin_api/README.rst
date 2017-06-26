@@ -92,3 +92,9 @@ Usage Example
     localhost:8081/api/auth/refresh-token
 
     {"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0OTY5MjA3NTguMjAwNjIxLCJ1c2VyX2lkIjoxLCJhY2Nlc3MiOjF9.cgv348fsNjqYrocmPvJbCgUIqJWoJGaUpVaBIxREJPc"}
+
+    foglamp$ curl -X POST -H authorization:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0OTg1MTY0MTIsImFjY2VzcyI6MX0.GhmabYlUy2TSjQjfhmLmW1_BsSn-QFe6hRv7JtLQ80I \
+    localhost:8081/api/example/data
+
+    {"t0": 73, "t1": 170, "t2": 41, "t3": 148, "t4": 110, "t5": 222, "t6": 215, "t7": 255, "t8": 143, "t9": 187}
+

@@ -84,9 +84,20 @@ async def whoami(request):
     return web.json_response({'username': request.user.name})
 
 
+@authentication_required
+async def get_data(request):
+    import random
+    low = 0
+    high = 255
+    mylist = [random.randint(low, high) for _ in range(10)]
+    keys_ = ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9']
+    return web.json_response(dict(zip(keys_, mylist)))
+
+
 def register_handlers(router):
     """Registers URI handlers"""
     router.add_route('POST', '/api/auth/login', login)
     router.add_route('POST', '/api/auth/refresh-token', refresh_token)
     router.add_route('GET', '/api/example/whoami', whoami)
+    router.add_route('GET', '/api/example/data', get_data)
 

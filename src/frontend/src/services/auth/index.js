@@ -5,6 +5,8 @@ import store from '../../store'
 const API_URL = 'http://localhost:8081/api'
 const LOGIN_URL = API_URL + '/auth/login'
 const ME_URL = API_URL + '/example/whoami'
+const DATA_URL = API_URL + '/example/data'
+
 
 export default {
 
@@ -44,6 +46,20 @@ export default {
     })
     .then(data => {
       store.commit('addUser', data)
+    })
+    .catch(e => {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', e.message)
+    })
+  },
+  getData() {
+    axios.get(DATA_URL, {headers: this.getAuthHeader()})
+    .then(response => {
+      return response.data;
+    })
+    .then(data => {
+      store.commit('setAssetsData', data)
+      console.log('Data', data)
     })
     .catch(e => {
         // Something happened in setting up the request that triggered an Error
