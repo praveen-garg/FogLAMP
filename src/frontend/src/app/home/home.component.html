@@ -4,11 +4,33 @@
         <i class="fa fa-home"></i> Home
       </a>
     </div>
+    <div class="nav-right">    
+     <div class="field level-right">
+         Welcome &nbsp; <b> {{ currentUser }} </b> &nbsp;    
+        <button  class="button" (click)=logOut()>Logout</button>
+      </div>
+    </div>
  </nav>
-<div class="field level-left">
-      <b>Welcome</b>&nbsp;{{ currentUser }}
-</div>  
-<div class="field level-right">    
-  <button  class="button" (click)=logOut()>Logout</button>
-</div>
- 
+ <section class="section">
+  <!-- <div class="container">
+    {{ xdata | json }}   
+  </div> -->
+
+ <div class="panel">
+        <p class="panel-heading">Values</p>
+        <div *ngFor="let entry of (xdata | keys)" class="panel-block">
+           <input value="{{ entry.value }}" class="input" type="text" disabled>
+        </div>
+        <div class="field is-grouped panel-heading">
+          <p class="control">
+            <a class="button is-primary" (click)=start()> Start </a>
+          </p>
+          <p class="control">
+            <a class="button is-danger" (click)=stop()> Stop </a>
+          </p>
+        </div>
+      </div>
+</section>
+<!--<button class="button is-primary" (click)=start()>Start</button>
+<button class="button is-danger" (click)=stop()>Stop</button>
+ -->

@@ -8,6 +8,7 @@ export class AuthService {
     private BASE_URL = 'http://localhost:8081/api/'
     private LOGIN_URL = this.BASE_URL + "auth/login"
     private ME_URL = this.BASE_URL + "example/whoami"
+    private DATA_URL = this.BASE_URL + "example/data"
 
     constructor(private http: Http) {}
     
@@ -39,6 +40,19 @@ export class AuthService {
             console.log(response.json())
             sessionStorage.setItem('currentUser', response.json().username)
         })
+        .catch((error:Response) => Observable.throw(error.json().message || 'Server error'));
+      }
+
+    /**
+      * Get assets data 
+      * @param token
+      */
+      getData(token: string){
+        let headers = new Headers({'content-type': 'application/json'})
+        headers.append("authorization", token)
+        let options = new RequestOptions({ headers: headers })
+        return this.http.get(this.DATA_URL, options)
+        .map(response => response.json())
         .catch((error:Response) => Observable.throw(error.json().message || 'Server error'));
       }
 }

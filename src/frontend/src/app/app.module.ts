@@ -13,6 +13,7 @@ import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
+import { KeysPipe } from './pipes/keys';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { FooterComponent } from './footer/index';
     LoginComponent,
     HomeComponent,
     AlertComponent,
-    FooterComponent
+    FooterComponent,
+    KeysPipe
   ],
   providers: [
     AuthGuard,
