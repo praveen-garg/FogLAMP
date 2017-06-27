@@ -59,7 +59,7 @@ export default {
     })
     .then(data => {
       store.commit('setAssetsData', data)
-      console.log('Data', data)
+      console.log('Assets data', data)
     })
     .catch(e => {
         // Something happened in setting up the request that triggered an Error

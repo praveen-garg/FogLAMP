@@ -24,14 +24,14 @@
       <div v-if="assets" class="panel">
         <p class="panel-heading">Values</p>
         <div v-for="(asset, index) in assets" class="panel-block">
-           <input v-model="assets[index]" class="input" type="text">
+           <input v-model="assets[index]" class="input" type="text" disabled>
         </div>
         <div class="field is-grouped panel-heading">
           <p class="control">
-            <a class="button is-primary"> Start </a>
+            <a class="button is-primary" @click="start()"> Start </a>
           </p>
           <p class="control">
-            <a class="button is-danger"> Stop </a>
+            <a class="button is-danger" @click="stop()"> Stop </a>
           </p>
         </div>
       </div>
@@ -47,6 +47,9 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
+  data: () => ({
+    timer: ''
+  }),
   beforeMount() {
       if(auth.checkAuth() == false){
         router.push('/login')
@@ -55,7 +58,17 @@ export default {
   methods: {
     submit() {
         auth.logout()
-      }
+      },
+    start() {
+      auth.getData()
+      this.timer = setInterval(function () {
+        auth.getData();
+      }.bind(this), 2000);
+
+    },
+    stop() {
+      clearInterval(this.timer)
+    }
   },
   computed: {
     ...mapGetters({
@@ -65,7 +78,10 @@ export default {
   },
   created () {
     auth.getWhoami()
-    auth.getData()
+    // this.start()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   }
 }
 </script>
