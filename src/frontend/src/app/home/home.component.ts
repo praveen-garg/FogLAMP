@@ -14,9 +14,17 @@ export class HomeComponent {
     private timer:any = ''
     private xdata:{} = {}
     private errorMessage:any = ''
+    options: Object;
    
     constructor(private router: Router, private authService: AuthService) {
         this.currentUser = sessionStorage.getItem('currentUser');
+        this.options = {
+            minValue: 0,
+            maxValue: 255,
+            // width: 300,
+            // height: 300
+        }
+        this.options['data-type']="radial-gauge";
     }
     
     /**

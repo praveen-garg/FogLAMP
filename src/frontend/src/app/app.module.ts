@@ -14,6 +14,7 @@ import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
 import { KeysPipe } from './pipes/keys';
+import {RadialGaugeComponent} from '../../node_modules/ng-canvas-gauges/component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { KeysPipe } from './pipes/keys';
     HomeComponent,
     AlertComponent,
     FooterComponent,
-    KeysPipe
+    KeysPipe,
+    RadialGaugeComponent
   ],
   providers: [
     AuthGuard,
