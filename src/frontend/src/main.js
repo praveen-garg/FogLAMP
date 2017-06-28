@@ -7,6 +7,8 @@ import store from './store'
 Vue.config.productionTip = false
 
 Vue.component('FooterBar', require('./components/FooterBar.vue'));
+Vue.component('RadialGauge', require('./components/RadialGauge.vue'));
+Vue.component('LinearGauge', require('./components/LinearGauge.vue'));
 
 /* eslint-disable no-new */
 new Vue({

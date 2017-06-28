@@ -22,24 +22,49 @@
   <section class="section">
     <div class="container">
       <div v-if="assets" class="panel">
-        <p class="panel-heading">Values</p>
-        <div v-for="(asset, index) in assets" class="panel-block">
-           <input v-model="assets[index]" class="input" type="text" disabled>
+      <p class="panel-heading">Values</p>
+      <div class="panel-block">
+      <div class="columns">
+        <div class="card column">
+          <div v-for="(asset, index) in assets">
+            <div class="card-image">
+              <radial-gauge :value="assets[index]"></radial-gauge>
+              <!-- <linear-gauge :value="assets[index]"></linear-gauge> -->
+            </div>
+            <div class="content">
+              <input v-model="index" class="input" disabled>
+              <input v-model="assets[index]" class="input" type="text" disabled>
+            </div>
+          </div>
         </div>
-        <div class="field is-grouped panel-heading">
-          <p class="control">
-            <a class="button is-primary" @click="start()"> Start </a>
-          </p>
-          <p class="control">
-            <a class="button is-danger" @click="stop()"> Stop </a>
-          </p>
-        </div>
+        <!-- <div v-if="assets" class="card column is-half">
+          <div v-for="(asset, index) in assets">
+            <div class="card-image">
+              <radial-gauge :value="assets[index]"></radial-gauge>
+            </div>
+            <div class="content">
+              <input v-model="index" class="input" disabled>
+              <input v-model="assets[index]" class="input" type="text" disabled>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
+    
+      <div class="field is-grouped panel-heading">
+        <p class="control">
+          <a class="button is-primary" @click="start()"> Start </a>
+        </p>
+        <p class="control">
+          <a class="button is-danger" @click="stop()"> Stop </a>
+        </p>
+      </div>
+    </div>
+  </div>
   </section>
-
 </div>
 </template>
+
 <script>
 import auth from '../services/auth'
 import router from '../router'
@@ -60,7 +85,7 @@ export default {
         auth.logout()
       },
     start() {
-      auth.getData()
+      clearInterval(this.timer)
       this.timer = setInterval(function () {
         auth.getData();
       }.bind(this), 2000);

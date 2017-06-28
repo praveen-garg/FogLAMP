@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "canvas-gauges": "^2.1.4",
     "vee-validate": "^2.0.0-rc.5",
     "vue": "^2.3.3",
+    "vue-canvas-gauges": "0.0.0",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1"
   },
