@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import './assets/css/bulma.min.css'
+import './assets/css/font-awesome.min.css'
+
 Vue.config.productionTip = false
 
 Vue.component('FooterBar', require('./components/FooterBar.vue'));

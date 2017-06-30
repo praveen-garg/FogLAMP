@@ -20,8 +20,8 @@
   </nav>
 
   <section class="section">
-    <div class="container">
-      <div v-if="assets" class="panel">
+    <div v-if="assets" class="container">
+      <div class="panel">
       <p class="panel-heading">Values</p>
       <div class="panel-block">
       <div class="columns">
@@ -33,7 +33,7 @@
             </div>
             <div class="content">
               <input v-model="index" class="input" disabled>
-              <input v-model="assets[index]" class="input" type="text" disabled>
+              <input v-model="assets[index]" class="input" type="text">
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
         </div> -->
       </div>
     </div>
-    
+
       <div class="field is-grouped panel-heading">
         <p class="control">
           <a class="button is-primary" @click="start()"> Start </a>
