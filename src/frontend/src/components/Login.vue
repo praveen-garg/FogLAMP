@@ -14,22 +14,16 @@
         <div class="control">
           <div class="field">
             <label class="label">Username</label>
-            <p class="control has-icons-left">
+            <p class="control">
               <input v-model="credentials.username" name="username" :class="{'input': true, 'is-danger': validationErrors.has('username') }" type="text" placeholder="username">
               <span v-show="validationErrors.has('username')" class="help is-danger">{{ validationErrors.first('username') }}</span>
-              <span class="icon is-small is-left">
-                <i class="fa fa-user"></i>
-              </span>
             </p>
           </div>
           <div class="field">
             <label class="label">Password</label>
-            <p class="control has-icons-left has-icons-right">
+            <p class="control">
               <input v-model="credentials.password" name="password" :class="{'input': true, 'is-danger': validationErrors.has('password') }" type="password" placeholder="password">
               <span v-show="validationErrors.has('password')" class="help is-danger">{{ validationErrors.first('password') }}</span>
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock"></i>
-              </span>
             </p>
           </div>
           <div class="field">

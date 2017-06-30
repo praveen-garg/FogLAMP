@@ -4,14 +4,13 @@
       <nav class="main-nav nav has-shadow">
         <div class="nav-left">
           <a class="nav-item">
-            <img src="./assets/logo.png" alt="Vue logo">
+            <h3>FogLAMP</h3>
           </a>
         </div>
         <div class="nav-center">
           <div class="nav-item content">
-            <h1 class="title">
-              FogLAMP Dashboard
-            </h1>
+            <h2 class="title">
+            </h2>
           </div>
         </div>
         <div class="nav-right nav-menu">

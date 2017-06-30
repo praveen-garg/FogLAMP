@@ -3,7 +3,7 @@
   <nav class="nav has-shadow" >
     <div class="nav-left">
       <a class="nav-item is-tab" to="/dashboard">
-        <i class="fa fa-dashboard"></i> Dashboard
+        Dashboard
       </a>
     </div>
     <div class="nav-right">
@@ -29,7 +29,6 @@
           <div v-for="(asset, index) in assets">
             <div class="card-image">
               <radial-gauge :value="assets[index]"></radial-gauge>
-              <!-- <linear-gauge :value="assets[index]"></linear-gauge> -->
             </div>
             <div class="content">
               <input v-model="index" class="input" disabled>
