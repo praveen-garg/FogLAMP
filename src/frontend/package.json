@@ -14,6 +14,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "chromedriver": "^2.30.1",
+    "selenium-standalone": "^6.5.0",
     "vee-validate": "^2.0.0-rc.5",
     "vue": "^2.3.3",
     "vue-router": "^2.3.1",

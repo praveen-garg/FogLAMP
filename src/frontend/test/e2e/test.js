@@ -1,6 +1,6 @@
 var config = require('../../nightwatch.conf.BASIC.js');
 
-module.exports = { // adapted from: https://git.io/vodU0
+module.exports = {
   'Page Title': function(browser) {
     browser
       .url('http://localhost:8080')
@@ -18,8 +18,8 @@ module.exports = { // adapted from: https://git.io/vodU0
       .setValue('input[type=password]', 'password')
       .click('button[name=btn]')
       .pause(1000)
-      .assert.containsText('')
-      .saveScreenshot('page-title-test.png')
+      .assert.containsText('.nav-item div b', 'Welcome')
+      .saveScreenshot('success-login-test.png')
       .end();
   }
 };
