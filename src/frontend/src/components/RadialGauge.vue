@@ -25,13 +25,10 @@ export default {
     if (this.value) this.options.value = this.value
     this.options.renderTo = this.$el
     this.options.colorNumbers = 'red'
-    this.options.colorPlate = '#222'
+    // this.options.colorPlate = 'blue'
+    // this.options.height = 300
     this.options.minValue = 0
     this.options.maxValue = 255
-    this.options.exactTicks="true"
-    // this.options.majorTicks="0,15,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255"
-    this.options.minorTicks="10"
-    this.options.highlights="0"
     this.chart = new RadialGauge(this.options).draw()
   },
 

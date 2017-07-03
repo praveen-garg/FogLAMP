@@ -28,7 +28,7 @@
           </div>
           <div class="field">
             <p class="has-text">
-              <button class="button is-primary" name="btn" @click="submit()">Login</button>
+              <button class="button is-primary" name="login-btn" @click="submit()">Login</button>
             </p>
           </div>
         </div>
@@ -82,4 +82,3 @@ export default {
   }
 }
 </script>
-

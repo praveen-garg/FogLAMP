@@ -14,8 +14,6 @@
   "dependencies": {
     "axios": "^0.16.1",
     "canvas-gauges": "^2.1.4",
-    "chromedriver": "^2.30.1",
-    "selenium-standalone": "^6.5.0",
     "vee-validate": "^2.0.0-rc.5",
     "vue": "^2.3.3",
     "vue-canvas-gauges": "0.0.0",
@@ -35,6 +33,8 @@
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
+    "chromedriver": "^2.30.1",
+    "selenium-standalone": "^6.5.0",
     "eslint": "^3.19.0",
     "eslint-friendly-formatter": "^2.0.7",
     "eslint-loader": "^1.7.1",
