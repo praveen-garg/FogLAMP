@@ -6,7 +6,7 @@ Project init
 
 - Project name Foglamp-Admin-Interface
 - Project description Foglamp Admin Interface, Using Vuejs and Webpack
-- Author Monika Sharma <monika@scaledb.com>
+- Author Monika Sharma <monika@dianomic.com>
 - Vue build standalone
 - Install vue-router? Yes
 - Use ESLint to lint your code? Yes
