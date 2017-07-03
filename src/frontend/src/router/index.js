@@ -18,13 +18,7 @@ const router = new Router({
       },
       beforeEnter: Guard.guest
     },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: function (resolve) {
-        require(['@/components/Signup.vue'], resolve)
-      }
-    },
+
     {
       path: '*',
       component: function (resolve) {

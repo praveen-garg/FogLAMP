@@ -191,7 +191,7 @@ setup_and_run() {
         return
     fi
     
-    make install-py-requirements
+    make install-dev-requirements
     make create-env
 
     if [ "$OPTION" == "LINT" ]

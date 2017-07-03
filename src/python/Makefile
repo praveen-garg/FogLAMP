@@ -59,14 +59,9 @@ install-test-requirements: check-root
 	@echo "-- Installing test dependencies"
 	pip install -r requirements_test.txt
 
-check-env:
-	@echo $(value FOGLAMP_ENV_PATH)
-
 create-env:
 	@echo "-- Creating environment file"
 	[ -f foglamp/foglamp-env.yaml ] && echo "foglamp-env already exists" || cp foglamp/foglamp-env.example.yaml foglamp/foglamp-env.yaml
-
-develop: install-dev-requirements
 
 test: py-test doc-build-test
 

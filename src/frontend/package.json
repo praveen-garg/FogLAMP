@@ -2,7 +2,7 @@
   "name": "Foglamp-Admin-Interface",
   "version": "0.1.0",
   "description": "Foglamp Admin Interface, Using Vuejs and Webpack",
-  "author": "Monika Sharma <monika@scaledb.com>",
+  "author": "Monika Sharma <monika@dianomic.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "canvas-gauges": "^2.1.4",
     "chromedriver": "^2.30.1",
     "selenium-standalone": "^6.5.0",
     "vee-validate": "^2.0.0-rc.5",
     "vue": "^2.3.3",
+    "vue-canvas-gauges": "0.0.0",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1"
   },

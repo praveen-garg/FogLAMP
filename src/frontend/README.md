@@ -64,7 +64,6 @@ I had Jenkins running on my Ubuntu machine, so had to kill `sudo kill $(sudo lso
 
 ```
 source build.sh -i
-make develop # install cors dependency
 foglamp
 ```
 
