@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import '../assets/css/styles.css';
+import '../assets/css/bulma.min.css';
 @Component({
   moduleId: module.id.toString(),
   selector: 'app',
