@@ -14,14 +14,15 @@ import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
 import { KeysPipe } from './pipes/keys';
-// import {RadialGaugeComponent} from '../../node_modules/ng-canvas-gauges/component';
+import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    NgzioGaugeComponentModule
   ],
   declarations: [
     AppComponent,
@@ -29,8 +30,7 @@ import { KeysPipe } from './pipes/keys';
     HomeComponent,
     AlertComponent,
     FooterComponent,
-    KeysPipe,
-    // RadialGaugeComponent
+    KeysPipe
   ],
   providers: [
     AuthGuard,
