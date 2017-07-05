@@ -1,7 +1,7 @@
  <nav class="nav has-shadow" >
     <div class="nav-left">
       <a class="nav-item is-tab" to="/dashboard">
-        <i class="fa fa-home"></i> Home
+        Dashboard
       </a>
     </div>
     <div class="nav-right">    
@@ -20,7 +20,7 @@
         <p class="panel-heading">Values</p>
         <div *ngFor="let entry of (xdata | keys)" class="panel-block">
            <input value="{{ entry.value }}" class="input" type="text" disabled>
-           <radial-gauge [attr.value]="entry.value"></radial-gauge>
+           <!--<radial-gauge [attr.value]="entry.value"></radial-gauge>-->
         </div>
         <div class="field is-grouped panel-heading">
           <p class="control">
