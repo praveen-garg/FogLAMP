@@ -3,11 +3,11 @@
       <nav class="navbar">
           <div class="navbar-brand app-navbar">
             <a class="navbar-item">
-              Dashboard
+              <span class="icon"><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
           </div>
           <div class="nav-right">
-            <a>Running...</a>
+            <span class="tag is-success">Running</span>
           </div>
       </nav>
   </div>
@@ -16,7 +16,7 @@
     <ul class="menu-list">
       <li>
         <a href="#" class="">
-          Configration
+          Configuration
         </a>
       </li>
       <li>
@@ -24,6 +24,7 @@
           Scheduled Tasks
         </a>
       </li>
+      <!-- TODO: These menu item should be dynamic -->
       <li>
         <a href="#" class="">
            Assets & Readings
@@ -60,28 +61,53 @@
   <div class="tile"> 
     <div class="tile is-parent">
     <article class ="tile is-child box">
-       <div class="item">
-          Configuration Manager
+       <div class="columns">
+          <div class="column is-three-quarters">
+             <p class="control">Configuration Manager</p>
+          </div>
+          <div class="column">
+          <div class="is-pulled-right"><span class="icon"><i class="fa fa-refresh"></i></span>
+          &nbsp;&nbsp;
+          <span class="icon"><i class="fa fa-arrow-right"></i></span></div>
+          </div> 
        </div>
        <hr align="center">
-        <table class="table is-bordered is-striped is-narrow">
-          <thead>
+       <table class="table is-bordered is-striped is-narrow">
+         <thead>
             <tr>
               <th>Category</th>
-              <th>Default</th>
-              <th>Value</th>
+              <th>Config</th>
               <th>Description</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Purge > Age</td>
-              <td>72</td>
-              <td>24</td>
-              <td>Check age of reading</td>
+              <td>Purge</td>
+              <td>  
+                <table class="table is-bordered is-striped is-narrow">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Default</th>
+                  <th>Value</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Age</td>
+                <td>72</td>
+                <td>24</td>
+                <td>Check age of reading</td>
+              </tr>
+            </tbody>
+          </table>
+              </td>
+              <td> Purge data process </td>
             </tr>
-          </tbody>
-        </table>  
+      
+        <tbody> 
+        </table> 
     </article>
   </div>
   <div class="tile is-parent">

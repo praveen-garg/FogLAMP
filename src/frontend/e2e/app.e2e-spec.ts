@@ -1,10 +1,10 @@
-import { FoglampappPage } from './app.po';
+import { FogLAMPPage } from './app.po';
 
 describe('foglampapp App', () => {
-  let page: FoglampappPage;
+  let page: FogLAMPPage;
 
   beforeEach(() => {
-    page = new FoglampappPage();
+    page = new FogLAMPPage();
   });
 
   it('should display welcome message', () => {

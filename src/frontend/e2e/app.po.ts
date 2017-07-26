@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class FoglampappPage {
+export class FogLAMPPage {
   navigateTo() {
     return browser.get('/');
   }
