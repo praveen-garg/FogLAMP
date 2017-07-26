@@ -1,0 +1,67 @@
+/*html, body, #app {
+  height: 100%;
+}
+#app {
+  min-height: 100%;
+}
+
+.block {
+margin-right: 40px;
+}
+.footer {
+  margin-top: -12px;
+}
+
+.graph_grid {
+    margin-top: 50px;
+}
+@media screen and (max-width: 768px) {
+  #menu-toggle:checked + .nav-menu {
+    display: block;
+  }
+}*/
+
+.app-sidebar{
+    position: fixed;
+    top: 54px;
+    left: 0;
+    bottom: 0;
+    padding: 20px 0 50px;
+    width: 180px;
+    min-width: 45px;
+    max-height: 100vh;
+    height: calc(100% - 50px);
+    z-index: 1023;
+    background: #fff;
+    box-shadow: 0 2px 3px hsla(0,0%,7%,.1), 0 0 0 1px hsla(0,0%,7%,.1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.app-navbar {
+    position: fixed;
+    min-width: 100%;
+    z-index: 2024;
+    box-shadow: 0 2px 3px hsla(0,0%,7%,.1), 0 0 0 1px hsla(0,0%,7%,.1);
+}
+
+.label {
+    margin-left: 15px;
+}
+
+.nav-right{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 40px;
+}
+
+.app-main{
+    padding-top: 50px;
+    margin-left: 190px;
+    margin-right: 20px;
+}
+
+hr{
+    border:.5px solid #000;
+    margin-top: 5px;
+}

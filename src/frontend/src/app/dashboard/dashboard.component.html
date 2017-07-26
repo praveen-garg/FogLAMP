@@ -1,0 +1,118 @@
+<div class="app-navbar slideInDown">
+  <div class="hero-head">
+      <nav class="navbar">
+          <div class="navbar-brand app-navbar">
+            <a class="navbar-item">
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-right">
+            <a>Running...</a>
+          </div>
+      </nav>
+  </div>
+</div>
+  <aside class="menu app-sidebar slideInLeft">
+    <ul class="menu-list">
+      <li>
+        <a href="#" class="">
+          Configration
+        </a>
+      </li>
+      <li>
+        <a href="#" class="">
+          Scheduled Tasks
+        </a>
+      </li>
+      <li>
+        <a href="#" class="">
+           Assets & Readings
+        </a>
+      </li>
+      <li>
+        <a href="#" class="">
+           Purge
+        </a>
+      </li>
+      <li>
+        <a href="#" class="">
+           OMF Translator
+        </a>
+      </li>
+    </ul>
+  </aside>
+<section class="app-main">
+  <div class="container is-fluid">
+  <div class="tile">  
+  <div class="tile is-parent">
+    <article class ="tile is-child box">
+      <h4> Histogram of Latest </h4>
+      <chart [type]="type" [data]="data" [options]="options"></chart>
+    </article>
+  </div>
+  <div class="tile is-parent">
+    <article class ="tile is-child box">
+      <h4> Statistics Delta </h4>
+      <chart [type]="type1" [data]="data1" [options]="options1"></chart>
+    </article>  
+  </div>
+  </div>
+  <div class="tile"> 
+    <div class="tile is-parent">
+    <article class ="tile is-child box">
+       <div class="item">
+          Configuration Manager
+       </div>
+       <hr align="center">
+        <table class="table is-bordered is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Default</th>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Purge > Age</td>
+              <td>72</td>
+              <td>24</td>
+              <td>Check age of reading</td>
+            </tr>
+          </tbody>
+        </table>  
+    </article>
+  </div>
+  <div class="tile is-parent">
+    <article class ="tile is-child box">
+       <div class="item">
+          Service Status
+       </div>
+       <hr align="center">
+      <table class="table is-bordered is-striped is-narrow">
+      <thead>
+          <tr>
+            <th>Service</th>
+            <th>Configured</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Storage</td>
+            <td><span class="tag is-danger">No</span></td>
+            <td>x</td>
+          </tr>
+          <tr>
+            <td>Device</td>
+            <td><span class="tag is-primary">Yes</span></td>
+            <td><span class="tag is-success">Running</span></td>
+          </tr>
+        </tbody>
+      </table>  
+    </article>  
+  </div> 
+  </div>  
+  </div>
+</section>

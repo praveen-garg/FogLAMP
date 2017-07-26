@@ -1,0 +1,50 @@
+ <nav class="nav has-shadow" >
+    <div class="nav-left">
+      <a class="nav-item is-tab" to="/dashboard">
+        Dashboard
+      </a>
+    </div>
+    <div class="nav-right">    
+     <div class="field level-right">
+         Welcome &nbsp; <b> {{ currentUser }} </b> &nbsp;    
+        <button  class="button" (click)=logOut()>Logout</button>
+      </div>
+    </div>
+ </nav>
+ <section class="section">
+  <!-- <div class="container">
+    {{ xdata | json }}   
+  </div> -->
+
+ <div class="panel">
+        <p class="panel-heading">Values</p>
+        <div *ngFor="let entry of (xdata | keys)" class="panel-block">
+          <p class="control">
+              <label class="label">{{ entry.key }}</label> 
+          </p>
+          <p class="control">
+              <input value="{{ entry.value }}" class="input" type="text" disabled>
+          </p>
+          <p class="control">
+            <radial-gauge [attr.value]="entry.value" 
+              height="200"
+              major-ticks="0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255"
+              max-value="255"
+              minor-ticks="3"
+              stroke-ticks="true">
+            </radial-gauge>
+          </p>
+        </div>
+        <div class="field is-grouped panel-heading">
+          <p class="control">
+            <a class="button is-primary" (click)=start()> Start </a>
+          </p>
+          <p class="control">
+            <a class="button is-danger" (click)=stop()> Stop </a>
+          </p>
+        </div>
+      </div>
+</section>
+<!--<button class="button is-primary" (click)=start()>Start</button>
+<button class="button is-danger" (click)=stop()>Stop</button>
+ -->
