@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {ChartDataHelper} from "../../app/chart/chart-data-helper";
+import { ConfigurationService } from '../services/index';
 
 
 @Component({
@@ -9,6 +10,8 @@ import {ChartDataHelper} from "../../app/chart/chart-data-helper";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  congfigurationData = [];
   type:string;
   data:any;
   options:any;
@@ -16,7 +19,7 @@ export class DashboardComponent implements OnInit {
   type1:string;
   data1:any;
   options1:any;
-  constructor(public dataHelper: ChartDataHelper) { 
+  constructor(public dataHelper: ChartDataHelper, private configService: ConfigurationService) { 
     this.type = dataHelper.type;
     this.data = dataHelper.data;
     this.options = dataHelper.options;
@@ -27,6 +30,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
   }
 
+
+   getCategories() {
+    this.configService.getCategories().
+    subscribe(
+      data => {
+        this.congfigurationData = data.categories;
+        console.log("This is the final ",  this.congfigurationData);
+      },
+      error => {
+          
+      });
+    }
 }

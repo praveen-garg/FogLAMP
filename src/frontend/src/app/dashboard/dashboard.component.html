@@ -66,9 +66,20 @@
              <p class="control">Configuration Manager</p>
           </div>
           <div class="column">
-          <div class="is-pulled-right"><span class="icon"><i class="fa fa-refresh"></i></span>
-          &nbsp;&nbsp;
-          <span class="icon"><i class="fa fa-arrow-right"></i></span></div>
+          <div class="is-pulled-right">
+            <p class="field">
+              <a class="button is-small">
+                <span class="icon is-small" (click)="getCategories()"> 
+                  <i class="fa fa-refresh"></i>
+                </span>
+              </a>
+              <a class="button is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </a>
+            </p>
+          </div>
           </div> 
        </div>
        <hr align="center">
@@ -81,33 +92,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Purge</td>
+            <tr *ngFor ="let configuration of congfigurationData">
+              <td>{{configuration.key}}</td>
               <td>  
                 <table class="table is-bordered is-striped is-narrow">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Default</th>
-                  <th>Value</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>Age</td>
-                <td>72</td>
-                <td>24</td>
-                <td>Check age of reading</td>
-              </tr>
-            </tbody>
-          </table>
-              </td>
-              <td> Purge data process </td>
-            </tr>
-      
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Default</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor ="let v of (configuration.value | keys)">
+                      <td>{{v.key}} <span class="tag is-light">{{v.value.type}}</span> &nbsp; <i class="fa fa-info-circle" title="{{v.value.description}}"></i></td>
+                      <td>{{v.value.default}}</td>
+                      <td>{{v.value.value}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+               </td>
+              <td> {{configuration.description}} </td>
+            </tr>     
         <tbody> 
-        </table> 
+      </table> 
     </article>
   </div>
   <div class="tile is-parent">
