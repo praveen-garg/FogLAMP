@@ -16,13 +16,14 @@ export class DashboardComponent implements OnInit {
   congfigurationData = [];
   categoryData = [];
   statisticsData = [];
+  statHistoryData = [];
   type: string;
   data: any;
   options: any;
 
-  type1: string;
-  data1: any;
-  options1: any;
+  readingChart: string;
+  readingValues: any;
+
   constructor(public dataHelper: ChartDataHelper,
     private configService: ConfigurationService,
     private statisticsService: StatisticsService,
@@ -31,14 +32,14 @@ export class DashboardComponent implements OnInit {
     this.data = [];
     this.options = [];
 
-    this.type1 = dataHelper.type1;
-    this.data1 = dataHelper.data1;
-    this.options1 = dataHelper.options1;
+    this.readingChart = "line";
+    this.readingValues = [];
   }
 
   ngOnInit() {
     this.getCategories();
     this.getStatistics();
+    this.getStatisticsHistory();
   }
 
   public getCategories(): void {
@@ -74,24 +75,24 @@ export class DashboardComponent implements OnInit {
         for (var key in data) {
           values.push(data[key]);
           labels.push(key);
-          this.statisticsGraph(labels, values);
         }
+        this.statisticsGraph(labels, values);
       },
       error => { console.log("error", error) });
   }
 
   statisticsGraph(labels, data): void {
     console.log("Labels", labels, " data", data);
-      this.data = {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Latest',
-            data: data,
-            backgroundColor: "rgb(176,196,222)"
-          }
-        ]
-      };
+    this.data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Latest',
+          data: data,
+          backgroundColor: "rgb(176,196,222)"
+        }
+      ]
+    };
     this.options = {
       scales: {
         yAxes: [{
@@ -102,6 +103,51 @@ export class DashboardComponent implements OnInit {
       }
     }
   }
+
+  public getStatisticsHistory(): void {
+    var labels = [];
+    var values = [];
+    var readingsValue = []
+    this.statisticsService.getStatisticsHistory().
+      subscribe(data => {
+        this.statHistoryData = data.statistics;
+        this.statHistoryData.forEach(element => {
+          Object.keys(element).forEach(aKey => {
+            if (aKey.indexOf("READ") !== -1) {
+              readingsValue.push(element[aKey])
+            }
+          });
+
+        });
+        console.log("This is the history readings ", readingsValue);
+        this.historyRGraph([], readingsValue);
+      },
+      error => { console.log("error", error) });
+  }
+
+  historyRGraph(labels, data): void {
+    this.readingChart = "line"
+    this.readingValues = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'delta',
+          data: data,
+          backgroundColor: "rgb(100,149,237)"
+        }
+      ]
+    };
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false
+          }
+        }]
+      }
+    }
+  }
+
 
   public showModal(event) {
     var el = document.getElementById('cat-details');

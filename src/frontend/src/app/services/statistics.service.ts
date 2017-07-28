@@ -7,7 +7,6 @@ import { Utils } from './utils'
 export class StatisticsService {
   // private instance variable to hold base url
   private GET_STATISTICS = Utils.BASE_URL + "statistics"
-  private GET_CATEGORY_URL = Utils.BASE_URL + "category"
 
   constructor(private http: Http) { }
 
@@ -19,4 +18,11 @@ export class StatisticsService {
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
+
+  public getStatisticsHistory() {
+    return this.http.get(this.GET_STATISTICS + "/history")
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
 }
