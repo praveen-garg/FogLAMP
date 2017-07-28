@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {ChartDataHelper} from "../../app/chart/chart-data-helper";
+
+import { ChartDataHelper } from "../../app/chart/chart-data-helper";
 import { ConfigurationService } from '../services/index';
 
 
@@ -12,14 +14,17 @@ import { ConfigurationService } from '../services/index';
 export class DashboardComponent implements OnInit {
 
   congfigurationData = [];
-  type:string;
-  data:any;
-  options:any;
+  categoryData= []; 
+  type: string;
+  data: any;
+  options: any;
 
-  type1:string;
-  data1:any;
-  options1:any;
-  constructor(public dataHelper: ChartDataHelper, private configService: ConfigurationService) { 
+  type1: string;
+  data1: any;
+  options1: any;
+  constructor(public dataHelper: ChartDataHelper, 
+  private configService: ConfigurationService,
+  private router: Router) {
     this.type = dataHelper.type;
     this.data = dataHelper.data;
     this.options = dataHelper.options;
@@ -33,16 +38,37 @@ export class DashboardComponent implements OnInit {
     this.getCategories();
   }
 
-
-   getCategories() {
+  public getCategories(): void {
     this.configService.getCategories().
-    subscribe(
+      subscribe(
       data => {
         this.congfigurationData = data.categories;
-        console.log("This is the final ",  this.congfigurationData);
+        console.log("This is the congfigurationData ", this.congfigurationData);
+        this.getCategory();
       },
-      error => {
-          
-      });
-    }
+      error => { console.log("error", error) });
+  }
+
+  public getCategory(): void {
+    this.congfigurationData.forEach(element => {
+      this.configService.getCategory(element.key).
+        subscribe(
+        data => {
+          this.categoryData.push(data);
+          console.log("This is the categoryData ", this.categoryData);
+        },
+        error => { console.log("error", error) });
+    });
+  }
+
+public showModal(event) {
+  var el = document.getElementById('cat-details');
+  el.classList.add('is-active');
+}
+
+public closeModal(event) {
+  var el = document.getElementById('cat-details');
+  el.classList.remove('is-active');
+}
+
 }

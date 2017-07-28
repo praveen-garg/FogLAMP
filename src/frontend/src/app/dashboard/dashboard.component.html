@@ -1,152 +1,171 @@
 <div class="app-navbar slideInDown">
   <div class="hero-head">
-      <nav class="navbar">
-          <div class="navbar-brand app-navbar">
-            <a class="navbar-item">
-              <span class="icon"><i class="fa fa-tachometer"></i></span> Dashboard
-            </a>
-          </div>
-          <div class="nav-right">
-            <span class="tag is-success">Running</span>
-          </div>
-      </nav>
+    <nav class="navbar">
+      <div class="navbar-brand app-navbar">
+        <a class="navbar-item">
+          <span class="icon"><i class="fa fa-tachometer"></i></span> Dashboard
+        </a>
+      </div>
+      <div class="nav-right">
+        <span class="tag is-success">Running</span>
+      </div>
+    </nav>
   </div>
 </div>
-  <aside class="menu app-sidebar slideInLeft">
-    <ul class="menu-list">
-      <li>
-        <a href="#" class="">
+<aside class="menu app-sidebar slideInLeft">
+  <ul class="menu-list">
+    <li>
+      <a href="/configuration">
           Configuration
         </a>
-      </li>
-      <li>
-        <a href="#" class="">
+    </li>
+    <li>
+      <a href="#" class="">
           Scheduled Tasks
         </a>
-      </li>
-      <!-- TODO: These menu item should be dynamic -->
-      <li>
-        <a href="#" class="">
+    </li>
+    <!-- TODO: These menu item should be dynamic -->
+    <li>
+      <a href="#" class="">
            Assets & Readings
         </a>
-      </li>
-      <li>
-        <a href="#" class="">
+    </li>
+    <li>
+      <a href="#" class="">
            Purge
         </a>
-      </li>
-      <li>
-        <a href="#" class="">
+    </li>
+    <li>
+      <a href="#" class="">
            OMF Translator
         </a>
-      </li>
-    </ul>
-  </aside>
+    </li>
+  </ul>
+</aside>
 <section class="app-main">
   <div class="container is-fluid">
-  <div class="tile">  
-  <div class="tile is-parent">
-    <article class ="tile is-child box">
-      <h4> Histogram of Latest </h4>
-      <chart [type]="type" [data]="data" [options]="options"></chart>
-    </article>
-  </div>
-  <div class="tile is-parent">
-    <article class ="tile is-child box">
-      <h4> Statistics Delta </h4>
-      <chart [type]="type1" [data]="data1" [options]="options1"></chart>
-    </article>  
-  </div>
-  </div>
-  <div class="tile"> 
-    <div class="tile is-parent">
-    <article class ="tile is-child box">
-       <div class="columns">
-          <div class="column is-three-quarters">
-             <p class="control">Configuration Manager</p>
-          </div>
-          <div class="column">
-          <div class="is-pulled-right">
-            <p class="field">
-              <a class="button is-small">
-                <span class="icon is-small" (click)="getCategories()"> 
+    <div class="tile">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4> Histogram of Latest </h4>
+          <chart [type]="type" [data]="data" [options]="options"></chart>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4> Statistics Delta </h4>
+          <chart [type]="type1" [data]="data1" [options]="options1"></chart>
+        </article>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <div class="columns">
+            <div class="column is-three-quarters">
+              <p class="control">Configuration Manager</p>
+            </div>
+            <div class="column">
+              <div class="is-pulled-right">
+                <p class="field">
+                  <a class="button is-small">
+                    <span class="icon is-small" (click)="getCategories()"> 
                   <i class="fa fa-refresh"></i>
                 </span>
-              </a>
-              <a class="button is-small">
-                <span class="icon is-small">
+                  </a>
+                  <a class="button is-small" href="/configuration">
+                    <span class="icon is-small">
                   <i class="fa fa-arrow-right"></i>
                 </span>
-              </a>
-            </p>
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
-          </div> 
-       </div>
-       <hr align="center">
-       <table class="table is-bordered is-striped is-narrow">
-         <thead>
-            <tr>
-              <th>Category</th>
-              <th>Config</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor ="let configuration of congfigurationData">
-              <td>{{configuration.key}}</td>
-              <td>  
-                <table class="table is-bordered is-striped is-narrow">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Default</th>
-                      <th>Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor ="let v of (configuration.value | keys)">
-                      <td>{{v.key}} <span class="tag is-light">{{v.value.type}}</span> &nbsp; <i class="fa fa-info-circle" title="{{v.value.description}}"></i></td>
-                      <td>{{v.value.default}}</td>
-                      <td>{{v.value.value}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-               </td>
-              <td> {{configuration.description}} </td>
-            </tr>     
-        <tbody> 
-      </table> 
-    </article>
-  </div>
-  <div class="tile is-parent">
-    <article class ="tile is-child box">
-       <div class="item">
-          Service Status
-       </div>
-       <hr align="center">
-      <table class="table is-bordered is-striped is-narrow">
-      <thead>
-          <tr>
-            <th>Service</th>
-            <th>Configured</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Storage</td>
-            <td><span class="tag is-danger">No</span></td>
-            <td>x</td>
-          </tr>
-          <tr>
-            <td>Device</td>
-            <td><span class="tag is-primary">Yes</span></td>
-            <td><span class="tag is-success">Running</span></td>
-          </tr>
-        </tbody>
-      </table>  
-    </article>  
-  </div> 
-  </div>  
+          <hr align="center">
+          <table class="table is-bordered is-striped is-narrow">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let configuration of congfigurationData">
+                <td>{{configuration.key}}</td>
+                <td>
+                  {{configuration.description}}
+                </td>
+                <td> <a (click)="showModal()">details</a>
+                  <div id="cat-details" class="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                      <header class="modal-card-head">
+                        <p class="modal-card-title">{{configuration.key}}</p>
+                        <button (click)="closeModal()" class="delete"></button>
+                      </header>
+                      <section class="modal-card-body">
+                        <!-- Content ... -->
+                        <table class="table is-bordered is-striped is-narrow">
+                          <!--<thead>
+                            <tr>
+                              <th>Item</th>
+                              <th>Default</th>
+                              <th>Value</th>
+                            </tr>
+                          </thead>-->
+                          <tbody>
+                            <div  *ngFor ="let valueObject of categoryData">
+                            <tr *ngFor ="let v of (valueObject | keys)">
+                              <td><b>{{v.key}}</b> <span class="tag is-light">{{v.value.type}}</span></td>
+                              <!--  &nbsp; <i class="fa fa-info-circle"
+                                  title="{{v.value.description}}"></i>-->
+                              <td>{{v.value.default}} &nbsp; <span class="tag is-light">default</span></td>
+                              <td>{{v.value.value}}</td>
+                              <td>{{v.value.description}}</td>
+                            </tr>
+                            </div>
+                          </tbody>
+                        </table>
+                      </section>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tbody>
+          </table>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <div class="item">
+            Service Status
+          </div>
+          <hr align="center">
+          <table class="table is-bordered is-striped is-narrow">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Configured</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Storage</td>
+                <td><span class="tag is-danger">No</span></td>
+                <td>x</td>
+              </tr>
+              <tr>
+                <td>Device</td>
+                <td><span class="tag is-primary">Yes</span></td>
+                <td><span class="tag is-success">Running</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </div>
   </div>
 </section>

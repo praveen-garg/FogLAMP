@@ -16,9 +16,11 @@ import { FooterComponent } from './footer/index';
 import { KeysPipe } from './pipes/keys';
 import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 import { DashboardComponent } from './dashboard/index';
+import { ConfigurationManagerComponent } from '../app/configuration-manager/configuration-manager.component';
 
 import { ChartModule } from './chart/index';
 import {ChartDataHelper} from "../app/chart/chart-data-helper";
+
 
 @NgModule({
   imports: [
@@ -27,7 +29,8 @@ import {ChartDataHelper} from "../app/chart/chart-data-helper";
     HttpModule,
     routing,
     NgzioGaugeComponentModule,
-    ChartModule
+    ChartModule,
+    
   ],
   declarations: [
     AppComponent,
@@ -36,7 +39,8 @@ import {ChartDataHelper} from "../app/chart/chart-data-helper";
     AlertComponent,
     FooterComponent,
     KeysPipe,
-    DashboardComponent
+    DashboardComponent,
+    ConfigurationManagerComponent
   ],
   providers: [
     AuthGuard,
