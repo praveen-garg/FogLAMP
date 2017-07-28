@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 
 import { ChartDataHelper } from "../../app/chart/chart-data-helper";
-import { ConfigurationService } from '../services/index';
+import { ConfigurationService, StatisticsService } from '../services/index';
 
 
 @Component({
@@ -14,7 +14,8 @@ import { ConfigurationService } from '../services/index';
 export class DashboardComponent implements OnInit {
 
   congfigurationData = [];
-  categoryData= []; 
+  categoryData = [];
+  statisticsData = [];
   type: string;
   data: any;
   options: any;
@@ -22,12 +23,13 @@ export class DashboardComponent implements OnInit {
   type1: string;
   data1: any;
   options1: any;
-  constructor(public dataHelper: ChartDataHelper, 
-  private configService: ConfigurationService,
-  private router: Router) {
-    this.type = dataHelper.type;
-    this.data = dataHelper.data;
-    this.options = dataHelper.options;
+  constructor(public dataHelper: ChartDataHelper,
+    private configService: ConfigurationService,
+    private statisticsService: StatisticsService,
+    private router: Router) {
+    this.type = "line"
+    this.data = [];
+    this.options = [];
 
     this.type1 = dataHelper.type1;
     this.data1 = dataHelper.data1;
@@ -36,6 +38,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
+    this.getStatistics();
   }
 
   public getCategories(): void {
@@ -61,14 +64,53 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-public showModal(event) {
-  var el = document.getElementById('cat-details');
-  el.classList.add('is-active');
-}
+  public getStatistics(): void {
+    var labels = [];
+    var values = [];
+    this.statisticsService.getStatistics().
+      subscribe(data => {
+        this.statisticsData = data;
+        console.log("This is the statisticsData ", data);
+        for (var key in data) {
+          values.push(data[key]);
+          labels.push(key);
+          this.statisticsGraph(labels, values);
+        }
+      },
+      error => { console.log("error", error) });
+  }
 
-public closeModal(event) {
-  var el = document.getElementById('cat-details');
-  el.classList.remove('is-active');
-}
+  statisticsGraph(labels, data): void {
+    console.log("Labels", labels, " data", data);
+      this.data = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Latest',
+            data: data,
+            backgroundColor: "rgb(176,196,222)"
+          }
+        ]
+      };
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false
+          }
+        }]
+      }
+    }
+  }
+
+  public showModal(event) {
+    var el = document.getElementById('cat-details');
+    el.classList.add('is-active');
+  }
+
+  public closeModal(event) {
+    var el = document.getElementById('cat-details');
+    el.classList.remove('is-active');
+  }
 
 }
