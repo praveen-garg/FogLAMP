@@ -58,6 +58,21 @@
         </article>
       </div>
     </div>
+     <div class="tile">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4> Purge Statistics History </h4>
+          <chart [type]="purgeChart" [data]="purgeValues" [options]="options"></chart>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4> Sent Statistics History </h4>
+          <chart [type]="sentChart" [data]="sentValues" [options]="options"></chart>
+        </article>
+      </div>
+    </div>
+
     <div class="tile">
       <div class="tile is-parent">
         <article class="tile is-child box">
@@ -97,7 +112,7 @@
                 <td>
                   {{configuration.description}}
                 </td>
-                <td> <a (click)="showModal()">details</a>
+                <td> <a (click)="showModal()">show</a>
                   <div id="cat-details" class="modal">
                     <div class="modal-background"></div>
                     <div class="modal-card">
@@ -123,7 +138,7 @@
                                   title="{{v.value.description}}"></i>-->
                               <td>{{v.value.default}} &nbsp; <span class="tag is-light">default</span></td>
                               <td>{{v.value.value}}</td>
-                              <td>{{v.value.description}}</td>
+                              <td><small>{{v.value.description}}</small></td>
                             </tr>
                             </div>
                           </tbody>

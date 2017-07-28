@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   categoryData = [];
   statisticsData = [];
   statHistoryData = [];
+  
   type: string;
   data: any;
   options: any;
@@ -24,16 +25,27 @@ export class DashboardComponent implements OnInit {
   readingChart: string;
   readingValues: any;
 
+  purgeChart: string;
+  purgeValues: any;
+
+  sentChart: string;
+  sentValues: any;
+
   constructor(public dataHelper: ChartDataHelper,
     private configService: ConfigurationService,
     private statisticsService: StatisticsService,
     private router: Router) {
     this.type = "line"
     this.data = [];
-    this.options = [];
 
     this.readingChart = "line";
     this.readingValues = [];
+
+    this.purgeChart = "line";
+    this.purgeValues = [];
+
+    this.sentChart = "line";
+    this.sentValues = [];
   }
 
   ngOnInit() {
@@ -107,20 +119,32 @@ export class DashboardComponent implements OnInit {
   public getStatisticsHistory(): void {
     var labels = [];
     var values = [];
-    var readingsValue = []
+    var readingsValues = []
+    var purgeValues = []
+    var sentValues = []
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
         this.statHistoryData = data.statistics;
         this.statHistoryData.forEach(element => {
           Object.keys(element).forEach(aKey => {
-            if (aKey.indexOf("READ") !== -1) {
-              readingsValue.push(element[aKey])
+            if (aKey.indexOf("READINGS") !== -1) {
+              readingsValues.push(element[aKey])
+            }
+            if (aKey.indexOf("PURGED") !== -1 && aKey.indexOf("UNSNPURGED") == -1) {
+              purgeValues.push(element[aKey])
+            }
+            if (aKey.indexOf("SENT") !== -1 && aKey.indexOf("UNSENT") == -1) {
+              sentValues.push(element[aKey])
             }
           });
 
         });
-        console.log("This is the history readings ", readingsValue);
-        this.historyRGraph([], readingsValue);
+        console.log("This is the history readings ", readingsValues);
+        console.log("This is the history purg ", purgeValues);
+        console.log("This is the history sent ", sentValues);
+        this.historyRGraph([], readingsValues);
+        this.purgeRGraph([], purgeValues);
+        this.sentRGraph([], sentValues);
       },
       error => { console.log("error", error) });
   }
@@ -134,6 +158,52 @@ export class DashboardComponent implements OnInit {
           label: 'delta',
           data: data,
           backgroundColor: "rgb(100,149,237)"
+        }
+      ]
+    };
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false
+          }
+        }]
+      }
+    }
+  }
+
+  purgeRGraph(labels, data): void {
+    this.purgeChart = "line"
+    this.purgeValues = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'delta',
+          data: data,
+          backgroundColor: "rgb(255,165,0)"
+        }
+      ]
+    };
+    this.options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false
+          }
+        }]
+      }
+    }
+  }
+
+  sentRGraph(labels, data): void {
+    this.sentChart = "line"
+    this.sentValues = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'delta',
+          data: data,
+          backgroundColor: "rgb(144,238,144)"
         }
       ]
     };
