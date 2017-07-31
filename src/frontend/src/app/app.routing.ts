@@ -6,9 +6,9 @@ import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from './configuration-manager/index';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent},
+    { path: 'home', component: HomeComponent},
     { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: '', component: DashboardComponent },
     { path: 'configuration', component: ConfigurationManagerComponent },
     
     // otherwise redirect to home

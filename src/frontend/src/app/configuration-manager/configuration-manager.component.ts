@@ -8,8 +8,8 @@ import { ConfigurationService } from '../services/index';
   styleUrls: ['./configuration-manager.component.css']
 })
 export class ConfigurationManagerComponent implements OnInit {
-  private categoryData = [];
-  private configurationData = [];
+  public categoryData = [];
+  public configurationData = [];
   constructor(private configService: ConfigurationService, private route: ActivatedRoute) { }
 
   ngOnInit() {
