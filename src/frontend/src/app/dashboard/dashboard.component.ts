@@ -56,21 +56,23 @@ export class DashboardComponent implements OnInit {
       data => {
         this.congfigurationData = data.categories;
         console.log("This is the congfigurationData ", this.congfigurationData);
-        this.getCategory();
+        this.congfigurationData.forEach(element => {
+          this.getCategory(element.key);
+        });
       },
       error => { console.log("error", error) });
   }
 
-  public getCategory(): void {
-    this.congfigurationData.forEach(element => {
-      this.configService.getCategory(element.key).
+  public getCategory(category_name:string): void {
+    
+      this.configService.getCategory(category_name).
         subscribe(
         data => {
-          this.categoryData.push(data);
+          this.categoryData[category_name.trim()] = data
           console.log("This is the categoryData ", this.categoryData);
         },
         error => { console.log("error", error) });
-    });
+    
   }
 
   public getStatistics(): void {
@@ -215,13 +217,15 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  public showModal(event) {
-    var el = document.getElementById('cat-details');
+  public showModal(config_item_key) {
+    console.log("show:", config_item_key)
+    var el = document.getElementById(config_item_key);
     el.classList.add('is-active');
   }
 
-  public closeModal(event) {
-    var el = document.getElementById('cat-details');
+  public closeModal(config_item_key) {
+    console.log("close:", config_item_key)
+    var el = document.getElementById(config_item_key);
     el.classList.remove('is-active');
   }
 
