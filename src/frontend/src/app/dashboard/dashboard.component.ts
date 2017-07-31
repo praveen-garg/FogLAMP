@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
-import { ChartDataHelper } from "../../app/chart/chart-data-helper";
 import { ConfigurationService, StatisticsService } from '../services/index';
-
 
 @Component({
   selector: 'app-dashboard',
@@ -26,13 +23,12 @@ export class DashboardComponent implements OnInit {
   readingValues: any;
 
   purgeChart: string;
-  purgeValues: any;
+  purgedValues: any;
 
   sentChart: string;
   sentValues: any;
 
-  constructor(public dataHelper: ChartDataHelper,
-    private configService: ConfigurationService,
+  constructor(private configService: ConfigurationService,
     private statisticsService: StatisticsService,
     private router: Router) {
     this.type = "line"
@@ -42,7 +38,7 @@ export class DashboardComponent implements OnInit {
     this.readingValues = [];
 
     this.purgeChart = "line";
-    this.purgeValues = [];
+    this.purgedValues = [];
 
     this.sentChart = "line";
     this.sentValues = [];
@@ -120,7 +116,7 @@ export class DashboardComponent implements OnInit {
     var labels = [];
     var values = [];
     var readingsValues = []
-    var purgeValues = []
+    var purgedValues = []
     var sentValues = []
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
@@ -131,7 +127,7 @@ export class DashboardComponent implements OnInit {
               readingsValues.push(element[aKey])
             }
             if (aKey.indexOf("PURGED") !== -1 && aKey.indexOf("UNSNPURGED") == -1) {
-              purgeValues.push(element[aKey])
+              purgedValues.push(element[aKey])
             }
             if (aKey.indexOf("SENT") !== -1 && aKey.indexOf("UNSENT") == -1) {
               sentValues.push(element[aKey])
@@ -140,16 +136,22 @@ export class DashboardComponent implements OnInit {
 
         });
         console.log("This is the history readings ", readingsValues);
-        console.log("This is the history purg ", purgeValues);
+        console.log("This is the stats history for purge: ", purgedValues);
         console.log("This is the history sent ", sentValues);
-        this.historyRGraph([], readingsValues);
-        this.purgeRGraph([], purgeValues);
-        this.sentRGraph([], sentValues);
+        this.statsHistoryReadingsGraph(readingsValues);
+        this.statsHistoryPurgedGraph(purgedValues);
+        this.statsHistorySentGraph(sentValues);
       },
       error => { console.log("error", error) });
   }
 
-  historyRGraph(labels, data): void {
+  statsHistoryReadingsGraph(data): void {
+    var i = 0;
+    var labels =[];
+    data.forEach(element => {
+      i++;
+      labels.push(i)
+    });
     this.readingChart = "line"
     this.readingValues = {
       labels: labels,
@@ -172,9 +174,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  purgeRGraph(labels, data): void {
+  statsHistoryPurgedGraph(data): void {
+    var i = 0;
+    var labels =[];
+    data.forEach(element => {
+      i++;
+      labels.push(i)
+    });
     this.purgeChart = "line"
-    this.purgeValues = {
+    this.purgedValues = {
       labels: labels,
       datasets: [
         {
@@ -195,7 +203,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  sentRGraph(labels, data): void {
+  statsHistorySentGraph(data): void {
+    var i = 0;
+    var labels =[];
+    data.forEach(element => {
+      i++;
+      labels.push(i)
+    });
     this.sentChart = "line"
     this.sentValues = {
       labels: labels,

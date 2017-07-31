@@ -62,7 +62,7 @@
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Purge Statistics History </h4>
-          <chart [type]="purgeChart" [data]="purgeValues" [options]="options"></chart>
+          <chart [type]="purgeChart" [data]="purgedValues" [options]="options"></chart>
         </article>
       </div>
       <div class="tile is-parent">
@@ -73,28 +73,24 @@
       </div>
     </div>
 
-    <div class="tile">
-      <div class="tile is-parent">
+    <div class="tile is-ancestor">
+      <div class="tile is-parent is-4">
         <article class="tile is-child box">
           <div class="columns">
-            <div class="column is-three-quarters">
-              <p class="control">Configuration Manager</p>
-            </div>
             <div class="column">
-              <div class="is-pulled-right">
-                <p class="field">
-                  <a class="button is-small">
-                    <span class="icon is-small" (click)="getCategories()"> 
-                  <i class="fa fa-refresh"></i>
-                </span>
-                  </a>
-                  <a class="button is-small" href="/configuration">
+               <p class="control">
+                 Configuration Manager
+                  <a class="button is-small is-pulled-right" href="/configuration">
                     <span class="icon is-small">
-                  <i class="fa fa-arrow-right"></i>
-                </span>
+                      <i class="fa fa-arrow-right"></i>
+                    </span>
+                  </a>
+                  <a class="button is-small is-pulled-right">
+                    <span class="icon is-small" (click)="getCategories()"> 
+                        <i class="fa fa-refresh"></i>
+                    </span>
                   </a>
                 </p>
-              </div>
             </div>
           </div>
           <hr align="center">

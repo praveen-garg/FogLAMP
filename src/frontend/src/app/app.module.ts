@@ -19,7 +19,6 @@ import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from '../app/configuration-manager/configuration-manager.component';
 
 import { ChartModule } from './chart/index';
-import {ChartDataHelper} from "../app/chart/chart-data-helper";
 
 
 @NgModule({
@@ -47,8 +46,7 @@ import {ChartDataHelper} from "../app/chart/chart-data-helper";
     AlertService,
     AuthService,
     ConfigurationService,
-    StatisticsService,
-    ChartDataHelper
+    StatisticsService
   ],
   bootstrap: [ AppComponent ]
 })
