@@ -8,8 +8,8 @@ import { ConfigurationService } from '../services/index';
   styleUrls: ['./configuration-manager.component.css']
 })
 export class ConfigurationManagerComponent implements OnInit {
-  congfigurationData = [];
-  categoryValues = [];
+  private categoryData = [];
+  private congfigurationData = [];
   constructor(private configService: ConfigurationService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -17,25 +17,29 @@ export class ConfigurationManagerComponent implements OnInit {
   }
 
   public getCategories(): void {
+    this.congfigurationData = [];
     this.configService.getCategories().
       subscribe(
       data => {
         this.congfigurationData = data.categories;
         console.log("This is the congfigurationData ", this.congfigurationData);
-        this.getCategory();
+        this.congfigurationData.forEach(element => {
+          this.getCategory(element.key);
+        });
+        
       },
       error => { console.log("error", error) });
   }
 
-  public getCategory(): void {
-    this.congfigurationData.forEach(element => {
-      this.configService.getCategory(element.key).
+  public getCategory(category_name:string): void {
+    var categoryValues = [];
+    this.configService.getCategory(category_name).
         subscribe(
         data => {
-          this.categoryValues.push(data);
-          console.log("This is the categoryData ", this.categoryValues);
+          categoryValues.push(data);
+          this.categoryData.push({key : category_name,value: categoryValues})
+          console.log("This is the categoryData ", this.categoryData);
         },
         error => { console.log("error", error) });
-    });
   }
 }

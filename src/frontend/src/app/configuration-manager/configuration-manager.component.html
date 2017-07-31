@@ -1,21 +1,21 @@
 <nav class="breadcrumb is-small">
   <ul>
     <li><a href="/dashboard"><span class="icon is-small"><i class="fa fa-tachometer" aria-hidden="true"></i></span>&nbsp; Dashboard</a></li>
-    <li class="is-active"><a><span class="icon is-small"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp;Configuration Manager</a></li>
+    <li class="is-active"><a><span class="icon is-small"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp;category Manager</a></li>
   </ul>
 </nav>
 
 <!-- cards to be rendred as config.categories.count-->
-<div class="card" *ngFor="let configuration of congfigurationData">
+<div class="card" *ngFor="let category of categoryData; let i = index;">
   <header class="card-header">
     <p class="card-header-title">
-      {{configuration.key}}
+      {{category.key}}
     </p>
     <a class="card-header-icon"><span class="icon"><i class="fa fa-angle-down"></i></span></a>
   </header>
   <div class="card-content">
     <div class="content">
-      <div class="columns" *ngFor="let valueObject of categoryValues">
+      <div class="columns" *ngFor="let valueObject of category.value">
         <div class="column" *ngFor="let v of (valueObject | keys)">
           <h5 class="title is-5">{{v?.key}}</h5>
           <h6 class="subtitle is-6 has-text-grey-light"><small><i>{{v.value.description}}</i></small></h6>
@@ -27,19 +27,10 @@
           </div>
           <div class="field">
             <label>Value</label>
-            <div class="control" *ngIf="v?.value?.type === 'boolean'; then thenBlock else elseBlock"></div>
-            <ng-template #thenBlock>
-              <div class="select">
-                <select disabled>
-                          <option>false</option>
-                          <option >true</option>
-                      </select>
-              </div>
-            </ng-template>
-            <ng-template #elseBlock>
+            <div class="control">
               <!-- edit will enable and allow to save this -->
               <input class="input" type="text" [value]="v.value.value" disabled />
-            </ng-template>
+            </div>
           </div>
           <div class="field is-grouped">
             <div class="control">
@@ -58,7 +49,7 @@
         </div>
       </div>
       <footer class="card-footer">
-        <small>Purge Category Description</small>
+        <small>{{congfigurationData[i].description}}</small>
       </footer>
     </div>
   </div>

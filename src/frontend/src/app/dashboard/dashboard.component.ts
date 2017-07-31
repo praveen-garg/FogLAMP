@@ -90,7 +90,6 @@ export class DashboardComponent implements OnInit {
   }
 
   statisticsGraph(labels, data): void {
-    console.log("Labels", labels, " data", data);
     this.data = {
       labels: labels,
       datasets: [
@@ -113,8 +112,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public getStatisticsHistory(): void {
-    var labels = [];
-    var values = [];
     var readingsValues = []
     var purgedValues = []
     var sentValues = []
@@ -146,12 +143,7 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistoryReadingsGraph(data): void {
-    var i = 0;
-    var labels =[];
-    data.forEach(element => {
-      i++;
-      labels.push(i)
-    });
+    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.readingChart = "line"
     this.readingValues = {
       labels: labels,
@@ -175,12 +167,7 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistoryPurgedGraph(data): void {
-    var i = 0;
-    var labels =[];
-    data.forEach(element => {
-      i++;
-      labels.push(i)
-    });
+    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.purgeChart = "line"
     this.purgedValues = {
       labels: labels,
@@ -204,12 +191,7 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistorySentGraph(data): void {
-    var i = 0;
-    var labels =[];
-    data.forEach(element => {
-      i++;
-      labels.push(i)
-    });
+    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.sentChart = "line"
     this.sentValues = {
       labels: labels,
