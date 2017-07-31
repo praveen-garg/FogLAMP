@@ -28,4 +28,13 @@ export class ConfigurationService {
             .map(response => response.json())
             .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
     }
+
+    /**
+     * DELETE  | /foglamp/category/{category_name}/{config_item}  
+     */
+    deleteConfigItem(category_name: string, config_item: string) {
+        return this.http.get(this.GET_CATEGORY_URL + "/" + category_name + "/" + config_item)
+            .map(response => response.json())
+            .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+    }
 }
