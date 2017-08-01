@@ -37,4 +37,14 @@ export class ConfigurationService {
             .map(response => response.json())
             .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
     }
+
+    /**
+    *  PUT  | /foglamp/category/{category_name}/{config_item}  
+    */
+    editConfigItem(category_name: string, config_item: string, value: string) {
+        let body = JSON.stringify({ "value": value });
+        return this.http.put(this.GET_CATEGORY_URL + "/" + category_name + "/" + config_item, body)
+            .map(response => response.json())
+            .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+    }
 }
