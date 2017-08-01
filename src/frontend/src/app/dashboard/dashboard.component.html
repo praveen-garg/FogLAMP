@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="navbar-brand app-navbar">
         <a class="navbar-item">
-        FogLAMP Management
+          <b>FogLAMP Management</b>
         </a>
       </div>
       <div class="nav-right">
@@ -25,7 +25,7 @@
         </a>
     </li>
     <li>
-      <a href="/schedule-tasks" class="">
+      <a href="/scheduled-tasks" class="">
           Scheduled Tasks
         </a>
     </li>
@@ -49,37 +49,47 @@
 </aside>
 <section class="app-main">
   <div class="container is-fluid">
-    <div class="tile">
+    <!--<div class="tile">
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Statistics Histogram </h4>
           <chart [type]="type" [data]="data" [options]="options"></chart>
         </article>
       </div>
+    </div>-->
+    <div class="tile">
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Readings Statistics History </h4>
           <chart [type]="readingChart" [data]="readingValues" [options]="options"></chart>
+          <br/>
+          <h6>Total since startup:<b> {{statisticsData['READINGS  ']}} </b></h6>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <h4> Purge Statistics History </h4>
+          <chart [type]="purgeChart" [data]="purgedValues" [options]="options"></chart>
+          <br/>
+          <h6>Total since startup:<b> {{statisticsData['PURGED    ']}} </b></h6>
         </article>
       </div>
     </div>
     <div class="tile">
       <div class="tile is-parent">
         <article class="tile is-child box">
-          <h4> Purge Statistics History </h4>
-          <chart [type]="purgeChart" [data]="purgedValues" [options]="options"></chart>
+          <h4> Sent Statistics History </h4>
+          <chart [type]="sentChart" [data]="sentValues" [options]="options"></chart>
+          <br/>
+          <h6>Total since startup:<b> {{statisticsData['SENT      ']}} </b></h6>
         </article>
       </div>
       <div class="tile is-parent">
-        <article class="tile is-child box">
-          <h4> Sent Statistics History </h4>
-          <chart [type]="sentChart" [data]="sentValues" [options]="options"></chart>
-        </article>
       </div>
     </div>
 
     <div class="tile is-ancestor">
-      <div class="tile is-parent">
+      <!--<div class="tile is-parent">
         <article class="tile is-child box">
           <div class="columns">
             <div class="column">
@@ -122,7 +132,6 @@
                         <button (click)="closeModal(configuration.key.trim())" class="delete"></button>
                       </header>
                       <section class="modal-card-body">
-                        <!-- Content ... -->
                         <table class="table is-bordered is-striped is-narrow">
                           <thead>
                             <tr>
@@ -135,8 +144,6 @@
                           <tbody>
                             <tr *ngFor="let v of (categoryData[configuration.key.trim()] | keys)">
                               <td><b>{{v.key}}</b> <span class="tag is-light">{{v.value.type}}</span></td>
-                              <!--  &nbsp; <i class="fa fa-info-circle"
-                                  title="{{v.value.description}}"></i>-->
                               <td>{{v.value.default}} &nbsp; <span class="tag is-light">default</span></td>
                               <td>{{v.value.value}}</td>
                               <td><small>{{v.value.description}}</small></td>
@@ -151,7 +158,7 @@
               <tbody>
           </table>
         </article>
-      </div>
+      </div>-->
       <div class="tile is-parent">
         <article class="tile is-child box">
           <div class="item">

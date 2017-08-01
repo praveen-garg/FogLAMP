@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', component: DashboardComponent },
     { path: 'configuration', component: ConfigurationManagerComponent },
-    { path: 'schedule-tasks', component: ScheduledProcessComponent },
+    { path: 'scheduled-tasks', component: ScheduledProcessComponent },
     
     // otherwise redirect to home
     { path: '**', redirectTo: ''}

@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   categoryData = [];
   statisticsData = [];
   statHistoryData = [];
-  
+
   type: string;
   data: any;
   options: any;
@@ -63,16 +63,16 @@ export class DashboardComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
-  public getCategory(category_name:string): void {
-    
-      this.configService.getCategory(category_name).
-        subscribe(
-        data => {
-          this.categoryData[category_name.trim()] = data
-          console.log("This is the categoryData ", this.categoryData);
-        },
-        error => { console.log("error", error) });
-    
+  public getCategory(category_name: string): void {
+
+    this.configService.getCategory(category_name).
+      subscribe(
+      data => {
+        this.categoryData[category_name.trim()] = data
+        console.log("This is the categoryData ", this.categoryData);
+      },
+      error => { console.log("error", error) });
+
   }
 
   public getStatistics(): void {
@@ -115,8 +115,14 @@ export class DashboardComponent implements OnInit {
 
   public getStatisticsHistory(): void {
     var readingsValues = []
+    var readingsLabels = []
+
     var purgedValues = []
+    var purgedLabels = []
+
     var sentValues = []
+    var sentLabels = []
+
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
         this.statHistoryData = data.statistics;
@@ -124,34 +130,57 @@ export class DashboardComponent implements OnInit {
           Object.keys(element).forEach(aKey => {
             if (aKey.indexOf("READINGS") !== -1) {
               readingsValues.push(element[aKey])
+              var tempDt = element['history_ts'];
+              console.log("This is the recieved", tempDt);
+              readingsLabels.push(this.formateDate(tempDt))
+              console.log("This is the formatted", this.formateDate(tempDt));
             }
             if (aKey.indexOf("PURGED") !== -1 && aKey.indexOf("UNSNPURGED") == -1) {
               purgedValues.push(element[aKey])
+              var tempDt = element['history_ts'];
+              console.log("This is the recieved", tempDt);
+              purgedLabels.push(this.formateDate(tempDt))
+              console.log("This is the formatted", this.formateDate(tempDt));
             }
             if (aKey.indexOf("SENT") !== -1 && aKey.indexOf("UNSENT") == -1) {
               sentValues.push(element[aKey])
+              var tempDt = element['history_ts'];
+              console.log("This is the recieved", tempDt);
+              sentLabels.push(this.formateDate(tempDt))
+              console.log("This is the formatted", this.formateDate(tempDt));
             }
           });
-
         });
         console.log("This is the history readings ", readingsValues);
         console.log("This is the stats history for purge: ", purgedValues);
         console.log("This is the history sent ", sentValues);
-        this.statsHistoryReadingsGraph(readingsValues);
-        this.statsHistoryPurgedGraph(purgedValues);
-        this.statsHistorySentGraph(sentValues);
+        this.statsHistoryReadingsGraph(readingsLabels, readingsValues);
+        this.statsHistoryPurgedGraph(purgedLabels, purgedValues);
+        this.statsHistorySentGraph(sentLabels, sentValues);
       },
       error => { console.log("error", error) });
   }
 
-  statsHistoryReadingsGraph(data): void {
-    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
+  public formateDate(dt: string) {
+    var date = new Date(dt); // had to remove the colon (:) after the T in order to make it work
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    var minutes = date.getMinutes();
+    var hours = date.getHours();
+    var seconds = date.getSeconds();
+    var myFormattedDate = hours + ":" + minutes + ":" + seconds;
+    return myFormattedDate;
+  }
+
+  statsHistoryReadingsGraph(labels, data): void {
+    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.readingChart = "line"
     this.readingValues = {
       labels: labels,
       datasets: [
         {
-          label: 'delta',
+          label: '',
           data: data,
           backgroundColor: "rgb(100,149,237)"
         }
@@ -168,14 +197,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  statsHistoryPurgedGraph(data): void {
-    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
+  statsHistoryPurgedGraph(labels, data): void {
+    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) { return i; });
     this.purgeChart = "line"
     this.purgedValues = {
       labels: labels,
       datasets: [
         {
-          label: 'delta',
+          label: '',
           data: data,
           backgroundColor: "rgb(255,165,0)"
         }
@@ -192,14 +221,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  statsHistorySentGraph(data): void {
-    var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
+  statsHistorySentGraph(labels, data): void {
+    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) { return i; });
     this.sentChart = "line"
     this.sentValues = {
       labels: labels,
       datasets: [
         {
-          label: 'delta',
+          label: '',
           data: data,
           backgroundColor: "rgb(144,238,144)"
         }

@@ -7,7 +7,7 @@ import { Utils } from './utils'
 export class StatisticsService {
 
   private GET_STATISTICS = Utils.BASE_URL + "statistics"
-  private GET_STATISTICS_HISTORY = Utils.BASE_URL + "statistics/history"
+  private GET_STATISTICS_HISTORY = Utils.BASE_URL + "statistics/history?limit=5"
 
   private GET_SCHEDULE_PROCESS = Utils.BASE_URL + "schedule/process"
   private GET_SCHEDULES = Utils.BASE_URL + "schedules"
