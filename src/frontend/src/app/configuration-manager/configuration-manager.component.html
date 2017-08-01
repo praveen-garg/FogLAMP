@@ -29,7 +29,7 @@
             <label>Value</label>
             <div class="control">
               <!-- edit will enable and allow to save this -->
-              <input class="input" type="text" [value]="v.value.value" disabled />
+              <input class="input" type="text" [value]="v?.value?.value" disabled />
             </div>
           </div>
           <div class="field is-grouped">
@@ -40,7 +40,7 @@
               <button class="button is-small is-success" disabled>Save</button>
             </div>
             <div class="control">
-              <button class="button is-small is-danger">Delete</button>
+              <button class="button is-small is-danger" [disabled]="!v.value.value" (click) = "deletConfigItem(category?.key, v?.key)" >Delete</button>
             </div>
             <div class="control">
               <button class="button is-small is-link" disabled>Cancel</button>

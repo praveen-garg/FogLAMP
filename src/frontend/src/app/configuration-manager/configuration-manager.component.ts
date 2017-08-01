@@ -10,7 +10,9 @@ import { ConfigurationService } from '../services/index';
 export class ConfigurationManagerComponent implements OnInit {
   public categoryData = [];
   public configurationData = [];
-  constructor(private configService: ConfigurationService, private route: ActivatedRoute) { }
+  public isValid = true;
+  constructor(private configService: ConfigurationService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getCategories();
@@ -26,24 +28,40 @@ export class ConfigurationManagerComponent implements OnInit {
         this.configurationData.forEach(element => {
           this.getCategory(element.key);
         });
-        
+
       },
       error => { console.log("error", error) });
   }
 
-  private getCategory(category_name:string): void {
+  private getCategory(category_name: string): void {
     var categoryValues = [];
     this.configService.getCategory(category_name).
-        subscribe(
-        data => {
-          categoryValues.push(data);
-          this.categoryData.push({key : category_name,value: categoryValues})
-          console.log("This is the categoryData ", this.categoryData);
-        },
-        error => { console.log("error", error) });
+      subscribe(
+      data => {
+        categoryValues.push(data);
+        this.categoryData.push({ key: category_name, value: categoryValues })
+        console.log("This is the categoryData ", this.categoryData);
+      },
+      error => { console.log("error", error) });
   }
 
-  private deletConfigItem() {
-      
+
+  /**
+   * 
+   * @param category_name 
+   * @param config_item 
+   */
+  private deletConfigItem(category_name, config_item) {
+    console.log("category_name: ", category_name, " Config name: ", config_item);
+    this.configService.deleteConfigItem(category_name, config_item).
+      subscribe(
+      data => {
+        console.log("data ", data.value)
+        if (data.value == "") {
+          // Hot fix to bind DOM element with latest updated values
+          location.reload();
+        }
+      },
+      error => { console.log("error", error) });
   }
 }
