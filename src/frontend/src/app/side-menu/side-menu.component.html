@@ -1,0 +1,35 @@
+<aside class="menu app-sidebar slideInLeft">
+  <ul class="menu-list">
+    <li >
+      <a  [ngClass]="{'is-active': step==='dashboard' , 'is-active': isActive ==true}" (click)="onToggle('dashboard',true)">
+           Dashboard
+        </a>
+    </li>
+    <li>
+      <a  [ngClass]="{'is-active': step==='configuration'}" (click)="onToggle('configuration',false)"   >
+          Configuration
+        </a>
+    </li>
+    <li>
+      <a  [ngClass]="{'is-active': step==='scheduled-tasks'}" (click)="onToggle('scheduled-tasks',false)">
+          Scheduled Tasks
+        </a>
+    </li>
+    <!-- TODO: These menu item should be dynamic -->
+    <li>
+      <a href="#" class="">
+           Assets & Readings
+        </a>
+    </li>
+    <li>
+      <a href="#" class="">
+           Purge
+        </a>
+    </li>
+    <li>
+      <a href="#" class="">
+           OMF Translator
+        </a>
+    </li>
+  </ul>
+</aside>

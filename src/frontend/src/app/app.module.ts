@@ -20,6 +20,8 @@ import { ConfigurationManagerComponent } from '../app/configuration-manager/inde
 
 import { ChartModule } from './chart/index';
 import { ScheduledProcessComponent } from '../app/scheduled-process/index';
+import { SideMenuComponent } from '../app/side-menu/side-menu.component';
+import { NavbarComponent } from '../app/navbar/navbar.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { ScheduledProcessComponent } from '../app/scheduled-process/index';
     KeysPipe,
     DashboardComponent,
     ConfigurationManagerComponent,
-    ScheduledProcessComponent
+    ScheduledProcessComponent,
+    SideMenuComponent,
+    NavbarComponent
   ],
   providers: [
     AuthGuard,

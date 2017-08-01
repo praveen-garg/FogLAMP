@@ -1,53 +1,3 @@
-<div class="app-navbar slideInDown">
-  <div class="hero-head">
-    <nav class="navbar">
-      <div class="navbar-brand app-navbar">
-        <a class="navbar-item">
-        <b>FogLAMP Management</b>
-        </a>
-      </div>
-      <div class="nav-right">
-        <span class="tag is-success">Running</span>
-      </div>
-    </nav>
-  </div>
-</div>
-<aside class="menu app-sidebar slideInLeft">
-  <ul class="menu-list">
-    <li>
-      <a href="/dashboard">
-           Dashboard
-        </a>
-    </li>
-    <li>
-      <a href="/configuration" class="is-active">
-          Configuration
-        </a>
-    </li>
-    <li>
-      <a href="/scheduled-tasks" class="">
-          Scheduled Tasks
-        </a>
-    </li>
-    <!-- TODO: These menu item should be dynamic -->
-    <li>
-      <a href="#" class="">
-           Assets & Readings
-        </a>
-    </li>
-    <li>
-      <a href="#" class="">
-           Purge
-        </a>
-    </li>
-    <li>
-      <a href="#" class="">
-           OMF Translator
-        </a>
-    </li>
-  </ul>
-</aside>
-<section class="app-main">
 <div class="container is-fluid">  
 <!-- cards to be rendred as config.categories.count-->
 <div class="card" *ngFor="let category of categoryData; let i = index;">
@@ -99,4 +49,3 @@
   </div>
 </div>
 </div>
-</section>
