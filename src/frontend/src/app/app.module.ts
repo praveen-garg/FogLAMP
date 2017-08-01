@@ -16,9 +16,10 @@ import { FooterComponent } from './footer/index';
 import { KeysPipe } from './pipes/keys';
 import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 import { DashboardComponent } from './dashboard/index';
-import { ConfigurationManagerComponent } from '../app/configuration-manager/configuration-manager.component';
+import { ConfigurationManagerComponent } from '../app/configuration-manager/index';
 
 import { ChartModule } from './chart/index';
+import { ScheduledProcessComponent } from '../app/scheduled-process/index';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ChartModule } from './chart/index';
     FooterComponent,
     KeysPipe,
     DashboardComponent,
-    ConfigurationManagerComponent
+    ConfigurationManagerComponent,
+    ScheduledProcessComponent
   ],
   providers: [
     AuthGuard,
