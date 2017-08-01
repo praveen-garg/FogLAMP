@@ -1,10 +1,54 @@
-<nav class="breadcrumb is-small">
-  <ul>
-    <li><a href="/dashboard"><span class="icon is-small"><i class="fa fa-tachometer" aria-hidden="true"></i></span>&nbsp; Dashboard</a></li>
-    <li class="is-active"><a><span class="icon is-small"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp;Configuration Manager</a></li>
+<div class="app-navbar slideInDown">
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="navbar-brand app-navbar">
+        <a class="navbar-item">
+        FogLAMP Management
+        </a>
+      </div>
+      <div class="nav-right">
+        <span class="tag is-success">Running</span>
+      </div>
+    </nav>
+  </div>
+</div>
+<aside class="menu app-sidebar slideInLeft">
+  <ul class="menu-list">
+    <li>
+      <a href="/dashboard">
+           Dashboard
+        </a>
+    </li>
+    <li>
+      <a href="/configuration" class="is-active">
+          Configuration
+        </a>
+    </li>
+    <li>
+      <a href="/schedule-tasks" class="">
+          Scheduled Tasks
+        </a>
+    </li>
+    <!-- TODO: These menu item should be dynamic -->
+    <li>
+      <a href="#" class="">
+           Assets & Readings
+        </a>
+    </li>
+    <li>
+      <a href="#" class="">
+           Purge
+        </a>
+    </li>
+    <li>
+      <a href="#" class="">
+           OMF Translator
+        </a>
+    </li>
   </ul>
-</nav>
-
+</aside>
+<section class="app-main">
+<div class="container is-fluid">  
 <!-- cards to be rendred as config.categories.count-->
 <div class="card" *ngFor="let category of categoryData; let i = index;">
   <header class="card-header">
@@ -54,3 +98,5 @@
     </div>
   </div>
 </div>
+</div>
+</section>

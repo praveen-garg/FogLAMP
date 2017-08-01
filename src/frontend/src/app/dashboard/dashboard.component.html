@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="navbar-brand app-navbar">
         <a class="navbar-item">
-          <span class="icon"><i class="fa fa-tachometer"></i></span> Dashboard
+        FogLAMP Management
         </a>
       </div>
       <div class="nav-right">
@@ -14,6 +14,11 @@
 </div>
 <aside class="menu app-sidebar slideInLeft">
   <ul class="menu-list">
+    <li>
+      <a href="/dashboard" class="is-active">
+           Dashboard
+        </a>
+    </li>
     <li>
       <a href="/configuration">
           Configuration
@@ -58,7 +63,7 @@
         </article>
       </div>
     </div>
-     <div class="tile">
+    <div class="tile">
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Purge Statistics History </h4>
@@ -78,19 +83,19 @@
         <article class="tile is-child box">
           <div class="columns">
             <div class="column">
-               <p class="control">
-                 Configuration Manager
-                  <a class="button is-small is-pulled-right" href="/configuration">
-                    <span class="icon is-small">
+              <p class="control">
+                Configuration Manager
+                <a class="button is-small is-pulled-right" href="/configuration">
+                  <span class="icon is-small">
                       <i class="fa fa-arrow-right"></i>
                     </span>
-                  </a>
-                  <a class="button is-small is-pulled-right">
-                    <span class="icon is-small" (click)="getCategories()"> 
+                </a>
+                <a class="button is-small is-pulled-right">
+                  <span class="icon is-small" (click)="getCategories()"> 
                         <i class="fa fa-refresh"></i>
                     </span>
-                  </a>
-                </p>
+                </a>
+              </p>
             </div>
           </div>
           <hr align="center">
@@ -128,7 +133,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor ="let v of (categoryData[configuration.key.trim()] | keys)">
+                            <tr *ngFor="let v of (categoryData[configuration.key.trim()] | keys)">
                               <td><b>{{v.key}}</b> <span class="tag is-light">{{v.value.type}}</span></td>
                               <!--  &nbsp; <i class="fa fa-info-circle"
                                   title="{{v.value.description}}"></i>-->
