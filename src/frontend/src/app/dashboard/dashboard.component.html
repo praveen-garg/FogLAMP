@@ -74,7 +74,7 @@
     </div>
 
     <div class="tile is-ancestor">
-      <div class="tile is-parent is-4">
+      <div class="tile is-parent">
         <article class="tile is-child box">
           <div class="columns">
             <div class="column">
@@ -106,29 +106,29 @@
               <tr *ngFor="let configuration of congfigurationData">
                 <td>{{configuration.key}}</td>
                 <td>
-                  {{configuration.description}}
+                  <small> {{configuration.description}}</small>
                 </td>
-                <td> <a (click)="showModal()">show</a>
-                  <div id="cat-details" class="modal">
+                <td> <a (click)="showModal(configuration.key.trim())">show</a>
+                  <div id="{{configuration.key.trim()}}" class="modal">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                       <header class="modal-card-head">
-                        <p class="modal-card-title">{{configuration.key}}</p>
-                        <button (click)="closeModal()" class="delete"></button>
+                        <p class="modal-card-title">{{configuration.key.trim()}}</p>
+                        <button (click)="closeModal(configuration.key.trim())" class="delete"></button>
                       </header>
                       <section class="modal-card-body">
                         <!-- Content ... -->
                         <table class="table is-bordered is-striped is-narrow">
-                          <!--<thead>
+                          <thead>
                             <tr>
                               <th>Item</th>
                               <th>Default</th>
                               <th>Value</th>
+                              <th>Description</th>
                             </tr>
-                          </thead>-->
+                          </thead>
                           <tbody>
-                            <div  *ngFor ="let valueObject of categoryData">
-                            <tr *ngFor ="let v of (valueObject | keys)">
+                            <tr *ngFor ="let v of (categoryData[configuration.key.trim()] | keys)">
                               <td><b>{{v.key}}</b> <span class="tag is-light">{{v.value.type}}</span></td>
                               <!--  &nbsp; <i class="fa fa-info-circle"
                                   title="{{v.value.description}}"></i>-->
@@ -136,7 +136,6 @@
                               <td>{{v.value.value}}</td>
                               <td><small>{{v.value.description}}</small></td>
                             </tr>
-                            </div>
                           </tbody>
                         </table>
                       </section>
