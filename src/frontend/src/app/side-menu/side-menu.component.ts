@@ -7,20 +7,28 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SideMenuComponent implements OnInit {
   public isActive = true;
-  public step:string = '';
-  constructor(private router: Router) { }
+  public step: string = '';
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+
+  }
 
   ngOnInit() {
-    console.log("STEPs", this.step,  " isActive:", this.isActive );
-    if(this.isActive){
+    this.router.events.subscribe((res) => {
+      if (this.router.url === '/' || this.router.url === '/dashboard') {
+        console.log(this.router.url);
+        this.isActive = true;
+        this.step = '/dashboard';
+      } else {
+        console.log(this.router.url);
+        this.isActive = false;
+        this.step = this.router.url;
+      }
+    })
+  }
 
-    }
-  }   
-
-  onToggle(step, isActive){
-    console.log("STEPs", step,  " isActive:", isActive );
+  onToggle(step, isActive) {
     this.step = step;
     this.isActive = isActive;
-    this.router.navigate(['/' + step]);
+    this.router.navigate([step]);
   }
 }

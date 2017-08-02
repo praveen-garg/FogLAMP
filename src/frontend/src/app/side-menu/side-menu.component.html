@@ -1,17 +1,17 @@
 <aside class="menu app-sidebar slideInLeft">
   <ul class="menu-list">
     <li >
-      <a  [ngClass]="{'is-active': step==='dashboard' , 'is-active': isActive ==true}" (click)="onToggle('dashboard',true)">
+      <a  [ngClass]="{'is-active': step==='/dashboard' , 'is-active': isActive ==true}" (click)="onToggle('/dashboard',true)">
            Dashboard
         </a>
     </li>
     <li>
-      <a  [ngClass]="{'is-active': step==='configuration'}" (click)="onToggle('configuration',false)"   >
+      <a  [ngClass]="{'is-active': step==='/configuration'}" (click)="onToggle('/configuration',false)"   >
           Configuration
         </a>
     </li>
     <li>
-      <a  [ngClass]="{'is-active': step==='scheduled-tasks'}" (click)="onToggle('scheduled-tasks',false)">
+      <a  [ngClass]="{'is-active': step==='/scheduled-tasks'}" (click)="onToggle('/scheduled-tasks',false)">
           Scheduled Tasks
         </a>
     </li>
