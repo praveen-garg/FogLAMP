@@ -55,7 +55,7 @@ export class ConfigurationManagerComponent implements OnInit {
     this.configService.deleteConfigItem(category_name, config_item).
       subscribe(
       data => {
-        console.log("data ", data.value)
+        console.log("data ", data)
         if (data.value == "") {
           // Hot fix to bind DOM element with latest updated values
           location.reload();

@@ -64,7 +64,7 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
         this.tasksData = data.tasks;
-        console.log("This is the tasks ",  this.tasksData);
+        console.log("This is the tasks ",  data.tasks);
       },
       error => { console.log("error", error) });
   }

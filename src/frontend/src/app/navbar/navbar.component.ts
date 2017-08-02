@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ConfigurationService } from '../services/index';
 
-import { Utils } from '../services/utils';
+import Utils, {POLLING_INTERVAL} from '../services/utils';
 
 @Component({
   selector: 'app-navbar',
@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
     clearInterval(this.timer)
     this.timer = setInterval(function () {
       this.pingService()
-    }.bind(this), Utils.POLLING_INTERVAL);
+    }.bind(this), POLLING_INTERVAL);
   }
   stop() {
     clearInterval(this.timer)

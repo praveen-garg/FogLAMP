@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core'
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import { Utils } from './utils'
+import Utils, {BASE_URL} from './utils'
 
 @Injectable()
 export class AuthService {
   // private instance variable to hold base url
-  private LOGIN_URL = Utils.BASE_URL + "auth/login"
-  private ME_URL = Utils.BASE_URL + "example/whoami"
-  private DATA_URL = Utils.BASE_URL + "example/data"
+  private LOGIN_URL = BASE_URL + "auth/login"
+  private ME_URL = BASE_URL + "example/whoami"
+  private DATA_URL = BASE_URL + "example/data"
 
   constructor(private http: Http) { }
 

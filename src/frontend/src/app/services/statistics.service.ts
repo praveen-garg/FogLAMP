@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import { Utils } from './utils'
+import  Utils, {BASE_URL} from './utils'
+
 
 @Injectable()
 export class StatisticsService {
 
-  private GET_STATISTICS = Utils.BASE_URL + "statistics"
-  private GET_STATISTICS_HISTORY = Utils.BASE_URL + "statistics/history?limit=5"
+  private GET_STATISTICS = BASE_URL + "statistics"
+  private GET_STATISTICS_HISTORY = BASE_URL + "statistics/history?limit=5"
 
-  private GET_SCHEDULE_PROCESS = Utils.BASE_URL + "schedule/process"
-  private GET_SCHEDULES = Utils.BASE_URL + "schedules"
+  private GET_SCHEDULE_PROCESS = BASE_URL + "schedule/process"
+  private GET_SCHEDULES = BASE_URL + "schedules"
 
-  private GET_TASKS = Utils.BASE_URL + "tasks"
-  private GET_LATEST_TASKS = Utils.BASE_URL + "tasks/latest"
+  private GET_TASKS = BASE_URL + "tasks"
+  private GET_LATEST_TASKS = BASE_URL + "tasks/latest"
 
   constructor(private http: Http) { }
 

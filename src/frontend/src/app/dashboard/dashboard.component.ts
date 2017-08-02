@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ConfigurationService, StatisticsService } from '../services/index';
-
+import  Utils  from '../services/utils'
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -132,22 +132,22 @@ export class DashboardComponent implements OnInit {
               readingsValues.push(element[aKey])
               var tempDt = element['history_ts'];
               console.log("This is the recieved", tempDt);
-              readingsLabels.push(this.formateDate(tempDt))
-              console.log("This is the formatted", this.formateDate(tempDt));
+              readingsLabels.push(Utils.formateDate(tempDt))
+              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
             if (aKey.indexOf("PURGED") !== -1 && aKey.indexOf("UNSNPURGED") == -1) {
               purgedValues.push(element[aKey])
               var tempDt = element['history_ts'];
               console.log("This is the recieved", tempDt);
-              purgedLabels.push(this.formateDate(tempDt))
-              console.log("This is the formatted", this.formateDate(tempDt));
+              purgedLabels.push(Utils.formateDate(tempDt))
+              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
             if (aKey.indexOf("SENT") !== -1 && aKey.indexOf("UNSENT") == -1) {
               sentValues.push(element[aKey])
               var tempDt = element['history_ts'];
               console.log("This is the recieved", tempDt);
-              sentLabels.push(this.formateDate(tempDt))
-              console.log("This is the formatted", this.formateDate(tempDt));
+              sentLabels.push(Utils.formateDate(tempDt))
+              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
           });
         });
@@ -161,17 +161,7 @@ export class DashboardComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
-  public formateDate(dt: string) {
-    var date = new Date(dt); // had to remove the colon (:) after the T in order to make it work
-    var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
-    var minutes = date.getMinutes();
-    var hours = date.getHours();
-    var seconds = date.getSeconds();
-    var myFormattedDate = hours + ":" + minutes + ":" + seconds;
-    return myFormattedDate;
-  }
+ 
 
   statsHistoryReadingsGraph(labels, data): void {
     //var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
@@ -187,6 +177,9 @@ export class DashboardComponent implements OnInit {
       ]
     };
     this.options = {
+      legend: {
+        display: false // fixme: not working
+      },
       scales: {
         yAxes: [{
           ticks: {
@@ -211,6 +204,9 @@ export class DashboardComponent implements OnInit {
       ]
     };
     this.options = {
+      legend: {
+        display: false  // fixme: not working
+      },
       scales: {
         yAxes: [{
           ticks: {
@@ -235,6 +231,9 @@ export class DashboardComponent implements OnInit {
       ]
     };
     this.options = {
+      legend: {
+        display: false  // fixme: not working
+      },
       scales: {
         yAxes: [{
           ticks: {
