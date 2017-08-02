@@ -12,9 +12,7 @@ import { Utils } from '../services/utils';
 export class NavbarComponent implements OnInit {
   public timer: any = ''
   public ping_data: {} = {}
-  public error_message: any = ''
-  public isAlive: boolean = true
-  public service_status: string
+  public ping_info: {} = {}
 
   constructor(private configService: ConfigurationService) { }
   ngOnInit() {
@@ -27,15 +25,13 @@ export class NavbarComponent implements OnInit {
       .subscribe(
       (data) => { 
         this.ping_data = data
-        this.isAlive = true
-        this.service_status = "Running"
+        this.ping_info = { is_alive:true, service_status:"running..." }
        },
       (error) => {
-        this.error_message = <any>error
-        this.isAlive = false
-        this.service_status = "service down"
+        console.log("error: " , error)
+        this.ping_info = { is_alive:false, service_status:"service down" }
       },
-      () => console.log(this.ping_data)
+      () => console.log(this.ping_info)
       );
   }
   start() {
