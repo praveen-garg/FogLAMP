@@ -6,7 +6,7 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-        <span class="tag is-success">Running</span>
+        <span [ngClass]="isAlive?'tag is-success':'tag is-danger'">{{service_status}}</span>
         </div>
       </div>
 </nav>

@@ -13,7 +13,7 @@ import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
-import { KeysPipe } from './pipes/keys';
+import { KeysPipe } from './pipes/index';
 import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from '../app/configuration-manager/index';
@@ -31,8 +31,7 @@ import { NavbarComponent } from '../app/navbar/navbar.component';
     HttpModule,
     routing,
     NgzioGaugeComponentModule,
-    ChartModule,
-    
+    ChartModule
   ],
   declarations: [
     AppComponent,

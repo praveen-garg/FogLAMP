@@ -8,8 +8,19 @@ export class ConfigurationService {
     // private instance variable to hold base url
     private GET_CATEGORIES_URL = Utils.BASE_URL + "categories"
     private GET_CATEGORY_URL = Utils.BASE_URL + "category"
+    private GET_PING_URL = Utils.BASE_URL + "ping"
 
     constructor(private http: Http) { }
+
+    /**
+     *  GET  | /foglamp/ping    
+     */
+    pingService() {
+        return this.http.get(this.GET_PING_URL)
+            .map(response => response.json())
+            .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+    }
+
 
     /**
      *   GET  | /foglamp/categories
