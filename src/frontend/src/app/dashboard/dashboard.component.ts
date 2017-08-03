@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   congfigurationData = [];
   categoryData = [];
-  // statisticsData = [];
+  statisticsData = [];
   statHistoryData = [];
 
   // type: string;
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
-    //this.getStatistics();
+    this.getStatistics();
     this.getStatisticsHistory();
   }
 
@@ -74,21 +74,21 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  // public getStatistics(): void {
-  //   var labels = [];
-  //   var values = [];
-  //   this.statisticsService.getStatistics().
-  //     subscribe(data => {
-  //       this.statisticsData = data;
-  //       console.log("This is the statisticsData ", data);
-  //       for (var key in data) {
-  //         values.push(data[key]);
-  //         labels.push(key);
-  //       }
-  //       this.statisticsGraph(labels, values);
-  //     },
-  //     error => { console.log("error", error) });
-  // }
+  public getStatistics(): void {
+    var labels = [];
+    var values = [];
+    this.statisticsService.getStatistics().
+      subscribe(data => {
+        this.statisticsData = data;
+        console.log("This is the statisticsData ", data);
+        for (var key in data) {
+          values.push(data[key]);
+          labels.push(key);
+        }
+        //this.statisticsGraph(labels, values);
+      },
+      error => { console.log("error", error) });
+  }
 
   // statisticsGraph(labels, data): void {
   //   this.data = {
