@@ -8,7 +8,8 @@ import { routing }        from './app.routing';
 
 import { AuthGuard } from './guards/index';
 import { AlertComponent } from './directives/index';
-import { AlertService, AuthService, ConfigurationService, StatisticsService } from './services/index';
+import { AlertService, AuthService, ConfigurationService, 
+  StatisticsService, AssetsService } from './services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
@@ -22,6 +23,7 @@ import { ChartModule } from './chart/index';
 import { ScheduledProcessComponent } from '../app/scheduled-process/index';
 import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
+import { AssetsComponent } from '../app/assets/assets.component';
 
 
 @NgModule({
@@ -44,14 +46,16 @@ import { NavbarComponent } from '../app/navbar/navbar.component';
     ConfigurationManagerComponent,
     ScheduledProcessComponent,
     SideMenuComponent,
-    NavbarComponent
+    NavbarComponent,
+    AssetsComponent
   ],
   providers: [
     AuthGuard,
     AlertService,
     AuthService,
     ConfigurationService,
-    StatisticsService
+    StatisticsService,
+    AssetsService
   ],
   bootstrap: [ AppComponent ]
 })

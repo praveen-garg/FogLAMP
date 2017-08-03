@@ -1,0 +1,89 @@
+<div class="container is-fluid">
+  <div class="tile">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h5 class="title"><small> Assets </small></h5>
+        <table class="table is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Readings count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let asset of assets">
+              <td>{{asset.asset_code}}</td>
+              <td>
+                <small> {{asset.count}}</small>
+              </td>
+            </tr>
+            <tbody>
+        </table>
+      </article>
+    </div>
+  </div>
+
+  <div class="tile">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h5 class="title"><small> Asset Readings </small></h5>
+        <div class="select">
+          <select (change)="getAssetReading($event.target.value)">
+            <option>Select</option>
+            <option *ngFor="let asset of assets"  [value]='asset.asset_code'>{{asset.asset_code}} ({{asset.count}})</option>
+          </select>
+        </div>
+        <br/>
+        <br/>
+        <table class="table is-bordered is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Readings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let asset of assetsReadingsData">
+              <td><small>{{asset.asset_code}}</small></td>
+              <td>
+                <tr *ngFor="let d of asset.data">
+                  {{d.reading | json}}
+                  <hr class="dropdown-divider">
+                </tr>
+              </td>
+            </tr>
+            <tbody>
+        </table>
+      </article>
+    </div>
+    <!--<div class="tile is-parent">
+      <article class="tile is-child box">
+        <h5 class="title"><small> Latest Tasks </small></h5>
+        <table class="table is-bordered is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Process</th>
+              <th>State</th>
+              <th>Start time</th>
+              <th>End Time</th>
+              <th>Exit Code</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of tasksData">
+              <td><small>{{task.pid}}</small></td>
+              <td><small>{{task.process_name}}</small></td>
+              <td><small>{{taskState[task.state]}}</small></td>
+              <td><small>{{task.start_time | date: 'dd-MM-yyyy HH:mm:ss'}}</small></td>
+              <td><small>{{task.end_time | date: 'dd-MM-yyyy HH:mm:ss'}}</small></td>
+              <td><small>{{task.exit_code}}</small></td>
+              <td><small>{{task.reason}}</small></td>
+            </tr>
+            <tbody>
+        </table>
+      </article>
+    </div>-->
+  </div>
+</div>

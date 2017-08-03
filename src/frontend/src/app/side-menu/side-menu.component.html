@@ -22,7 +22,7 @@
     </li>
     <!-- TODO: These menu item should be dynamic -->
     <li>
-      <a href="#" class="">
+      <a [ngClass]="{'is-active': step==='/assets'}" (click)="onToggle('/assets',false)">
            Assets & Readings
         </a>
     </li>
