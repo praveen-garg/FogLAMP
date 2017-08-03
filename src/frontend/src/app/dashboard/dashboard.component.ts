@@ -12,16 +12,15 @@ export class DashboardComponent implements OnInit {
 
   congfigurationData = [];
   categoryData = [];
-  statisticsData = [];
+  // statisticsData = [];
   statHistoryData = [];
 
-  type: string;
-  data: any;
-  options: any;
+  // type: string;
+  // data: any;
 
   readingChart: string;
   readingValues: any;
-
+  
   purgeChart: string;
   purgedValues: any;
 
@@ -31,8 +30,8 @@ export class DashboardComponent implements OnInit {
   constructor(private configService: ConfigurationService,
     private statisticsService: StatisticsService,
     private router: Router) {
-    this.type = "line"
-    this.data = [];
+    // this.type = "line"
+    // this.data = [];
 
     this.readingChart = "line";
     this.readingValues = [];
@@ -46,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
-    this.getStatistics();
+    //this.getStatistics();
     this.getStatisticsHistory();
   }
 
@@ -75,43 +74,34 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  public getStatistics(): void {
-    var labels = [];
-    var values = [];
-    this.statisticsService.getStatistics().
-      subscribe(data => {
-        this.statisticsData = data;
-        console.log("This is the statisticsData ", data);
-        for (var key in data) {
-          values.push(data[key]);
-          labels.push(key);
-        }
-        this.statisticsGraph(labels, values);
-      },
-      error => { console.log("error", error) });
-  }
+  // public getStatistics(): void {
+  //   var labels = [];
+  //   var values = [];
+  //   this.statisticsService.getStatistics().
+  //     subscribe(data => {
+  //       this.statisticsData = data;
+  //       console.log("This is the statisticsData ", data);
+  //       for (var key in data) {
+  //         values.push(data[key]);
+  //         labels.push(key);
+  //       }
+  //       this.statisticsGraph(labels, values);
+  //     },
+  //     error => { console.log("error", error) });
+  // }
 
-  statisticsGraph(labels, data): void {
-    this.data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Latest',
-          data: data,
-          backgroundColor: "rgb(176,196,222)"
-        }
-      ]
-    };
-    this.options = {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      }
-    }
-  }
+  // statisticsGraph(labels, data): void {
+  //   this.data = {
+  //     labels: labels,
+  //     datasets: [
+  //       {
+  //         label: 'Latest',
+  //         data: data,
+  //         backgroundColor: "rgb(176,196,222)"
+  //       }
+  //     ]
+  //   };
+  // }
 
   public getStatisticsHistory(): void {
     var readingsValues = []
@@ -172,22 +162,10 @@ export class DashboardComponent implements OnInit {
         {
           label: '',
           data: data,
-          backgroundColor: "rgb(100,149,237)"
+          backgroundColor: "rgb(100,149,237)",
         }
       ]
     };
-    this.options = {
-      legend: {
-        display: false // fixme: not working
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      }
-    }
   }
 
   statsHistoryPurgedGraph(labels, data): void {
@@ -203,18 +181,6 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
-    this.options = {
-      legend: {
-        display: false  // fixme: not working
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      }
-    }
   }
 
   statsHistorySentGraph(labels, data): void {
@@ -230,18 +196,6 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
-    this.options = {
-      legend: {
-        display: false  // fixme: not working
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      }
-    }
   }
 
 

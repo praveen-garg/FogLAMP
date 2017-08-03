@@ -6,7 +6,7 @@ import { Chart } from 'chart.js';
   template: '<canvas></canvas>',
   styles: [':host { display: block; }']
 })
-export class ChartComponent implements OnInit, OnChanges  {
+export class ChartComponent implements OnInit, OnChanges {
   chart: any;
 
   @Input() type: string;
@@ -19,7 +19,18 @@ export class ChartComponent implements OnInit, OnChanges  {
     this.chart = new Chart(this.elementRef.nativeElement.querySelector('canvas'), {
       type: this.type,
       data: this.data,
-      options: this.options
+      options: {
+        legend: {
+          display: false // fixme: not working
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: false
+            }
+          }]
+        }
+      }
     });
   }
 

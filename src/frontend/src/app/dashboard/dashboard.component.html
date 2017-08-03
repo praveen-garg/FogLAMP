@@ -11,7 +11,8 @@
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Readings Statistics History </h4>
-          <chart [type]="readingChart" [data]="readingValues" [options]="options"></chart>
+          <br/>
+          <chart [type]="readingChart" [data]="readingValues" [options]="readingOptions"></chart>
           <br/>
           <h6>Total since startup:<b> {{statisticsData['READINGS  ']}} </b></h6>
         </article>
@@ -19,6 +20,7 @@
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Purge Statistics History </h4>
+          <br/>
           <chart [type]="purgeChart" [data]="purgedValues" [options]="options"></chart>
           <br/>
           <h6>Total since startup:<b> {{statisticsData['PURGED    ']}} </b></h6>
@@ -29,6 +31,7 @@
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4> Sent Statistics History </h4>
+          <br/>
           <chart [type]="sentChart" [data]="sentValues" [options]="options"></chart>
           <br/>
           <h6>Total since startup:<b> {{statisticsData['SENT      ']}} </b></h6>
