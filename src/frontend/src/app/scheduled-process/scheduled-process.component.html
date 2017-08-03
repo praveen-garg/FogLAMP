@@ -40,7 +40,7 @@
               <td><small>{{schedule.schedule.schedule_name}}</small></td>
               <td><small> {{scheduleType[schedule.schedule.schedule_type]}}</small></td>
               <td><small> {{schedule.schedule.schedule_day}}</small></td>
-              <td><small> {{schedule.schedule.schedule_time}}</small></td>
+              <td><small> {{schedule.schedule.schedule_time | slice:0:8}}</small></td>
                <td><small> {{schedule.schedule.schedule_interval}}</small></td>
               <!--<td ><small> {{schedule.schedule.schedule_type}}</small></td>-->
               <td><small> {{schedule.schedule.exclusive}}</small></td>
