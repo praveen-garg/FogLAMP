@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ConfigurationService } from '../services/index';
+import { ConfigurationService, AlertService } from '../services/index';
 
 @Component({
   selector: 'app-configuration-manager',
@@ -10,9 +9,7 @@ import { ConfigurationService } from '../services/index';
 export class ConfigurationManagerComponent implements OnInit {
   public categoryData = [];
   public configurationData = [];
-  public old_config_value: any;
-  constructor(private configService: ConfigurationService,
-    private route: ActivatedRoute) { }
+  constructor(private configService: ConfigurationService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.getCategories();
@@ -46,52 +43,54 @@ export class ConfigurationManagerComponent implements OnInit {
   }
 
 
-  /**
-   * 
-   * @param category_name 
-   * @param config_item 
-   */
-  private deleteConfigItem(category_name, config_item) {
-    console.log("category_name: ", category_name, " Config name: ", config_item);
-    this.configService.deleteConfigItem(category_name, config_item).
-      subscribe(
-      data => {
-        console.log("data ", data)
-        if (data.value == "") {
-          // Hot fix to bind DOM element with latest updated values
-          location.reload();
-        }
-      },
-      error => { console.log("error", error) });
-  }
+  // /**
+  //  * 
+  //  * @param category_name 
+  //  * @param config_item 
+  //  */
+  // private deleteConfigItem(category_name, config_item) {
+  //   console.log("category_name: ", category_name, " Config name: ", config_item);
+  //   this.configService.deleteConfigItem(category_name, config_item).
+  //     subscribe(
+  //     data => {
+  //       console.log("data ", data)
+  //       if (data.value == "") {
+  //         // Hot fix to bind DOM element with latest updated values
+  //         location.reload();
+  //       }
+  //     },
+  //     error => { console.log("error", error) });
+  // }
 
-  public changeConfigFieldsState(config_item_key: string, flag: boolean) {
+  public restoreConfigFieldValue(config_item_key: string, flag: boolean) {
     var inputField = <HTMLInputElement>document.getElementById(config_item_key);
-    inputField.value = this.old_config_value; 
+    inputField.value = inputField.textContent; 
     var cancelButton = <HTMLButtonElement>document.getElementById("btn-cancel-" + config_item_key);
     cancelButton.disabled = !flag;
   }
 
-  public saveConfigValue(category_name: string, config_item: string) {
+  public saveConfigValue(category_name: string, config_item: string, flag: boolean) {
     var inputField = <HTMLInputElement>document.getElementById(config_item);
     var value = inputField.value;
-    console.log("value", value);
-
+    var id = inputField.id;
+    var cancelButton = <HTMLButtonElement>document.getElementById("btn-cancel-" + id);
+    cancelButton.disabled = flag;
     this.configService.editConfigItem(category_name, config_item, value).
       subscribe(
       data => {
-        if (data.value != "") {
-          // Hot fix to bind DOM element with latest updated values
-          location.reload();
-        }
+          console.log("updated record: ", data)
+          this.alertService.success("Value updated successfully");
+          inputField.textContent = inputField.value = data.value;
+        
       },
-      error => { console.log("error", error) });
+      error => { 
+        console.log("error", error)
+        this.alertService.error(error)
+     });
   }
 
-  public changeValue(config_item_key: string, flag: boolean, event){
-     this.old_config_value = event.target.textContent;
+  public onTextChange(config_item_key: string, flag: boolean){
      var cancelButton = <HTMLButtonElement>document.getElementById("btn-cancel-" + config_item_key);
      cancelButton.disabled = !flag;
   }
-
 }
