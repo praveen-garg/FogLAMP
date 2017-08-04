@@ -68,12 +68,12 @@ export class StatisticsService {
 /**
    *  GET | /foglamp/audit  
    */
-  public getAuditLogs() {
-    return this.http.get(this.GET_AUDIT_LOGS)
+  public getAuditLogs(limit:Number = 0) {
+    let params: URLSearchParams = new URLSearchParams();
+    return this.http.get(this.GET_AUDIT_LOGS, {params: {limit: limit}})
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
-
 
 
 }
