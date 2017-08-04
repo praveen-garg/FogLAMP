@@ -16,7 +16,7 @@
         </a>
     </li>
      <li>
-      <a href="#" class="">
+      <a [ngClass]="{'is-active': step==='/audit-logs'}" (click)="onToggle('/audit-logs',false)">
            Audit Logs
         </a>
     </li>

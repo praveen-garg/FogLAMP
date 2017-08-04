@@ -24,6 +24,7 @@ import { ScheduledProcessComponent } from '../app/scheduled-process/index';
 import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
 import { AssetsComponent } from '../app/assets/assets.component';
+import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { AssetsComponent } from '../app/assets/assets.component';
     ScheduledProcessComponent,
     SideMenuComponent,
     NavbarComponent,
-    AssetsComponent
+    AssetsComponent,
+    AuditLogComponent
   ],
   providers: [
     AuthGuard,

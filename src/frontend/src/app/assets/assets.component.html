@@ -35,12 +35,11 @@
         </div>
         <br/>
         <br/>
-        <table class="table is-bordered is-striped is-narrow">
+        <table class="table is-striped is-narrow">
           <thead>
             <tr>
               <th>Asset</th>
               <th>Readings</th>
-              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody>
@@ -48,16 +47,21 @@
               <td><small>{{asset.asset_code}}</small></td>
               <td>
                 <tr *ngFor="let d of asset.data">
-                  {{d.reading | json}}
+                  <td>
+                  {{d.reading | json}} 
+                  </td> 
+                  <td>
+                    <span class="tag is-rounded">{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+                  </td>
                   <hr class="dropdown-divider">
                 </tr>
               </td>
-              <td>
+              <!--<td>
                 <tr *ngFor="let d of asset.data"> 
                   <small>{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</small>
                   <hr class="dropdown-divider">
                 </tr>
-              </td>
+              </td>-->
             </tr>
             <tbody>
         </table>

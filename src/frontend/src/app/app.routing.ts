@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from './configuration-manager/index';
 import { ScheduledProcessComponent } from './scheduled-process/index'
 import { AssetsComponent } from './assets/index'
+import { AuditLogComponent } from './audit-log/index';
 
 
 const appRoutes: Routes = [
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
     { path: 'configuration', component: ConfigurationManagerComponent },
     { path: 'scheduled-tasks', component: ScheduledProcessComponent },
     { path: 'assets', component: AssetsComponent },
+    { path: 'audit-logs', component: AuditLogComponent },
     
     // otherwise redirect to home
     { path: '**', redirectTo: ''}
