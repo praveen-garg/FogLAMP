@@ -20,10 +20,10 @@ export class AssetsService {
   }
 
   /**
-  *    GET  |  foglamp/asset/{asset_code}/{reading}/summary
-  *    Return a summary (min, max and average) for the specified asset and sensor
+  *  /foglamp/asset/{asset_code}
+  *  Return a set of asset readings for the given asset 
   */
-  public setOfAssetReading(asset_code) {
+  public getAssetReadings(asset_code) {
     return this.http.get(this.GET_ASSET + "/" + asset_code)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))

@@ -29,7 +29,10 @@ export class AssetsComponent implements OnInit {
   public getAssetReading(asset_code):void {
     console.log("This is the asset code ",  asset_code);
     this.assetsReadingsData = [];
-    this.assetService.setOfAssetReading(asset_code).
+    if(asset_code.toLowerCase() === 'select'){
+      return;
+    }
+    this.assetService.getAssetReadings(asset_code).
       subscribe(
       data => {
         this.assetsReadingsData = [{

@@ -10,6 +10,7 @@ import { ConfigurationService } from '../services/index';
 export class ConfigurationManagerComponent implements OnInit {
   public categoryData = [];
   public configurationData = [];
+  public old_config_value: any;
   constructor(private configService: ConfigurationService,
     private route: ActivatedRoute) { }
 
@@ -66,10 +67,8 @@ export class ConfigurationManagerComponent implements OnInit {
 
   public changeConfigFieldsState(config_item_key: string, flag: boolean) {
     var inputField = <HTMLInputElement>document.getElementById(config_item_key);
-    var saveButton = <HTMLButtonElement>document.getElementById("btn-save-" + config_item_key);
+    inputField.value = this.old_config_value; 
     var cancelButton = <HTMLButtonElement>document.getElementById("btn-cancel-" + config_item_key);
-    inputField.disabled = !flag;
-    saveButton.disabled = !flag;
     cancelButton.disabled = !flag;
   }
 
@@ -88,4 +87,11 @@ export class ConfigurationManagerComponent implements OnInit {
       },
       error => { console.log("error", error) });
   }
+
+  public changeValue(config_item_key: string, flag: boolean, event){
+     this.old_config_value = event.target.textContent;
+     var cancelButton = <HTMLButtonElement>document.getElementById("btn-cancel-" + config_item_key);
+     cancelButton.disabled = !flag;
+  }
+
 }
