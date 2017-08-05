@@ -9,7 +9,7 @@ import { routing }        from './app.routing';
 import { AuthGuard } from './guards/index';
 import { AlertComponent } from './directives/index';
 import { AlertService, AuthService, ConfigurationService, 
-  StatisticsService, AssetsService } from './services/index';
+  StatisticsService, AssetsService, AuditService } from './services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
@@ -57,7 +57,8 @@ import { AuditLogComponent } from '../app/audit-log/audit-log.component';
     AuthService,
     ConfigurationService,
     StatisticsService,
-    AssetsService
+    AssetsService,
+    AuditService
   ],
   bootstrap: [ AppComponent ]
 })

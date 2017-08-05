@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../services/index';
+import { AuditService } from '../services/index';
 
 import * as _ from 'lodash';
 
@@ -13,7 +13,7 @@ export class AuditLogComponent implements OnInit {
   public audit_source = [];
   public audit_severity = [];
   public range: Number = 0;
-  constructor(private statisticsService: StatisticsService) { }
+  constructor(private auditService: AuditService) { }
 
   ngOnInit() {
     this.getAuditLogs(0)
@@ -21,12 +21,12 @@ export class AuditLogComponent implements OnInit {
 
   public getAuditLogs(limit: Number = 0): void {
     if (limit == null) {
-      return;
+      limit = 0;
     }
     this.range = limit;
     console.log("Limit: ", this.range);
     this.auditLogs = []
-    this.statisticsService.getAuditLogs(limit).
+    this.auditService.getAuditLogs(limit).
       subscribe(
       data => {
         this.auditLogs = data.audit

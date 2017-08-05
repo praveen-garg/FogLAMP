@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     { path: 'configuration', component: ConfigurationManagerComponent },
     { path: 'scheduled-tasks', component: ScheduledProcessComponent },
     { path: 'assets', component: AssetsComponent },
-    { path: 'audit-logs', component: AuditLogComponent },
+    { path: 'audit', component: AuditLogComponent },
     
     // otherwise redirect to home
     { path: '**', redirectTo: ''}
