@@ -20,11 +20,12 @@ export class AuditLogComponent implements OnInit {
   public sourceOptionsList = []
   public severityLevelsList = []
   public filterdData = []
-  public range: Number = 0;
+  public limit: Number = 0;
+  public offset: Number = 0;
   constructor(private auditService: AuditService) { }
 
   ngOnInit() {
-    this.getAuditLogs(0)
+    this.getAuditLogs()
     // Add SeverityEnum to severityLevelsList
     // TODO: Severity keys must be coming from service
     for (let item in SeverityEnum) {
@@ -34,15 +35,33 @@ export class AuditLogComponent implements OnInit {
       }
     }
   }
+  
+   public setLimit(limit: Number) {
+       this.limit = limit;
+       console.log("Limit: ", limit)
+       this.getAuditLogs()
+   }
 
-  public getAuditLogs(limit: Number = 0): void {
-    if (limit == null) {
-      limit = 0;
+  public setOffset(offset: Number) {
+      this.offset = offset
+      console.log("offset: ", offset)
+      if(this.limit != null) {
+        
+        this.getAuditLogs()
+      }
+  }
+ 
+  public getAuditLogs(): void {
+    console.log("Limit: ", this.limit)
+    console.log("offset: ", this.offset)
+    if (this.limit == null) {
+      this.limit = 0;
     }
-    this.range = limit
-    console.log("Limit: ", this.range)
+    if (this.offset == null) {
+      this.offset = 0;
+    }
     this.auditLogs = []
-    this.auditService.getAuditLogs(limit).
+    this.auditService.getAuditLogs(this.limit, this.offset).
       subscribe(
       data => {
         this.filterdData = this.auditLogs = data.audit

@@ -22,12 +22,16 @@
           </div>
         </div>
         <div class="column">
-          <input class="input" type="number" min="0" placeholder="limit" name="range" [ngModel]="range" (ngModelChange)="getAuditLogs($event)">
+          <input class="input" type="number" min="0" placeholder="limit" name="limit" [ngModel]="limit" (ngModelChange)="setLimit($event)">
         </div>
         
         <div class="column">
-            <input class="input" type="text" name="searchString" placeholder="Search..." [(ngModel)]="searchString">
+          <input class="input" type="number" min="0" placeholder="offset" name="offset" [ngModel]="offset" (ngModelChange)="setOffset($event)">
         </div>
+        
+        <!--<div class="column">
+            <input class="input" type="text" name="searchString" placeholder="Search..." [(ngModel)]="searchString">
+        </div>-->
       </div>
     </div>
 
