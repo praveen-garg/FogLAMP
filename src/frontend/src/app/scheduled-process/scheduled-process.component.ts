@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService, SchedulesService } from '../services/index';
+import { SchedulesService } from '../services/index';
 
 enum ScheduleType {
     STARTUP = 1,
@@ -26,7 +26,7 @@ export class ScheduledProcessComponent implements OnInit {
   public tasksData = [];
   public scheduleType = ScheduleType;
   public taskState = TaskState
-  constructor( private statisticsService: StatisticsService, private schedulesService: SchedulesService) { }
+  constructor(private schedulesService: SchedulesService) { }
 
   ngOnInit() {
     console.log(this.scheduleType)
