@@ -32,7 +32,7 @@ export class AssetsComponent implements OnInit {
     if(asset_code.toLowerCase() === 'select'){
       return;
     }
-    this.assetService.getAssetReadings(asset_code).
+    this.assetService.getAssetReadings(encodeURIComponent(asset_code)).
       subscribe(
       data => {
         this.assetsReadingsData = [{

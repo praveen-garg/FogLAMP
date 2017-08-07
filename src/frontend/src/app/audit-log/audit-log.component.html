@@ -7,22 +7,26 @@
       <div class="columns">
         <div class="column">
           <div class="select">
-            <select disabled>
+            <select (change) = "filterSource('source', $event)">
             <option>Source</option>
-            <option *ngFor="let source of audit_source"  [value]='source'>{{source}}</option>
+            <option *ngFor="let source of sourceOptionsList"  [value]='source'>{{source}}</option>
           </select>
           </div>
         </div>
         <div class="column">
           <div class="select">
-            <select disabled>
+            <select (change) = "filterSource('severity', $event)">
             <option>Severity</option>
-            <option *ngFor="let severity of audit_severity"  [value]='severity'>{{severity}}</option>
+            <option *ngFor="let severity of severityLevelsList"  [value]='severity'>{{severity}}</option>
           </select>
           </div>
         </div>
         <div class="column">
           <input class="input" type="number" min="0" placeholder="limit" name="range" [ngModel]="range" (ngModelChange)="getAuditLogs($event)">
+        </div>
+        
+        <div class="column">
+            <input class="input" type="text" name="searchString" placeholder="Search..." [(ngModel)]="searchString">
         </div>
       </div>
     </div>
@@ -37,7 +41,7 @@
           <th>Details</th>
         </tr>
       </thead>
-      <tr *ngFor="let logs of auditLogs">
+      <tr *ngFor="let logs of filterdData | filter : 'name' : searchString">
         <td>{{logs.source}}</td>
         <td>
           <small> {{logs.severity}}</small>
