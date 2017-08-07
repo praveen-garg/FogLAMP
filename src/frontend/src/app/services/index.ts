@@ -4,3 +4,4 @@ export * from './configuration.service';
 export * from './statistics.service';
 export * from './assets.service';
 export * from  './audit.service'
+export * from './schedules.service'

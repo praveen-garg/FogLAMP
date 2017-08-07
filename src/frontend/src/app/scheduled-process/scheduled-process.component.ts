@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../services/index';
+import { StatisticsService, SchedulesService } from '../services/index';
 
 enum ScheduleType {
     STARTUP = 1,
@@ -26,7 +26,7 @@ export class ScheduledProcessComponent implements OnInit {
   public tasksData = [];
   public scheduleType = ScheduleType;
   public taskState = TaskState
-  constructor( private statisticsService: StatisticsService) { }
+  constructor( private statisticsService: StatisticsService, private schedulesService: SchedulesService) { }
 
   ngOnInit() {
     console.log(this.scheduleType)
@@ -38,7 +38,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedules():void {
     this.schedulesData = [];
-    this.statisticsService.getSchedules().
+    this.schedulesService.getSchedules().
       subscribe(
       data => {
         this.schedulesData = data.schedules;
@@ -49,7 +49,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedulesProcesses():void {
     this.schedulesProcessData = [];
-    this.statisticsService.getScheduledProcesses().
+    this.schedulesService.getScheduledProcesses().
       subscribe(
       data => {
         this.schedulesProcessData = data.processes;
@@ -60,7 +60,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getLatestTasks():void {
     this.tasksData = [];
-    this.statisticsService.getLatestTasks().
+    this.schedulesService.getLatestTasks().
       subscribe(
       data => {
         this.tasksData = data.tasks;
