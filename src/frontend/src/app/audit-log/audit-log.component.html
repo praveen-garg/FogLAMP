@@ -22,11 +22,11 @@
           </div>
         </div>
         <div class="column">
-          <input class="input" type="number" min="0" placeholder="limit" name="limit" [ngModel]="limit" (ngModelChange)="setLimit($event)">
+          <input-debounce  placeholder="limit"  (value)="setLimit($event)"></input-debounce>
         </div>
         
         <div class="column">
-          <input class="input" type="number" min="0" placeholder="offset" name="offset" [ngModel]="offset" (ngModelChange)="setOffset($event)">
+          <input-debounce  placeholder="offset"  (value)="setOffset($event)"></input-debounce>
         </div>
         
         <!--<div class="column">

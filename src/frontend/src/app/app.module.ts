@@ -25,7 +25,7 @@ import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
 import { AssetsComponent } from '../app/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
-
+import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
 @NgModule({
   imports: [
@@ -50,7 +50,8 @@ import { AuditLogComponent } from '../app/audit-log/audit-log.component';
     SideMenuComponent,
     NavbarComponent,
     AssetsComponent,
-    AuditLogComponent
+    AuditLogComponent,
+    InputDebounceComponent
   ],
   providers: [
     AuthGuard,

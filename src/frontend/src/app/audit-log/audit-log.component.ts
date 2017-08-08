@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuditService } from '../services/index';
+import {InputDebounceComponent} from "../input-debounce/input-debounce.component";
 
 import * as _ from 'lodash';
 
