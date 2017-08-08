@@ -288,7 +288,7 @@ async def get_statistics(request):
     """
         Returns a general set of statistics
 
-        Example: curl -X GET http://localhost:8082/foglamp/statistics
+        :Example: curl -X GET http://localhost:8082/foglamp/statistics
     """
 
     try:
@@ -303,7 +303,7 @@ async def get_statistics_history(request):
     """
         Returns a list of general set of statistics
 
-        Example: curl -X GET -d limit=1 http://localhost:8082/foglamp/statistics/history
+        :Example: curl -X GET http://localhost:8082/foglamp/statistics/history?limit=1
     """
 
     try:
@@ -334,10 +334,24 @@ async def get_audit_entries(request):
         curl -X GET http://localhost:8082/foglamp/audit
 
         curl -X GET http://localhost:8082/foglamp/audit?limit=5
+
+        curl -X GET http://localhost:8082/foglamp/audit?limit=5&skip=3
+
+        curl -X GET http://localhost:8082/foglamp/audit?source=PURGE
+
+        curl -X GET http://localhost:8082/foglamp/audit?severity=ERROR
+
+        curl -X GET http://localhost:8082/foglamp/audit?source=LOGGN&severity=INFORMATION&limit=10
     """
     try:
         limit = request.query.get('limit') if 'limit' in request.query else 0
-        audit_entries = await audit_trail_db_services.read_audit_entries(int(limit))
+        offset = 0
+        if limit:
+            offset = request.query.get('skip') if 'skip' in request.query else 0
+        source = request.query.get('source') if 'source' in request.query else None
+        severity = request.query.get('severity') if 'severity' in request.query else None
+        audit_entries = await audit_trail_db_services.read_audit_entries(limit=int(limit), offset=int(offset),
+                                                                         source=source, severity=severity)
 
         return web.json_response({'audit': audit_entries})
 
