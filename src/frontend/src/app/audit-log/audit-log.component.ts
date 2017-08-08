@@ -20,12 +20,15 @@ export class AuditLogComponent implements OnInit {
   public sourceOptionsList = []
   public severityLevelsList = []
   public filterdData = []
-  public limit: Number = 0;
-  public offset: Number = 0;
+  public limit: Number = 0
+  public offset: Number = 0
+  public source: String = ""
+  public severity: String = ""
+
   constructor(private auditService: AuditService) { }
 
   ngOnInit() {
-    this.getAuditLogs()
+    this.getAuditLogs(false)
     // Add SeverityEnum to severityLevelsList
     // TODO: Severity keys must be coming from service
     for (let item in SeverityEnum) {
@@ -35,23 +38,22 @@ export class AuditLogComponent implements OnInit {
       }
     }
   }
-  
-   public setLimit(limit: Number) {
-       this.limit = limit;
-       console.log("Limit: ", limit)
-       this.getAuditLogs()
-   }
+
+  public setLimit(limit: Number) {
+    this.limit = limit;
+    console.log("Limit: ", limit)
+    this.getAuditLogs(true)
+  }
 
   public setOffset(offset: Number) {
-      this.offset = offset
-      console.log("offset: ", offset)
-      if(this.limit != null) {
-        
-        this.getAuditLogs()
-      }
+    this.offset = offset
+    console.log("offset: ", offset)
+    if (this.limit != null) {
+      this.getAuditLogs(true)
+    }
   }
- 
-  public getAuditLogs(): void {
+
+  public getAuditLogs(isFiltered: boolean = false): void {
     console.log("Limit: ", this.limit)
     console.log("offset: ", this.offset)
     if (this.limit == null) {
@@ -68,25 +70,36 @@ export class AuditLogComponent implements OnInit {
         // TODO: source must come from service to know actual superset of sources
         this.sourceOptionsList = _.uniq(this.auditLogs.map(function (a) { return a.source }))
         //this.severityLevelsList = _.uniq(this.auditLogs.map(function (a) { return a.severity }))
+        if (isFiltered) {
+          console.log("is Filtered", isFiltered)
+          this.filterSource("","");
+        }
       },
       error => { console.log("error", error) })
   }
 
   public filterSource(type, event) {
-    this.filterdData = [];
-    console.log("Type: ", event.target.value)
-    if (event.target.value.trim().toLowerCase() == "source" || event.target.value.trim().toLowerCase() == "severity") {
-      this.filterdData = this.auditLogs;
-      console.log("All records: ", this.filterdData)
-      return;
+    this.filterdData = []
+    if (type == "source") {
+      this.source = event.target.value != "undefined"?event.target.value.trim().toLowerCase():""
+    } else if (type == "severity") {
+      this.severity = event.target.value != "undefined"?event.target.value.trim().toLowerCase():""
     }
-    if (type == "severity") {
-      this.filterdData = this.auditLogs.filter(element => element.severity.toLowerCase() === (event.target.value.trim().toLowerCase()))
-      console.log("Filtered Severity: ", this.filterdData)
-      return;
-    }
-    this.filterdData = this.auditLogs.filter(element => element.source.toLowerCase() === (event.target.value.trim().toLowerCase()))
-    console.log("Filtered Source: ", this.filterdData)
+
+    console.log("Type: ", type)
+    console.log("this.source: ", this.source)
+    console.log("this.severity: ", this.severity)
+
+    this.filterdData = this.auditLogs.filter(
+      element => (element.source.toLowerCase() === this.source && this.severity == "") ||
+        (this.source == "" && element.severity.toLowerCase() === this.severity) ||
+        (this.source == element.source.toLowerCase() && this.severity === element.severity.toLowerCase()) ||
+        (this.source == "source" && this.severity == element.severity.toLowerCase()) ||
+        (this.source == element.source.toLowerCase() && this.severity == "severity") ||
+        (this.source == "" && this.severity == "severity") ||
+        (this.source == "source" && this.severity == "") ||
+        (this.source == "source" && this.severity == "severity") ||
+        (this.source == "" && this.severity == ""))
   }
 
 }

@@ -8,7 +8,7 @@
         <div class="column">
           <div class="select">
             <select (change) = "filterSource('source', $event)">
-            <option>Source</option>
+            <option selected="selected" >Source</option>
             <option *ngFor="let source of sourceOptionsList"  [value]='source'>{{source}}</option>
           </select>
           </div>
@@ -16,7 +16,7 @@
         <div class="column">
           <div class="select">
             <select (change) = "filterSource('severity', $event)">
-            <option>Severity</option>
+            <option selected="selected">Severity</option>
             <option *ngFor="let severity of severityLevelsList"  [value]='severity'>{{severity}}</option>
           </select>
           </div>
