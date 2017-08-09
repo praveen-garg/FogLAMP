@@ -14,7 +14,7 @@
             <tr *ngFor="let process of schedulesProcessData">
               <td>{{process.name}}</td>
               <td>
-                <small> {{process.script}}</small>
+                <small> {{process.script | json}}</small>
               </td>
             </tr>
             <tbody>
