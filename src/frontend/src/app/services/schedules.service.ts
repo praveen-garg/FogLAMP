@@ -5,7 +5,7 @@ import  Utils, {BASE_URL} from './utils'
 
 @Injectable()
 export class SchedulesService {
- private GET_SCHEDULE_PROCESS = BASE_URL + "schedule/process"
+ private GET_SCHEDULE_PROCESS = BASE_URL + "scheduled/processes"
   private GET_SCHEDULES = BASE_URL + "schedules"
 
   private GET_TASKS = BASE_URL + "tasks"
