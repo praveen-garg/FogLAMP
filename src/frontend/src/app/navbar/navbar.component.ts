@@ -11,8 +11,8 @@ import Utils, {POLLING_INTERVAL} from '../services/utils';
 })
 export class NavbarComponent implements OnInit {
   public timer: any = ''
-  public ping_data: {} = {}
-  public ping_info: {} = {is_alive:false, service_status:"service down"}
+  public ping_data = {}
+  public ping_info = {is_alive:false, service_status:"service down"}
 
   constructor(private configService: ConfigurationService) { }
   ngOnInit() {

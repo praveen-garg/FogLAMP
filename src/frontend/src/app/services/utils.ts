@@ -1,5 +1,5 @@
 //export const BASE_URL = 'http://0.0.0.0:8082/foglamp/'
-export const BASE_URL = 'http://192.168.1.197:8082/foglamp/'
+export const BASE_URL = 'http://192.168.1.10:8082/foglamp/'
 export const POLLING_INTERVAL = 2000   //milliseconds
 
 export default class Utils {

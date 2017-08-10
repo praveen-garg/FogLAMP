@@ -45,7 +45,7 @@
           <th>Details</th>
         </tr>
       </thead>
-      <tr *ngFor="let logs of filterdData | filter : 'name' : searchString">
+      <tr *ngFor="let logs of filterdData">
         <td>{{logs.source}}</td>
         <td>
           <small> {{logs.severity}}</small>
