@@ -4,14 +4,15 @@
 # See: http://foglamp.readthedocs.io/
 # FOGLAMP_END
 
+import uuid
 import datetime
 from aiohttp import web
 
 from foglamp.core import server
 from foglamp.core.api import scheduler_db_services
-from foglamp.core.scheduler import Scheduler, StartUpSchedule, TimedSchedule, IntervalSchedule, ManualSchedule, Task
+from foglamp.core.scheduler import Schedule, StartUpSchedule, TimedSchedule, IntervalSchedule, ManualSchedule, Task
 
-__author__ = "Amarendra K. Sinha, Ashish Jabble"
+__author__ = "Amarendra K. Sinha"
 __copyright__ = "Copyright (c) 2017 OSIsoft, LLC"
 __license__ = "Apache 2.0"
 __version__ = "${VERSION}"
@@ -20,14 +21,16 @@ __version__ = "${VERSION}"
 _help = """
     -------------------------------------------------------------------------------
     | GET             | /foglamp/schedule/process                                 |
+    | GET             | /foglamp/schedule/process/{scheduled_process_name}        |
 
-    | GET             | /foglamp/schedules                                        |
-    | POST            | /foglamp/schedule                                         |
+    | GET POST        | /foglamp/schedule                                         |
     | GET PUT DELETE  | /foglamp/schedule/{schedule_id}                           |
+    | POST            | /foglamp/schedule/start/{schedule_id}                     |
 
-    | GET             | /foglamp/tasks                                            |
-    | GET             | /foglamp/tasks/latest                                     |
-    | GET DELETE      | /foglamp/task/{task_id}                                   |
+
+    | GET             | /foglamp/task                                             |
+    | GET             | /foglamp/task/latest                                      |
+    | GET PUT         | /foglamp/task/{task_id}                                   |
     -------------------------------------------------------------------------------
 """
 
@@ -43,12 +46,11 @@ async def get_scheduled_processes(request):
     """
 
     try:
-        # processes = await scheduler_db_services.read_scheduled_processes()
         processes_list = await server.Server.scheduler.get_scheduled_processes()
 
         processes = []
         for proc in processes_list:
-            processes.append({'name': proc.name, 'script': proc.script})
+            processes.append(proc.name)
 
         return web.json_response({'processes': processes})
     except Exception as ex:
@@ -71,7 +73,7 @@ async def get_scheduled_process(request):
         if not scheduled_process:
             raise ValueError('No such Scheduled Process: {}.'.format(scheduled_process_name))
 
-        return web.json_response(scheduled_process)
+        return web.json_response(scheduled_process[0].get("name"))
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
@@ -127,11 +129,11 @@ async def _check_schedule_post_parameters(data, curr_value=None):
         _errors.append('Schedule type cannot be empty.')
 
     # Raise error if schedule_type is wrong
-    if _schedule.get('schedule_type') not in list(Scheduler._ScheduleType):
+    if _schedule.get('schedule_type') not in list(Schedule.Type):
         _errors.append('Schedule type error: {}'.format(_schedule.get('schedule_type')))
 
     # Raise error if day and time are missing for schedule_type = TIMED
-    if _schedule.get('schedule_type') == Scheduler._ScheduleType.TIMED:
+    if _schedule.get('schedule_type') == Schedule.Type.TIMED:
         if not _schedule.get('schedule_day') or not _schedule.get('schedule_time'):
             _errors.append('Schedule day and time cannot be empty for TIMED schedule.')
         elif not isinstance(_schedule.get('schedule_day'), int):
@@ -140,7 +142,7 @@ async def _check_schedule_post_parameters(data, curr_value=None):
             _errors.append('Time must be an integer.')
 
     # Raise error if repeat is missing or is non integers
-    if _schedule.get('schedule_type') == Scheduler._ScheduleType.INTERVAL:
+    if _schedule.get('schedule_type') == Schedule.Type.INTERVAL:
         if 'schedule_repeat' not in _schedule:
             _errors.append('repeat is required for INTERVAL Schedule type.')
         elif not isinstance(int(_schedule.get('schedule_repeat')), int):
@@ -185,22 +187,21 @@ async def _execute_add_update_schedule(data, curr_value=None):
     _schedule = _extract_args(data, curr_value)
 
     # Create schedule object as Scheduler.save_schedule requires an object
-    if _schedule.get('schedule_type') == Scheduler._ScheduleType.STARTUP:
+    if _schedule.get('schedule_type') == Schedule.Type.STARTUP:
         schedule = StartUpSchedule()
-    elif _schedule.get('schedule_type') == Scheduler._ScheduleType.TIMED:
+    elif _schedule.get('schedule_type') == Schedule.Type.TIMED:
         schedule = TimedSchedule()
         schedule.day = _schedule.get('schedule_day')
         m, s = divmod(_schedule.get('schedule_time'), 60)
         h, m = divmod(m, 60)
-        schedule.time = "{hours}:{minutes}:{seconds}".format(hours=h, minutes=m, seconds=s)
-    elif _schedule.get('schedule_type') == Scheduler._ScheduleType.INTERVAL:
+        schedule.time = datetime.time().replace(hour=h, minute=m, second=s)
+    elif _schedule.get('schedule_type') == Schedule.Type.INTERVAL:
         schedule = IntervalSchedule()
-    elif _schedule.get('schedule_type') == Scheduler._ScheduleType.MANUAL:
+    elif _schedule.get('schedule_type') == Schedule.Type.MANUAL:
         schedule = ManualSchedule()
 
     # Populate scheduler object
     schedule.schedule_id = _schedule.get('schedule_id')
-    # schedule.schedule_type = schedule_type
     schedule.name = _schedule.get('schedule_name')
     schedule.process_name = _schedule.get('schedule_process_name')
     schedule.repeat = datetime.timedelta(seconds=_schedule['schedule_repeat'])
@@ -221,7 +222,6 @@ async def get_schedules(request):
     """
 
     try:
-        # schedules = await scheduler_db_services.read_schedule()
         schedule_list = await server.Server.scheduler.get_schedules()
 
         schedules = []
@@ -230,7 +230,7 @@ async def get_schedules(request):
                 'id': str(sch.schedule_id),
                 'name': sch.name,
                 'process_name': sch.process_name,
-                'type': sch.type,
+                'type': Schedule.Type(int(sch.schedule_type)).name,
                 'repeat': str(sch.repeat),
                 'day': sch.day,
                 'time': str(sch.time),
@@ -255,8 +255,7 @@ async def get_schedule(request):
         if not schedule_id:
             raise ValueError('No such Schedule')
 
-        # schedule = await scheduler_db_services.read_schedule(schedule_id)
-        sch = await server.Server.scheduler.get_schedule(schedule_id)
+        sch = await server.Server.scheduler.get_schedule(uuid.UUID(schedule_id))
         if not sch:
             raise ValueError('No such Schedule')
 
@@ -264,7 +263,7 @@ async def get_schedule(request):
             'id': str(sch.schedule_id),
             'name': sch.name,
             'process_name': sch.process_name,
-            'type': sch.type,
+            'type': Schedule.Type(int(sch.schedule_type)).name ,
             'repeat': str(sch.repeat),
             'day': sch.day,
             'time': str(sch.time),
@@ -282,7 +281,7 @@ async def start_schedule(request):
     """
     Starts a given schedule
 
-    :Example: curl -X GET  http://localhost:8082/foglamp/schedule/start/fd439e5b-86ba-499a-86d3-34a6e5754b5a
+    :Example: curl -X POST  http://localhost:8082/foglamp/schedule/start/fd439e5b-86ba-499a-86d3-34a6e5754b5a
     """
 
     try:
@@ -291,15 +290,14 @@ async def start_schedule(request):
         if not schedule_id:
             raise ValueError('No such Schedule')
 
-        schedule = await scheduler_db_services.read_schedule(schedule_id)
-
-        if not schedule:
-            raise ValueError('No such Schedule')
+        sch = await server.Server.scheduler.get_schedule(uuid.UUID(schedule_id))
+        if not sch:
+            raise ValueError('No such Schedule: {}.'.format(schedule_id))
 
         # Start schedule
-        await server.Server.scheduler.queue_task(schedule_id)
+        await server.Server.scheduler.queue_task(uuid.UUID(schedule_id))
 
-        return web.json_response(schedule)
+        return web.json_response({'id': schedule_id, 'message': 'Schedule started successfully'})
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
@@ -310,7 +308,7 @@ async def post_schedule(request):
     """
     Create a new schedule in schedules table
 
-    :Example: curl -d '{"type": 3, "name": "sleep30", "process_name": "sleep30", "repeat": "45"}'  -X POST  http://localhost:8082/foglamp/schedule
+    :Example: curl -d '{"type": 3, "name": "sleep30test", "process_name": "sleep30", "repeat": "45"}'  -X POST  http://localhost:8082/foglamp/schedule
     """
 
     try:
@@ -326,7 +324,22 @@ async def post_schedule(request):
 
         updated_schedule_id = await _execute_add_update_schedule(data)
 
-        return web.json_response({'message': 'Schedule created successfully.', 'id': str(updated_schedule_id)})
+        sch = await server.Server.scheduler.get_schedule(updated_schedule_id)
+        if not sch:
+            raise ValueError('No such Schedule')
+
+        schedule = {
+            'id': str(sch.schedule_id),
+            'name': sch.name,
+            'process_name': sch.process_name,
+            'type': Schedule.Type(int(sch.schedule_type)).name,
+            'repeat': str(sch.repeat),
+            'day': sch.day,
+            'time': str(sch.time),
+            'exclusive': sch.exclusive
+        }
+
+        return web.json_response({'schedule': schedule})
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
@@ -347,19 +360,19 @@ async def update_schedule(request):
         if not schedule_id:
             raise ValueError('No such Schedule.')
 
-        schedule = await scheduler_db_services.read_schedule(schedule_id)
-        if not schedule:
+        sch = await server.Server.scheduler.get_schedule(uuid.UUID(schedule_id))
+        if not sch:
             raise ValueError('No such Schedule: {}.'.format(schedule_id))
 
         curr_value = dict()
-        curr_value['schedule_id'] = schedule[0]['id']
-        curr_value['schedule_process_name'] = schedule[0]['process_name']
-        curr_value['schedule_name'] = schedule[0]['schedule']['schedule_name']
-        curr_value['schedule_type'] = schedule[0]['schedule']['schedule_type']
-        curr_value['schedule_repeat'] = schedule[0]['schedule']['schedule_interval']
-        curr_value['schedule_time'] = schedule[0]['schedule']['schedule_time']
-        curr_value['schedule_day'] = schedule[0]['schedule']['schedule_day']
-        curr_value['schedule_exclusive'] = schedule[0]['schedule']['exclusive']
+        curr_value['schedule_id'] = sch.schedule_id
+        curr_value['schedule_process_name'] = sch.process_name
+        curr_value['schedule_name'] = sch.name
+        curr_value['schedule_type'] = sch.schedule_type
+        curr_value['schedule_repeat'] = sch.repeat
+        curr_value['schedule_time'] = sch.time
+        curr_value['schedule_day'] = sch.day
+        curr_value['schedule_exclusive'] = sch.exclusive
 
         go_no_go = await _check_schedule_post_parameters(data, curr_value)
         if len(go_no_go) != 0:
@@ -367,7 +380,22 @@ async def update_schedule(request):
 
         updated_schedule_id = await _execute_add_update_schedule(data, curr_value)
 
-        return web.json_response({'message': 'Schedule updated successfully.', 'id': str(updated_schedule_id)})
+        sch = await server.Server.scheduler.get_schedule(updated_schedule_id)
+        if not sch:
+            raise ValueError('No such Schedule')
+
+        schedule = {
+            'id': str(sch.schedule_id),
+            'name': sch.name,
+            'process_name': sch.process_name,
+            'type': Schedule.Type(int(sch.schedule_type)).name,
+            'repeat': str(sch.repeat),
+            'day': sch.day,
+            'time': str(sch.time),
+            'exclusive': sch.exclusive
+        }
+
+        return web.json_response({'schedule': schedule})
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
@@ -391,7 +419,7 @@ async def delete_schedule(request):
         if not is_schedule:
             raise ValueError('No such Schedule: {}.'.format(schedule_id))
 
-        await server.Server.scheduler.delete_schedule(schedule_id)
+        await server.Server.scheduler.delete_schedule(uuid.UUID(schedule_id))
 
         return web.json_response({'message': 'Schedule deleted successfully.', 'id': schedule_id})
     except ValueError as ex:
@@ -418,10 +446,20 @@ async def get_task(request):
         if not task_id:
             raise ValueError('No such Task')
 
-        task = await scheduler_db_services.read_task(task_id)
+        tsk = await server.Server.scheduler.get_task(uuid.UUID(task_id))
 
-        if not task:
-            raise ValueError('No such Task')
+        if not tsk:
+            raise ValueError('No such Task: {}'.format(task_id))
+
+        task = {
+            'id': str(tsk.task_id),
+            'process_name': tsk.process_name,
+            'state': Task.State(int(tsk.state)).name,
+            'start_time': str(tsk.start_time),
+            'end_time': str(tsk.end_time),
+            'exit_code': tsk.exit_code,
+            'reason': tsk.reason
+        }
 
         return web.json_response(task)
     except ValueError as ex:
@@ -434,6 +472,9 @@ async def get_tasks(request):
     """
     Returns the list of tasks
 
+    :Example: curl -X GET  http://localhost:8082/foglamp/tasks
+    :Example: curl -X GET  http://localhost:8082/foglamp/tasks?name=xxx
+    :Example: curl -X GET  http://localhost:8082/foglamp/tasks?state=xxx
     :Example: curl -X GET  http://localhost:8082/foglamp/tasks?name=xxx&state=xxx
     """
 
@@ -442,10 +483,13 @@ async def get_tasks(request):
 
         state = request.query.get('state') if 'state' in request.query else None
         if state:
-            if state not in list(Task.State):
+            if state.upper() not in [t.name for t in list(Task.State)]:
                 raise ValueError('This state value {} not permitted.'.format(state))
             else:
-                state = int(state)
+                z = dict()
+                for i in list(Task.State):
+                    z.update({i.name: i.value})
+                state = z[state.upper()]
 
         name = request.query.get('name') if 'name' in request.query else None
 
@@ -454,7 +498,21 @@ async def get_tasks(request):
         if not tasks:
             raise ValueError('No such Tasks')
 
-        return web.json_response({'tasks': tasks})
+        new_tasks = []
+        for task in tasks:
+            new_tasks.append(
+                {'id': str(task['id']),
+                     'process_name': task['process_name'],
+                     'state': Task.State(int(task['state'])).name ,
+                     'start_time': str(task['start_time']),
+                     'end_time': str(task['end_time']),
+                     'exit_code': task['exit_code'],
+                     'reason': task['reason'],
+                     'pid': task['pid']
+                 }
+            )
+
+        return web.json_response({'tasks': new_tasks})
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
@@ -466,15 +524,19 @@ async def get_tasks_latest(request):
     Returns the list of the most recent task execution for each name from tasks table
 
     :Example: curl -X GET  http://localhost:8082/foglamp/tasks/latest
+    :Example: curl -X GET  http://localhost:8082/foglamp/tasks/latest?name=xxx
     """
 
     try:
         state = request.query.get('state') if 'state' in request.query else None
         if state:
-            if state not in list(Task.State):
+            if state.upper() not in [t.name for t in list(Task.State)]:
                 raise ValueError('This state value {} not permitted.'.format(state))
             else:
-                state = int(state)
+                z = dict()
+                for i in list(Task.State):
+                    z.update({i.name: i.value})
+                state = z[state.upper()]
 
         name = request.query.get('name') if 'name' in request.query else None
 
@@ -483,37 +545,49 @@ async def get_tasks_latest(request):
         if not tasks:
             raise ValueError('No such Task')
 
-        return web.json_response({'tasks': tasks})
+        new_tasks = []
+        for task in tasks:
+            new_tasks.append(
+                {'id': str(task['id']),
+                     'process_name': task['process_name'],
+                     'state': [t.name for t in list(Task.State)][int(task['state']) - 1],
+                     'start_time': str(task['start_time']),
+                     'end_time': str(task['end_time']),
+                     'exit_code': task['exit_code'],
+                     'reason': task['reason'],
+                     'pid': task['pid']
+                 }
+        )
+
+        return web.json_response({'tasks': new_tasks})
     except ValueError as ex:
         raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
         raise web.HTTPInternalServerError(reason='FogLAMP has encountered an internal error', text=str(ex))
 
 
-async def get_tasks_running(request):
-    """
-    Returns a list of all running tasks
+async def cancel_task(request):
+    """Cancel a running task from tasks table
 
-    :Example: curl -X GET  http://localhost:8082/foglamp/tasks/running
+    :Example: curl -X GET  http://localhost:8082/foglamp/task/cancel/{task_id}
     """
 
     try:
-        task_list = await server.Server.scheduler.get_running_tasks()
+        task_id = request.match_info.get('task_id', None)
 
-        tasks = []
-        for task in task_list:
-            tasks.append({
-                'id': task.task_id,
-                'process_name': task.process_name,
-                'state': task.state,
-                'start_time': task.start_time
-            })
+        if not task_id:
+            raise ValueError('No Task given')
 
-        return web.json_response({'tasks': tasks})
+        task = await server.Server.scheduler.get_task(uuid.UUID(task_id))
+
+        if not task:
+            raise ValueError('No such Task: {}'.format(task_id))
+
+        # Cancel Task
+        await server.Server.scheduler.cancel_task(uuid.UUID(task_id))
+
+        return web.json_response({'id': task_id, 'message': 'Task cancelled successfully'})
+    except ValueError as ex:
+        raise web.HTTPNotFound(reason=str(ex))
     except Exception as ex:
         raise web.HTTPInternalServerError(reason='FogLAMP has encountered an internal error', text=str(ex))
-
-
-async def cancel_task(request):
-    """Cancel a running task from tasks table"""
-    pass
