@@ -1,0 +1,19 @@
+.scroll {
+  border: 0;
+  border-collapse: collapse;
+}
+
+.scroll tr {
+  display: flex;
+}
+
+.scroll tbody {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+  height: 400px;
+}
+
+.panel{
+    margin-top: 10px; 
+}

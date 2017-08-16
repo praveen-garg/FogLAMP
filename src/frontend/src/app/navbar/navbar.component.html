@@ -1,0 +1,12 @@
+<nav class="navbar">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <b>FogLAMP Management</b>
+        </a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+        <span [ngClass]="ping_info.is_alive?'tag is-success':'tag is-danger'">{{ping_info.service_status}}</span>
+        </div>
+      </div>
+</nav>

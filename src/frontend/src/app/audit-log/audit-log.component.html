@@ -1,0 +1,62 @@
+<div class="container is-fluid">
+  <nav class="panel">
+    <p class="panel-heading">
+      <small> Audit Logs </small>
+    </p>
+    <div class="panel-block">
+      <div class="columns">
+        <div class="column">
+          <div class="select">
+            <select (change) = "filterSource('source', $event)">
+            <option selected="selected" >Source</option>
+            <option *ngFor="let source of sourceOptionsList"  [value]='source'>{{source}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="column">
+          <div class="select">
+            <select (change) = "filterSource('severity', $event)">
+            <option selected="selected">Severity</option>
+            <option *ngFor="let severity of severityLevelsList"  [value]='severity'>{{severity}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="column">
+          <input-debounce  placeholder="limit"  (value)="setLimit($event)"></input-debounce>
+        </div>
+        
+        <div class="column">
+          <input-debounce  placeholder="offset"  (value)="setOffset($event)"></input-debounce>
+        </div>
+        
+        <!--<div class="column">
+            <input class="input" type="text" name="searchString" placeholder="Search..." [(ngModel)]="searchString">
+        </div>-->
+      </div>
+    </div>
+
+
+    <table class="table is-striped scroll" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Severity</th>
+          <th>Timestamp</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let logs of filterdData">
+        <td>{{logs.source}}</td>
+        <td>
+          <small> {{logs.severity}}</small>
+        </td>
+        <td>
+          <span class="tag is-rounded"> {{logs.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+        </td>
+        <td>
+          <small> {{logs.details | json}}</small>
+        </td>
+      </tr>
+    </table>
+  </nav>
+</div>

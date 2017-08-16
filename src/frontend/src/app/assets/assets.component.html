@@ -1,0 +1,71 @@
+<div class="container is-fluid">
+  <div class="tile">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h5 class="title"><small> Assets </small></h5>
+        <table class="table is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Readings count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let asset of assets">
+              <td>{{asset.asset_code}}</td>
+              <td>
+                <small> {{asset.count}}</small>
+              </td>
+            </tr>
+            <tbody>
+        </table>
+      </article>
+    </div>
+  </div>
+
+  <div class="tile">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h5 class="title"><small> Asset Readings </small></h5>
+        <div class="select">
+          <select (change)="getAssetReading($event.target.value)">
+            <option>Select</option>
+            <option *ngFor="let asset of assets"  [value]='asset.asset_code'>{{asset.asset_code}} ({{asset.count}})</option>
+          </select>
+        </div>
+        <br/>
+        <br/>
+        <table class="table is-striped is-narrow">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Readings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let asset of assetsReadingsData">
+              <td><small>{{asset.asset_code}}</small></td>
+              <td>
+                <tr *ngFor="let d of asset.data">
+                  <td>
+                  {{d.reading | json}} 
+                  </td> 
+                  <td>
+                    <span class="tag is-rounded">{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+                  </td>
+                  <hr class="dropdown-divider">
+                </tr>
+              </td>
+              <!--<td>
+                <tr *ngFor="let d of asset.data"> 
+                  <small>{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</small>
+                  <hr class="dropdown-divider">
+                </tr>
+              </td>-->
+            </tr>
+            <tbody>
+        </table>
+      </article>
+    </div>
+  </div>
+</div>
