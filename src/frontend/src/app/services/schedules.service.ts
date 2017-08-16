@@ -5,19 +5,19 @@ import  Utils, {BASE_URL} from './utils'
 
 @Injectable()
 export class SchedulesService {
- private GET_SCHEDULE_PROCESS = BASE_URL + "scheduled/processes"
-  private GET_SCHEDULES = BASE_URL + "schedules"
+ private GET_SCHEDULE_PROCESS = BASE_URL + "schedule/process"
+  private GET_SCHEDULE = BASE_URL + "schedule"
 
-  private GET_TASKS = BASE_URL + "tasks"
-  private GET_LATEST_TASKS = BASE_URL + "tasks/latest"
+  private GET_TASK = BASE_URL + "task"
+  private GET_LATEST_TASK = BASE_URL + "task/latest"
 
   constructor(private http:Http) { }
 
   /**
-   *  GET | /foglamp/schedules 
+   *  GET | /foglamp/schedule
    */
-  public getSchedules() {
-    return this.http.get(this.GET_SCHEDULES)
+  public getSchedule() {
+    return this.http.get(this.GET_SCHEDULE)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
@@ -25,17 +25,17 @@ export class SchedulesService {
   /**
    *  GET | /foglamp/schedule/process 
    */
-  public getScheduledProcesses() {
+  public getScheduledProcess() {
     return this.http.get(this.GET_SCHEDULE_PROCESS)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
 
   /**
-   *  GET | /foglamp/tasks/latest
+   *  GET | /foglamp/task/latest
    */
-  public getLatestTasks() {
-    return this.http.get(this.GET_LATEST_TASKS)
+  public getLatestTask() {
+    return this.http.get(this.GET_LATEST_TASK)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }

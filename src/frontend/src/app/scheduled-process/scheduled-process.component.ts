@@ -1,20 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedulesService } from '../services/index';
 
-enum ScheduleType {
-    STARTUP = 1,
-    TIMED = 2,
-    INTERVAL = 3,
-    MANUAL = 4,
-  }
-
-enum TaskState {
-     RUNNING = 1,
-     COMPLETE = 2,
-     CANCELED = 3,
-     INTERRUPTED = 4
-    }
-
 @Component({
   selector: 'app-scheduled-process',
   templateUrl: './scheduled-process.component.html',
@@ -24,13 +10,10 @@ export class ScheduledProcessComponent implements OnInit {
   public schedulesData = [];
   public schedulesProcessData = [];
   public tasksData = [];
-  public scheduleType = ScheduleType;
-  public taskState = TaskState
+
   constructor(private schedulesService: SchedulesService) { }
 
   ngOnInit() {
-    console.log(this.scheduleType)
-    console.log(this.taskState)
     this.getSchedules();
     this.getSchedulesProcesses();
     this.getLatestTasks();
@@ -38,7 +21,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedules():void {
     this.schedulesData = [];
-    this.schedulesService.getSchedules().
+    this.schedulesService.getSchedule().
       subscribe(
       data => {
         this.schedulesData = data.schedules;
@@ -49,7 +32,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedulesProcesses():void {
     this.schedulesProcessData = [];
-    this.schedulesService.getScheduledProcesses().
+    this.schedulesService.getScheduledProcess().
       subscribe(
       data => {
         this.schedulesProcessData = data.processes;
@@ -60,7 +43,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getLatestTasks():void {
     this.tasksData = [];
-    this.schedulesService.getLatestTasks().
+    this.schedulesService.getLatestTask().
       subscribe(
       data => {
         this.tasksData = data.tasks;
