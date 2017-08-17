@@ -20,7 +20,7 @@ export class ConfigurationManagerComponent implements OnInit {
       data => {
         console.log("This is the congfigurationData ", data.categories);
         data.categories.forEach(element => {
-          this.getCategory(element.key, element.description);
+          this.getCategory(element.description, element.key);
         });
       },
       error => { console.log("error", error) });
