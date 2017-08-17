@@ -5,8 +5,8 @@
       <div class="card-header-title">
         <div class="media">
           <div class="media-content">
-            <p class="title is-5">{{category.key}}</p>
-            <p class="subtitle is-6">{{configurationData[i].description}}</p>
+            <!-- <p class="title is-5">{{category.key}}</p> -->
+            <p class="subtitle is-6">{{category.description}}</p>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
               <div class="control">
                 <div class="media">
                   <div class="media-content">
-                    <p class="title is-5">{{v?.key}}</p>
+                    <!-- <p class="title is-5">{{v?.key}}</p> -->
                     <p class="subtitle is-6">{{v.value.description}}</p>
                   </div>
                 </div>
@@ -50,7 +50,7 @@
               <button class="button is-small is-primary" (click)= "changeConfigFieldsState(v.key.trim(),true)">Edit</button>
             </div>-->
               <div class="control">
-                <button id="btn-save-{{v.key.trim()}}" class="button is-small is-success" (click)="saveConfigValue(category?.key.trim(), v?.key.trim(), true)">Save</button>
+                <button id="btn-save-{{v.key.trim()}}" class="button is-small is-primary" (click)="saveConfigValue(category?.key.trim(), v?.key.trim(), true)">Save</button>
               </div>
               <!--<div class="control">
               <button class="button is-small is-danger" [disabled]="!v.value.value.trim()" (click) = "deleteConfigItem(category?.key.trim(), v?.key.trim())" >Delete</button>
