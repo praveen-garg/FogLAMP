@@ -8,59 +8,35 @@ import { ConfigurationService, AlertService } from '../services/index';
 })
 export class ConfigurationManagerComponent implements OnInit {
   public categoryData = [];
-  public configurationData = [];
   constructor(private configService: ConfigurationService, private alertService: AlertService) { }
-
+  
   ngOnInit() {
     this.getCategories();
   }
 
   public getCategories(): void {
-    this.configurationData = [];
     this.configService.getCategories().
       subscribe(
       data => {
-        this.configurationData = data.categories;
-        console.log("This is the congfigurationData ", this.configurationData);
-        this.configurationData.forEach(element => {
-          this.getCategory(element.key);
+        console.log("This is the congfigurationData ", data.categories);
+        data.categories.forEach(element => {
+          this.getCategory(element.key, element.description);
         });
-
       },
       error => { console.log("error", error) });
   }
 
-  private getCategory(category_name: string): void {
+  private getCategory(category_name: string, description:string): void {
     var categoryValues = [];
     this.configService.getCategory(category_name).
       subscribe(
       data => {
         categoryValues.push(data);
-        this.categoryData.push({ key: category_name, value: categoryValues })
+        this.categoryData.push({description: description,key: category_name, value: categoryValues})
         console.log("This is the categoryData ", this.categoryData);
       },
       error => { console.log("error", error) });
   }
-
-
-  // /**
-  //  * 
-  //  * @param category_name 
-  //  * @param config_item 
-  //  */
-  // private deleteConfigItem(category_name, config_item) {
-  //   console.log("category_name: ", category_name, " Config name: ", config_item);
-  //   this.configService.deleteConfigItem(category_name, config_item).
-  //     subscribe(
-  //     data => {
-  //       console.log("data ", data)
-  //       if (data.value == "") {
-  //         // Hot fix to bind DOM element with latest updated values
-  //         location.reload();
-  //       }
-  //     },
-  //     error => { console.log("error", error) });
-  // }
 
   public restoreConfigFieldValue(config_item_key: string, flag: boolean) {
     var inputField = <HTMLInputElement>document.getElementById(config_item_key);
