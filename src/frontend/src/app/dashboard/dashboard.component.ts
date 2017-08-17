@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ConfigurationService, StatisticsService } from '../services/index';
-import  Utils  from '../services/utils'
+import Utils from '../services/utils'
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,12 +15,9 @@ export class DashboardComponent implements OnInit {
   statisticsData = [];
   statHistoryData = [];
 
-  // type: string;
-  // data: any;
-
   readingChart: string;
   readingValues: any;
-  
+
   purgeChart: string;
   purgedValues: any;
 
@@ -30,8 +27,6 @@ export class DashboardComponent implements OnInit {
   constructor(private configService: ConfigurationService,
     private statisticsService: StatisticsService,
     private router: Router) {
-    // this.type = "line"
-    // this.data = [];
 
     this.readingChart = "line";
     this.readingValues = [];
@@ -85,23 +80,9 @@ export class DashboardComponent implements OnInit {
           values.push(data[key]);
           labels.push(key);
         }
-        //this.statisticsGraph(labels, values);
       },
       error => { console.log("error", error) });
   }
-
-  // statisticsGraph(labels, data): void {
-  //   this.data = {
-  //     labels: labels,
-  //     datasets: [
-  //       {
-  //         label: 'Latest',
-  //         data: data,
-  //         backgroundColor: "rgb(176,196,222)"
-  //       }
-  //     ]
-  //   };
-  // }
 
   public getStatisticsHistory(): void {
     var readingsValues = []
@@ -151,8 +132,6 @@ export class DashboardComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
- 
-
   statsHistoryReadingsGraph(labels, data): void {
     //var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.readingChart = "line"
@@ -197,7 +176,6 @@ export class DashboardComponent implements OnInit {
       ]
     };
   }
-
 
   public showModal(config_item_key) {
     console.log("show:", config_item_key)

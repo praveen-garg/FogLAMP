@@ -27,6 +27,8 @@ import { AssetsComponent } from '../app/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
+import {NgxMaskModule} from 'ngx-mask'  
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { InputDebounceComponent } from '../app/input-debounce/input-debounce.com
     HttpModule,
     routing,
     NgzioGaugeComponentModule,
-    ChartModule
+    ChartModule,
+    NgxMaskModule
   ],
   declarations: [
     AppComponent,

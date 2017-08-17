@@ -42,26 +42,6 @@ export class ConfigurationManagerComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
-
-  // /**
-  //  * 
-  //  * @param category_name 
-  //  * @param config_item 
-  //  */
-  // private deleteConfigItem(category_name, config_item) {
-  //   console.log("category_name: ", category_name, " Config name: ", config_item);
-  //   this.configService.deleteConfigItem(category_name, config_item).
-  //     subscribe(
-  //     data => {
-  //       console.log("data ", data)
-  //       if (data.value == "") {
-  //         // Hot fix to bind DOM element with latest updated values
-  //         location.reload();
-  //       }
-  //     },
-  //     error => { console.log("error", error) });
-  // }
-
   public restoreConfigFieldValue(config_item_key: string, flag: boolean) {
     var inputField = <HTMLInputElement>document.getElementById(config_item_key);
     inputField.value = inputField.textContent; 
