@@ -26,13 +26,13 @@ export class ConfigurationManagerComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
-  private getCategory(category_name: string, description:string): void {
+  private getCategory(category_description:string, category_name: string): void {
     var categoryValues = [];
     this.configService.getCategory(category_name).
       subscribe(
       data => {
         categoryValues.push(data);
-        this.categoryData.push({description: description,key: category_name, value: categoryValues})
+        this.categoryData.push({ key: category_name, value: categoryValues, description: category_description })
         console.log("This is the categoryData ", this.categoryData);
       },
       error => { console.log("error", error) });
