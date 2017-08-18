@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ConfigurationService } from '../services/index';
 
-import Utils, {POLLING_INTERVAL} from '../services/utils';
+import { POLLING_INTERVAL } from '../utils';
 
 @Component({
   selector: 'app-navbar',
