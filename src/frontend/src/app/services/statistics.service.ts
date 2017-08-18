@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
 export class StatisticsService {
 
   private GET_STATISTICS = environment.BASE_URL + "statistics"
-  private GET_STATISTICS_HISTORY = environment.BASE_URL + "statistics/history?limit=5"
+  private GET_STATISTICS_HISTORY = environment.BASE_URL + "statistics/history?limit=20"
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {}
 
   /**
    *    GET  | /foglamp/statistics 

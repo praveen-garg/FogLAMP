@@ -20,19 +20,19 @@ export class ConfigurationManagerComponent implements OnInit {
       data => {
         console.log("This is the congfigurationData ", data.categories);
         data.categories.forEach(element => {
-          this.getCategory(element.description, element.key);
+          this.getCategory(element.key, element.description);
         });
       },
       error => { console.log("error", error) });
   }
 
-  private getCategory(category_description:string, category_name: string): void {
+  private getCategory(category_name: string, category_desc:string): void {
     var categoryValues = [];
     this.configService.getCategory(category_name).
       subscribe(
       data => {
         categoryValues.push(data);
-        this.categoryData.push({ key: category_name, value: categoryValues, description: category_description })
+        this.categoryData.push({ key: category_name, value: categoryValues, description: category_desc })
         console.log("This is the categoryData ", this.categoryData);
       },
       error => { console.log("error", error) });
@@ -57,7 +57,6 @@ export class ConfigurationManagerComponent implements OnInit {
           console.log("updated record: ", data)
           this.alertService.success("Value updated successfully");
           inputField.textContent = inputField.value = data.value;
-        
       },
       error => { 
         console.log("error", error)
