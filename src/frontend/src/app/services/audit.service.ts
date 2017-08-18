@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import Utils, { BASE_URL } from './utils'
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuditService {
-  private GET_AUDIT_LOGS = BASE_URL + "audit"
+  private GET_AUDIT_LOGS = environment.BASE_URL + "audit"
 
-  constructor(private http: Http) { }
-
+  constructor(private http: Http) {}
 
   /**
      *  GET | /foglamp/audit  

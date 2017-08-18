@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import  Utils, {BASE_URL} from './utils'
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
 export class StatisticsService {
 
-  private GET_STATISTICS = BASE_URL + "statistics"
-  private GET_STATISTICS_HISTORY = BASE_URL + "statistics/history?limit=5"
+  private GET_STATISTICS = environment.BASE_URL + "statistics"
+  private GET_STATISTICS_HISTORY = environment.BASE_URL + "statistics/history?limit=5"
 
   constructor(private http: Http) { }
 
