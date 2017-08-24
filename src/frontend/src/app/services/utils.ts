@@ -12,7 +12,12 @@ export default class Utils {
     var minutes = date.getMinutes();
     var hours = date.getHours();
     var seconds = date.getSeconds();
-    var myFormattedDate = hours + ":" + minutes;
+    var myFormattedDate = Utils.pad(hours,2,0) + ":" + Utils.pad(minutes,2,0) + ":" + Utils.pad(seconds,2,0);
     return myFormattedDate;
+  }
+  public static pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 }

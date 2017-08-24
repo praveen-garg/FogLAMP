@@ -8,7 +8,7 @@ import  Utils, {BASE_URL} from './utils'
 export class StatisticsService {
 
   private GET_STATISTICS = BASE_URL + "statistics"
-  private GET_STATISTICS_HISTORY = BASE_URL + "statistics/history?limit=5"
+  private GET_STATISTICS_HISTORY = BASE_URL + "statistics/history?limit=20"
 
   constructor(private http: Http) { }
 
