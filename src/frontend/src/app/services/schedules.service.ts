@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import  Utils, {BASE_URL} from './utils'
+//import  Utils, {BASE_URL} from './utils'
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SchedulesService {
- private GET_SCHEDULE_PROCESS = BASE_URL + "schedule/process"
-  private GET_SCHEDULE = BASE_URL + "schedule"
+ private GET_SCHEDULE_PROCESS = environment.BASE_URL + "schedule/process"
+  private GET_SCHEDULE = environment.BASE_URL + "schedule"
 
-  private GET_TASK = BASE_URL + "task"
-  private GET_LATEST_TASK = BASE_URL + "task/latest"
+  private GET_TASK = environment.BASE_URL + "task"
+  private GET_LATEST_TASK = environment.BASE_URL + "task/latest"
 
   constructor(private http:Http) { }
 
