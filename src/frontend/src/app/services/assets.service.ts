@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import Utils, { BASE_URL } from './utils'
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AssetsService {
-  private GET_ASSET = BASE_URL + "asset"
+  private GET_ASSET = environment.BASE_URL + "asset"
 
   constructor(private http: Http) { }
 
@@ -28,5 +28,4 @@ export class AssetsService {
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
-
 }
