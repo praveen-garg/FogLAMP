@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { Observable } from 'rxjs/Rx'
-import Utils, {BASE_URL} from './utils'
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigurationService {
     // private instance variable to hold base url
-    private GET_CATEGORIES_URL = BASE_URL + "categories"
-    private GET_CATEGORY_URL = BASE_URL + "category"
-    private GET_PING_URL = BASE_URL + "ping"
+    private GET_CATEGORIES_URL = environment.BASE_URL + "categories"
+    private GET_CATEGORY_URL = environment.BASE_URL + "category"
+    private GET_PING_URL = environment.BASE_URL + "ping"
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {}
 
     /**
      *  GET  | /foglamp/ping    

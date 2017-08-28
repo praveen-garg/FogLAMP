@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { ConfigurationService, StatisticsService } from '../services/index';
-import Utils from '../services/utils'
+import Utils from '../utils'
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
   congfigurationData = [];
   categoryData = [];
   statisticsData = [];
@@ -70,16 +69,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public getStatistics(): void {
-    var labels = [];
-    var values = [];
     this.statisticsService.getStatistics().
       subscribe(data => {
         this.statisticsData = data;
         console.log("This is the statisticsData ", data);
-        for (var key in data) {
-          values.push(data[key]);
-          labels.push(key);
-        }
       },
       error => { console.log("error", error) });
   }
@@ -133,7 +126,6 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistoryReadingsGraph(labels, data): void {
-    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) {return i;});
     this.readingChart = "line"
     this.readingValues = {
       labels: labels,
@@ -148,7 +140,6 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistoryPurgedGraph(labels, data): void {
-    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) { return i; });
     this.purgeChart = "line"
     this.purgedValues = {
       labels: labels,
@@ -163,7 +154,6 @@ export class DashboardComponent implements OnInit {
   }
 
   statsHistorySentGraph(labels, data): void {
-    //var labels = Array.apply(null, Array(data.length)).map(function (_, i) { return i; });
     this.sentChart = "line"
     this.sentValues = {
       labels: labels,
@@ -188,5 +178,4 @@ export class DashboardComponent implements OnInit {
     var el = document.getElementById(config_item_key);
     el.classList.remove('is-active');
   }
-
 }
