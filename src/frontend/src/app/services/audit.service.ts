@@ -40,8 +40,6 @@ export class AuditService {
    * @param severity 
    */
   public getAuditLogs(limit: Number = 0, offset: Number = 0, source: String, severity: String) {
-    console.log(severity);
-    
     let params: URLSearchParams = new URLSearchParams();
     return this.http.get(this.GET_AUDIT_LOGS, { params: { limit: limit, skip: offset, source: source.toUpperCase(), severity: severity.toUpperCase()} })
       .map(response => response.json())

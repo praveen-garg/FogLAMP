@@ -8,8 +8,8 @@
           </p>
         </header>
         <div class="card-content">
-          <table class="table is-striped is-narrow">
-            <thead>
+          <table  class="table is-striped is-narrow scroll">
+            <thead id="head">
               <tr>
                 <th>Name</th>
                 <th>Type</th>
@@ -19,16 +19,14 @@
                 <th>Exclusive</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let schedule of schedulesData">
-                <td><small>{{schedule.name}}</small></td>
-                <td><small> {{schedule.type}}</small></td>
-                <td><small> {{schedule.day}}</small></td>
-                <td><small> {{schedule.time | slice:0:8}}</small></td>
-                <td><small> {{schedule.repeat}}</small></td>
-                <td><small> {{schedule.exclusive}}</small></td>
-              </tr>
-              <tbody>
+            <tr *ngFor="let schedule of scheduleData">
+              <td><small>{{schedule.name}}</small></td>
+              <td><small> {{schedule.type}}</small></td>
+              <td><small> {{schedule.day}}</small></td>
+              <td><small> {{schedule.time | slice:0:8}}</small></td>
+              <td><small> {{schedule.repeat}}</small></td>
+              <td><small> {{schedule.exclusive}}</small></td>
+            </tr>
           </table>
         </div>
       </div>
@@ -42,89 +40,72 @@
             </p>
           </header>
           <div class="card-content">
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Name</label>
-                  <div class="control">
-                    <input id="name" class="input" type="text" placeholder="Name">
+            <form name="form" (ngSubmit)="f.form.valid && createSchedule()" #f="ngForm" novalidate>
+              <div class="columns">
+                <div class="column">
+                  <div class="field" [ngClass]="{ 'has-error': f.submitted && !scheduler.valid }">
+                    <label class="label">Name</label>
+                    <p class="control">
+                      <input id="name" type="text" class="input" name="scheduler_name" [(ngModel)]="scheduler_name" #scheduler="ngModel" 
+                      placeholder="name" required />
+                    </p>
+                    <div *ngIf="f.submitted && !scheduler.valid" class="help is-danger level-left">Name is required</div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Process Name</label>
-                  <div class="control">
-                    <div class="select">
-                      <select>
-                        <option disabled>Select</option>
-                        <option [value]='process' *ngFor="let process of schedulesProcessData">{{process}}</option>
-                      </select>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Exclusive</label>
+                    <div class="control">
+                      <input id="exclusive" type="checkbox" checked>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Type</label>
-                  <div class="control">
-                    <div class="select">
-                      <select  #t (change)="setType(t.value)">
-                        <option disabled>Select</option>
-                        <option [value]='type' *ngFor="let type of scheduleTypeKeys()">{{type}}</option>
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Process Name</label>
+                    <div class="control">
+                      <div class="select">
+                        <select id="process">
+                        <option [value]='process' *ngFor="let process of scheduleProcess">{{process}}</option>
                       </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Type</label>
+                    <div class="control">
+                      <div class="select">
+                        <select id="type" #t (change)="setType(t.value)">
+                        <option [value]='type.index' *ngFor="let type of scheduleType">{{type.name}}</option>
+                      </select>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="column">
-                <div class="field">
-                  <label class="label">Exclusive</label>
-                  <div class="control">
-                    <input type="checkbox" checked>
+              <div class="columns">
+                <div class="column">
+                  <div class="field" [ngClass]="{ 'has-error': f.submitted && invalidRepeat }">
+                    <label class="label">Repeat (Interval)</label>
+                    <p class="control">
+                      <input id="repeat" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" 
+                      placeholder="hh:mm:ss" mask='00:00:00' (ngModelChange)="invalidRepeat=false">
+                    </p>
+                    <div *ngIf="f.submitted && invalidRepeat" class="help is-danger level-left">Repeat must be in 00:00:01, 23:59:59 range</div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Repeat (Interval)</label>
-                  <div class="control">
-                    <input id="repeat" class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00'>
-                    <!--<div class="columns">
-                      <div class="column">
-                        <div class="field">
-                          <input class="input" type="number" min="0" max="24" placeholder="hh">
-                        </div>
-                      </div>
-                      <div class="column">
-                        <div class="field">
-                          <input class="input" type="number" min="0" max="60" placeholder="mm">
-                        </div>
-                      </div>
-                      <div class="column">
-                        <div class="field">
-                          <input class="input" type="number" min="0" max="60" placeholder="ss">
-                        </div>
-                      </div>
-                    </div>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Day</label>
-                  <div class="control">
-                    <div class="select">
-                      <select>
-                        <option disabled>Select</option>
+              <div class="columns">
+                <div class="column">
+                  <div *ngIf="selectedType == 2" class="field">
+                    <label class="label">Day</label>
+                    <div class="control">
+                      <div class="select">
+                        <select id="day">
                         <option value='1'>Monday</option>
                         <option value='2'>Tuesday</option>
                         <option value='3'>Wednesday</option>
@@ -133,26 +114,31 @@
                         <option value='6'>Saturday</option>
                         <option value='7'>Sunday</option>
                       </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="column">
-                <div class="field">
-                  <label class="label">Time</label>
-                  <div class="control">
-                    <input id="time" class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00'>
-                  </div>
-                  <div class="column">
-                    <div class="field">
-                      <div class="control">
-                        <button id="save" class="button is-success is-pulled-right" (click)="createSchedule()">Save</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div class="column">
+                  <div *ngIf="selectedType == 2" class="field" [ngClass]="{ 'has-error': f.submitted && invalidTime }">
+                    <label class="label">Time</label>
+                    <p class="control">
+                      <input id="time" class="input" type='text' name="time" [(ngModel)]="invalidTime" #time="ngModel" 
+                      placeholder="hh:mm:ss" mask='00:00:00' (ngModelChange)="invalidTime=false">
+                    </p>
+                    <div *ngIf="f.submitted && invalidTime" class="help is-danger level-left">Time must be in 00:00:01, 23:59:59 range</div>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <div class="control">
+                      <button id="save" class="button is-success">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -180,17 +166,15 @@
                 <th>Reason</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let task of tasksData">
-                <td><small>{{task.pid}}</small></td>
-                <td><small>{{task.process_name}}</small></td>
-                <td><small>{{task.state}}</small></td>
-                <td><small>{{task.start_time != 'None' ?(task.start_time | date: 'dd-MM-yyyy HH:mm:ss') : task.start_time}}</small></td>
-                <td><small>{{task.end_time != 'None'?(task.end_time | date: 'dd-MM-yyyy HH:mm:ss') : task.end_time}}</small></td>
-                <td><small>{{task.exit_code}}</small></td>
-                <td><small>{{task.reason}}</small></td>
-              </tr>
-              <tbody>
+            <tr *ngFor="let task of tasksData">
+              <td><small>{{task.pid}}</small></td>
+              <td><small>{{task.process_name}}</small></td>
+              <td><small>{{task.state}}</small></td>
+              <td><small>{{task.start_time != 'None' ?(task.start_time | date: 'dd-MM-yyyy HH:mm:ss') : task.start_time}}</small></td>
+              <td><small>{{task.end_time != 'None'?(task.end_time | date: 'dd-MM-yyyy HH:mm:ss') : task.end_time}}</small></td>
+              <td><small>{{task.exit_code}}</small></td>
+              <td><small>{{task.reason}}</small></td>
+            </tr>
           </table>
         </div>
       </div>
