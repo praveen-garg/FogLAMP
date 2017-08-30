@@ -6,7 +6,9 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SchedulesService {
- private GET_SCHEDULE_PROCESS = environment.BASE_URL + "schedule/process"
+  
+  private GET_SCHEDULE_TYPE = environment.BASE_URL + "schedule/type"
+  private GET_SCHEDULE_PROCESS = environment.BASE_URL + "schedule/process"
   private GET_SCHEDULE = environment.BASE_URL + "schedule"
 
   private GET_TASK = environment.BASE_URL + "task"
@@ -15,10 +17,32 @@ export class SchedulesService {
   constructor(private http:Http) { }
 
   /**
+   *  GET | foglamp/schedule/type
+   */
+  public getScheduleType() {
+    return this.http.get(this.GET_SCHEDULE_TYPE)
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+
+  /**
    *  GET | /foglamp/schedule
    */
   public getSchedule() {
     return this.http.get(this.GET_SCHEDULE)
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+  /**
+   * Create schedule 
+   * 
+   * POST | /foglamp/schedule
+   * 
+   */
+  public createSchedule(payload:any){
+      return this.http.post(this.GET_SCHEDULE, JSON.stringify(payload))
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }

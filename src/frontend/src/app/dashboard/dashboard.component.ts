@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   constructor(private configService: ConfigurationService,
     private statisticsService: StatisticsService,
     private router: Router) {
+
     this.readingChart = "line";
     this.readingValues = [];
 

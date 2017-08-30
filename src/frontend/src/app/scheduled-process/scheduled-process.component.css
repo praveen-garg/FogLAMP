@@ -1,0 +1,23 @@
+.card-header{
+        background-color: whitesmoke;
+}
+
+.scroll thead { display: block; }
+
+.scroll tbody { display: block; }
+
+.scroll tbody {
+    height: 300px;      
+    overflow-y: scroll;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+.scroll th
+{
+padding:12px;
+}
+
+.scroll td
+{
+padding:8px;
+}
