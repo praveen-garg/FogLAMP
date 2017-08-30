@@ -86,6 +86,13 @@ export class ScheduledProcessComponent implements OnInit {
     let repeat_interval = <HTMLInputElement>document.getElementById("repeat")
     let exclusive_state = <HTMLInputElement>document.getElementById("exclusive")
 
+    var repeat_time = repeat_interval.value != '' ? this.converTimeToSec(repeat_interval.value) : 0
+    // check if time is in valid range
+    this.invalidRepeat = this.not_between(repeat_time)
+    if (this.invalidRepeat) {
+      return;
+    }
+
     // "schedule_type": [{"index": 1, "name": "STARTUP"},{"index": 2,"name": "TIMED"},
     // {"index": 3,"name": "INTERVAL"},{"index": 4,"name": "MANUAL"}]
     // For schedule type 'TIMED', show 'Day' and 'TIME' field on UI
@@ -95,14 +102,12 @@ export class ScheduledProcessComponent implements OnInit {
       var day = scheduler_day_field.value
       var time = scheduler_time_field.value
       var scheduled_time = time != '' ? this.converTimeToSec(time) : 0
-    }
-    var repeat_time = repeat_interval.value != '' ? this.converTimeToSec(repeat_interval.value) : 0
-    
-    // check if time is in valid range
-    this.invalidRepeat = this.not_between(repeat_time)
-    this.invalidTime = this.not_between(scheduled_time)
-    if (this.invalidRepeat || this.invalidTime) {
-      return;
+
+      // check if time is in valid range
+      this.invalidTime = this.not_between(scheduled_time)
+      if (this.invalidTime) {
+        return;
+      }
     }
 
     var payload = {
@@ -120,7 +125,7 @@ export class ScheduledProcessComponent implements OnInit {
         this.getSchedules()
       },
       error => { console.log("error", error) })
-    }
+  }
 
   /**
    * To check supplied time range 
