@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SchedulesService } from '../services/index';
+import { SchedulesService, AlertService } from '../services/index';
 
 @Component({
   selector: 'app-scheduled-process',
@@ -11,7 +11,6 @@ export class ScheduledProcessComponent implements OnInit {
   public scheduleProcess = []
   public scheduleType = []
   public tasksData = []
-
   // To handle field validtion on UI
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
@@ -19,7 +18,10 @@ export class ScheduledProcessComponent implements OnInit {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
-  constructor(private schedulesService: SchedulesService) { }
+  // to hold schedule id for delete
+  public schedule_id:string;
+
+  constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.getScheduleType()
@@ -148,4 +150,26 @@ export class ScheduledProcessComponent implements OnInit {
     var seconds = (+repeatTime[0]) * 60 * 60 + (+repeatTime[1]) * 60 + (+repeatTime[2])
     return seconds;
   }
+
+toggleDialog(id, isOpen:boolean) {
+    this.schedule_id = id;
+    let schedule_name = <HTMLDivElement>document.getElementById("modal-box")
+    if(isOpen){
+      schedule_name.classList.add('is-active')
+      return
+    }
+    schedule_name.classList.remove('is-active')
+}
+
+public delete(){
+     console.log(this.schedule_id)
+     this.schedulesService.deleteSchedule(this.schedule_id).
+      subscribe(
+      data => {
+        this.alertService.success("Schedule deleted successfully")
+        this.getSchedules()
+      },
+      error => { console.log("error", error) })
+      this.toggleDialog('',false) 
+    }
 }

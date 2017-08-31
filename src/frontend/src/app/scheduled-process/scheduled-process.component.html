@@ -8,7 +8,7 @@
           </p>
         </header>
         <div class="card-content">
-          <table  class="table is-striped is-narrow scroll">
+          <table class="table is-striped scroll">
             <thead id="head">
               <tr>
                 <th>Name</th>
@@ -17,6 +17,7 @@
                 <th>Time</th>
                 <th>Interval</th>
                 <th>Exclusive</th>
+                <th></th>
               </tr>
             </thead>
             <tr *ngFor="let schedule of scheduleData">
@@ -26,8 +27,23 @@
               <td><small> {{schedule.time | slice:0:8}}</small></td>
               <td><small> {{schedule.repeat}}</small></td>
               <td><small> {{schedule.exclusive}}</small></td>
+              <td>
+                <div (click)="toggleDialog(schedule.id, true)"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
+              </td>
             </tr>
           </table>
+          <div id="modal-box" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <section class="modal-card-body">
+                Are you sure?
+              </section>
+              <footer class="modal-card-foot">
+                <button class="button is-success" (click)= "delete()">Yes</button>
+                <button class="button" (click)= "toggleDialog('',false)"> No</button>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -46,8 +62,8 @@
                   <div class="field" [ngClass]="{ 'has-error': f.submitted && !scheduler.valid }">
                     <label class="label">Name</label>
                     <p class="control">
-                      <input id="name" type="text" class="input" name="scheduler_name" [(ngModel)]="scheduler_name" #scheduler="ngModel" 
-                      placeholder="name" required />
+                      <input id="name" type="text" class="input" name="scheduler_name" [(ngModel)]="scheduler_name" #scheduler="ngModel" placeholder="name"
+                        required />
                     </p>
                     <div *ngIf="f.submitted && !scheduler.valid" class="help is-danger level-left">Name is required</div>
                   </div>
@@ -92,8 +108,8 @@
                   <div class="field" [ngClass]="{ 'has-error': f.submitted && invalidRepeat }">
                     <label class="label">Repeat (Interval)</label>
                     <p class="control">
-                      <input id="repeat" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" 
-                      placeholder="hh:mm:ss" mask='00:00:00' (ngModelChange)="invalidRepeat=false">
+                      <input id="repeat" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" placeholder="hh:mm:ss"
+                        mask='00:00:00' (ngModelChange)="invalidRepeat=false">
                     </p>
                     <div *ngIf="f.submitted && invalidRepeat" class="help is-danger level-left">Repeat must be in 00:00:01, 23:59:59 range</div>
                   </div>
@@ -122,8 +138,8 @@
                   <div *ngIf="selected_schedule_type == 2" class="field" [ngClass]="{ 'has-error': f.submitted && invalidTime }">
                     <label class="label">Time</label>
                     <p class="control">
-                      <input id="time" class="input" type='text' name="time" [(ngModel)]="invalidTime" #time="ngModel" 
-                      placeholder="hh:mm:ss" mask='00:00:00' (ngModelChange)="invalidTime=false">
+                      <input id="time" class="input" type='text' name="time" [(ngModel)]="invalidTime" #time="ngModel" placeholder="hh:mm:ss" mask='00:00:00'
+                        (ngModelChange)="invalidTime=false">
                     </p>
                     <div *ngIf="f.submitted && invalidTime" class="help is-danger level-left">Time must be in 00:00:01, 23:59:59 range</div>
                   </div>
