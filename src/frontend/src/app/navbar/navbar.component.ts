@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   }
 
   pingService() {
-    console.log("pingService ...")
+    //console.log("pingService ...")
     this.configService.pingService()
       .subscribe(
       (data) => { 
@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
         console.log("error: " , error)
         this.ping_info = { is_alive:false, service_status:"service down" }
       },
-      () => console.log(this.ping_info)
+      //() => console.log(this.ping_info)
       );
   }
   start() {

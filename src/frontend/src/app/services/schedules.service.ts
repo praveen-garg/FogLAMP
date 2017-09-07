@@ -47,6 +47,19 @@ export class SchedulesService {
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
 
+ /**
+   * Delete schedule 
+   * 
+   * DELETE | /foglamp/{schedule_id} 
+   * 
+   */
+  public deleteSchedule(schedule_id:any){
+     return this.http.delete(this.GET_SCHEDULE + "/" + schedule_id)
+            .map(response => response.json())
+            .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+
   /**
    *  GET | /foglamp/schedule/process 
    */

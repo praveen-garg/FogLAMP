@@ -2,22 +2,18 @@
         background-color: whitesmoke;
 }
 
-.scroll thead { display: block; }
 
-.scroll tbody { display: block; }
-
-.scroll tbody {
-    height: 300px;      
-    overflow-y: scroll;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+ table.scroll {
+    overflow-x: hidden;
+    display: block;
+    height: 300px;
 }
 
-.scroll th
-{
-padding:12px;
+ table.scroll tbody {
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-.scroll td
-{
-padding:8px;
+.fa-minus-circle {
+    color: rgb(178,34,34)
 }

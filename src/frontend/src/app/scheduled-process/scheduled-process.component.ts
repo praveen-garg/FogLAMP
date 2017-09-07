@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SchedulesService } from '../services/index';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SchedulesService, AlertService } from '../services/index';
+
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-scheduled-process',
@@ -11,7 +13,6 @@ export class ScheduledProcessComponent implements OnInit {
   public scheduleProcess = []
   public scheduleType = []
   public tasksData = []
-
   // To handle field validtion on UI
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
@@ -19,7 +20,10 @@ export class ScheduledProcessComponent implements OnInit {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
-  constructor(private schedulesService: SchedulesService) { }
+  // Object to hold schedule id to delete 
+  public childData: any;
+  @ViewChild(ModalComponent) child: ModalComponent;
+  constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.getScheduleType()
@@ -147,5 +151,26 @@ export class ScheduledProcessComponent implements OnInit {
     var repeatTime = timeValue.split(':')
     var seconds = (+repeatTime[0]) * 60 * 60 + (+repeatTime[1]) * 60 + (+repeatTime[2])
     return seconds;
+  }
+
+  /**
+   * To reload schedule list after deletion of a schedule
+   * @param notify  
+   */
+  onNotify() {
+    this.getSchedules();
+  }
+
+  /**
+   * open modal dialog
+   * @param id  schedule id to delete
+   */
+  openModal(id) {
+    // call child component method to toggle modal
+    this.child.toggleModal(true)
+    this.childData = {
+      id: id,
+      clicked: true
+    }
   }
 }
