@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchedulesService, AlertService } from '../services/index';
+
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-scheduled-process',
@@ -18,9 +20,9 @@ export class ScheduledProcessComponent implements OnInit {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
-  // to hold schedule id for delete
-  public schedule_id:string;
-
+  // Object to hold schedule id to delete 
+  public childData: any;
+  @ViewChild(ModalComponent) child: ModalComponent;
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
@@ -151,25 +153,24 @@ export class ScheduledProcessComponent implements OnInit {
     return seconds;
   }
 
-toggleDialog(id, isOpen:boolean) {
-    this.schedule_id = id;
-    let schedule_name = <HTMLDivElement>document.getElementById("modal-box")
-    if(isOpen){
-      schedule_name.classList.add('is-active')
-      return
-    }
-    schedule_name.classList.remove('is-active')
-}
+  /**
+   * To reload schedule list after deletion of a schedule
+   * @param notify  
+   */
+  onNotify() {
+    this.getSchedules();
+  }
 
-public delete(){
-     console.log(this.schedule_id)
-     this.schedulesService.deleteSchedule(this.schedule_id).
-      subscribe(
-      data => {
-        this.alertService.success("Schedule deleted successfully")
-        this.getSchedules()
-      },
-      error => { console.log("error", error) })
-      this.toggleDialog('',false) 
+  /**
+   * open modal dialog
+   * @param id  schedule id to delete
+   */
+  openModal(id) {
+    // call child component method to toggle modal
+    this.child.toggleModal(true)
+    this.childData = {
+      id: id,
+      clicked: true
     }
+  }
 }

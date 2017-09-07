@@ -28,22 +28,11 @@
               <td><small> {{schedule.repeat}}</small></td>
               <td><small> {{schedule.exclusive}}</small></td>
               <td>
-                <div (click)="toggleDialog(schedule.id, true)"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
+                <div (click)="openModal(schedule.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
               </td>
             </tr>
           </table>
-          <div id="modal-box" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-              <section class="modal-card-body">
-                Are you sure?
-              </section>
-              <footer class="modal-card-foot">
-                <button class="button is-success" (click)= "delete()">Yes</button>
-                <button class="button" (click)= "toggleDialog('',false)"> No</button>
-              </footer>
-            </div>
-          </div>
+          <app-modal (notify)='onNotify($event)' [childData]='childData'></app-modal>
         </div>
       </div>
     </div>

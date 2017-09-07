@@ -27,7 +27,8 @@ import { AssetsComponent } from '../app/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
-import {NgxMaskModule} from 'ngx-mask'  
+import {NgxMaskModule} from 'ngx-mask';
+import { ModalComponent } from './modal/modal.component'  
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import {NgxMaskModule} from 'ngx-mask'
     NavbarComponent,
     AssetsComponent,
     AuditLogComponent,
-    InputDebounceComponent
+    InputDebounceComponent,
+    ModalComponent
   ],
   providers: [
     AuthGuard,
