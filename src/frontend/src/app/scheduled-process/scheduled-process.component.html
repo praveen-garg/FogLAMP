@@ -27,12 +27,16 @@
               <td><small> {{schedule.time | slice:0:8}}</small></td>
               <td><small> {{schedule.repeat}}</small></td>
               <td><small> {{schedule.exclusive}}</small></td>
+               <td>
+                <div (click)="editSchedule(schedule.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+              </td>
               <td>
                 <div (click)="openModal(schedule.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
               </td>
             </tr>
           </table>
           <app-modal (notify)='onNotify($event)' [childData]='childData'></app-modal>
+          <app-update-modal (notify)='onNotify($event)' [childData]='updateScheduleData'></app-update-modal>
         </div>
       </div>
     </div>

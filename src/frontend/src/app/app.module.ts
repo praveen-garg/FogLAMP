@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -28,12 +28,14 @@ import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
 import {NgxMaskModule} from 'ngx-mask';
-import { ModalComponent } from './modal/modal.component'  
+import { ModalComponent } from './modal/modal.component';
+import { UpdateModalComponent } from './update-modal/update-modal.component'  
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     routing,
     NgzioGaugeComponentModule,
@@ -56,7 +58,8 @@ import { ModalComponent } from './modal/modal.component'
     AssetsComponent,
     AuditLogComponent,
     InputDebounceComponent,
-    ModalComponent
+    ModalComponent,
+    UpdateModalComponent
   ],
   providers: [
     AuthGuard,

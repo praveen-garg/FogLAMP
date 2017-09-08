@@ -29,8 +29,17 @@ export class SchedulesService {
   /**
    *  GET | /foglamp/schedule
    */
-  public getSchedule() {
+  public getSchedules() {
     return this.http.get(this.GET_SCHEDULE)
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+  /**
+   *  GET | /foglamp/schedule/{schedule_id}
+   */
+  public getSchedule(schedule_id) {
+    return this.http.get(this.GET_SCHEDULE + "/" + schedule_id)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
@@ -46,6 +55,23 @@ export class SchedulesService {
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
+
+ /**
+   * Update schedule 
+   * 
+   * PUT | /foglamp/schedule/{schedule_id}
+   * 
+   */
+  public updateSchedule(schedule_id, payload:any){
+      console.log("schedule_id", schedule_id);
+      console.log("payload", payload);
+      
+      return this.http.put(this.GET_SCHEDULE+ "/" + schedule_id, JSON.stringify(payload))
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+
 
  /**
    * Delete schedule 

@@ -2,6 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchedulesService, AlertService } from '../services/index';
 
 import { ModalComponent } from '../modal/modal.component';
+import { UpdateModalComponent } from '../update-modal/update-modal.component';
+
+enum weekDays {
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6,
+    Sunday = 7
+}
+
 
 @Component({
   selector: 'app-scheduled-process',
@@ -13,6 +25,8 @@ export class ScheduledProcessComponent implements OnInit {
   public scheduleProcess = []
   public scheduleType = []
   public tasksData = []
+  public days = [];
+
   // To handle field validtion on UI
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
@@ -22,16 +36,27 @@ export class ScheduledProcessComponent implements OnInit {
 
   // Object to hold schedule id to delete 
   public childData: any;
+  public updateScheduleData: any;
+
   @ViewChild(ModalComponent) child: ModalComponent;
+  @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
+    this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value === 'string') as string[];
     this.getScheduleType()
     this.getSchedules()
     this.getSchedulesProcesses()
     this.getLatestTasks()
+    
+    this.updateScheduleData = {
+      schedule_process: this.scheduleProcess,
+      schedule_type: this.scheduleType,
+      days: this.days
+    }
   }
 
+  
   public getScheduleType(): void {
     this.schedulesService.getScheduleType().
       subscribe(
@@ -44,7 +69,7 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedules(): void {
     this.scheduleData = [];
-    this.schedulesService.getSchedule().
+    this.schedulesService.getSchedules().
       subscribe(
       data => {
         this.scheduleData = data.schedules
@@ -153,6 +178,19 @@ export class ScheduledProcessComponent implements OnInit {
     return seconds;
   }
 
+  editSchedule(id) {
+    console.log("Edit schedule", id)
+    this.updateScheduleData = {
+      id: id,
+      schedule_process: this.scheduleProcess,
+      schedule_type: this.scheduleType,
+      days: this.days 
+    }
+    console.log("update: " , this.updateScheduleData);
+    
+    this.updateModal.toggleModal(true)
+  }
+
   /**
    * To reload schedule list after deletion of a schedule
    * @param notify  
@@ -169,8 +207,7 @@ export class ScheduledProcessComponent implements OnInit {
     // call child component method to toggle modal
     this.child.toggleModal(true)
     this.childData = {
-      id: id,
-      clicked: true
+      id: id
     }
   }
 }

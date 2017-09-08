@@ -1,0 +1,100 @@
+<div id="update-modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Update Schedule</p>
+      <button class="delete" aria-label="close" (click)="toggleModal(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="card-content">
+        <form [formGroup]="form" (ngSubmit)="updateSchedule()" novalidate>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Name</label>
+                <p class="control">
+                  <input type="text" class="input" formControlName="name" placeholder="name" />
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Exclusive</label>
+                <div class="control">
+                  <input type="checkbox" checked formControlName="exclusive">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Process Name</label>
+                <div class="control">
+                  <div class="select">
+                    <select formControlName="process_name">
+                        <option  [value]='process' [selected]="process == process_name" *ngFor="let process of scheduleProcess">{{process}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Type</label>
+                <div class="control">
+                  <div class="select">
+                    <select [(ngModel)]="selectedValue" (change)="setScheduleTypeKey(selectedValue)" formControlName="type">
+                        <option  [selected]="type.name == type" [ngValue]="type.name" *ngFor="let type of scheduleType">{{type.name}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Repeat (Interval)</label>
+                <p class="control">
+                  <input class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00'>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div *ngIf="selected_schedule_type == 2" class="field">
+                <label class="label">Day</label>
+                <div class="control">
+                  <div class="select">
+                    <select formControlName="day">
+                         <option  [selected]="d == day" [ngValue]="d"  *ngFor="let d of days">{{d}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div *ngIf="selected_schedule_type == 2" class="field">
+                <label class="label">Time</label>
+                <p class="control">
+                  <input class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00' formControlName="time">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <button id="save" class="button is-success">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
