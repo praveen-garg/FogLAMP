@@ -1,4 +1,4 @@
-<div id="update-modal" class="modal">
+<div id="update_schedule_modal" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -7,14 +7,17 @@
     </header>
     <section class="modal-card-body">
       <div class="card-content">
-        <form [formGroup]="form" (ngSubmit)="updateSchedule()" novalidate>
+        <form [formGroup]="form" (ngSubmit)="f.form.valid && updateSchedule()" #f="ngForm" novalidate>
           <div class="columns">
             <div class="column">
-              <div class="field">
-                <label class="label">Name</label>
-                <p class="control">
-                  <input type="text" class="input" formControlName="name" placeholder="name" />
-                </p>
+              <div class="field" [ngClass]="{ 'has-error': f.submitted && !form.controls.name.valid }">
+                <div class="form-group">
+                  <label class="label">Name</label>
+                  <p class="control">
+                    <input type="text" class="input" formControlName="name" placeholder="name" required/>
+                  </p>
+                  <small *ngIf="f.submitted && !form.controls.name.valid" class="help is-danger level-left">Name is required</small>
+                </div>
               </div>
             </div>
             <div class="column">
@@ -29,11 +32,11 @@
           <div class="columns">
             <div class="column">
               <div class="field">
-                <label class="label">Process Name</label>
+                <label class="label">Process</label>
                 <div class="control">
                   <div class="select">
                     <select formControlName="process_name">
-                        <option  [value]='process' [selected]="process == process_name" *ngFor="let process of scheduleProcess">{{process}}</option>
+                        <option  [selected]="process == process_name" *ngFor="let process of scheduleProcess">{{process}}</option>
                       </select>
                   </div>
                 </div>
@@ -44,9 +47,9 @@
                 <label class="label">Type</label>
                 <div class="control">
                   <div class="select">
-                    <select [(ngModel)]="selectedValue" (change)="setScheduleTypeKey(selectedValue)" formControlName="type">
-                        <option  [selected]="type.name == type" [ngValue]="type.name" *ngFor="let type of scheduleType">{{type.name}}</option>
-                      </select>
+                    <select [(ngModel)]="selectedValue" (change)="selected_schedule_type = setScheduleTypeKey(selectedValue)" formControlName="type">
+                        <option  [selected]="type.name == type"  *ngFor="let type of scheduleType">{{type.name}}</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -54,11 +57,15 @@
           </div>
           <div class="columns">
             <div class="column">
-              <div class="field">
+              <div class="field" [ngClass]="{ 'has-error': f.submitted && isValidRepeatRange}">
                 <label class="label">Repeat (Interval)</label>
-                <p class="control">
-                  <input class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00'>
-                </p>
+                <div class="columns">
+                  <div class="column">
+                    <input id="repeat_day" class="input" type='number' min="0" max="365" placeholder="days" formControlName="repeatDay">
+                    <input id="repeat_time" class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00'>
+                  </div>
+                </div>
+                <small *ngIf="f.submitted && isValidRepeatRange" class="help is-danger level-left">Repeat must be in 00:00:00 or greater</small>
               </div>
             </div>
           </div>
@@ -68,19 +75,20 @@
                 <label class="label">Day</label>
                 <div class="control">
                   <div class="select">
-                    <select formControlName="day">
-                         <option  [selected]="d == day" [ngValue]="d"  *ngFor="let d of days">{{d}}</option>
+                    <select [(ngModel)]="selectedDay" (change)="selected_day_index = getSelectedDayIndex(selectedDay)" formControlName="day">
+                         <option  [selected]="d == day" *ngFor="let d of days">{{d}}</option>
                       </select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="column">
-              <div *ngIf="selected_schedule_type == 2" class="field">
+              <div *ngIf="selected_schedule_type == 2" class="field" [ngClass]="{ 'has-error': f.submitted && isValidTimeRange}">
                 <label class="label">Time</label>
                 <p class="control">
                   <input class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00' formControlName="time">
                 </p>
+                <small *ngIf="f.submitted && isValidTimeRange" class="help is-danger level-left">Time must be in 00:00:00 or 23:59:59 range</small>
               </div>
             </div>
           </div>
@@ -89,6 +97,7 @@
               <div class="field">
                 <div class="control">
                   <button id="save" class="button is-success">Save</button>
+                  <button id="cancel" class="button is-danger" (click)="toggleModal(false)">Cancel</button>
                 </div>
               </div>
             </div>

@@ -4,14 +4,16 @@ import { SchedulesService, AlertService } from '../services/index';
 import { ModalComponent } from '../modal/modal.component';
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
 
+import Utils from '../utils'
+
 enum weekDays {
-    Monday = 1,
-    Tuesday = 2,
-    Wednesday = 3,
-    Thursday = 4,
-    Friday = 5,
-    Saturday = 6,
-    Sunday = 7
+  Monday = 1,
+  Tuesday = 2,
+  Wednesday = 3,
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6,
+  Sunday = 7
 }
 
 
@@ -48,15 +50,14 @@ export class ScheduledProcessComponent implements OnInit {
     this.getSchedules()
     this.getSchedulesProcesses()
     this.getLatestTasks()
-    
+
     this.updateScheduleData = {
       schedule_process: this.scheduleProcess,
       schedule_type: this.scheduleType,
-      days: this.days
+      day: this.days
     }
   }
 
-  
   public getScheduleType(): void {
     this.schedulesService.getScheduleType().
       subscribe(
@@ -73,6 +74,19 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
         this.scheduleData = data.schedules
+        this.scheduleData.forEach(element => {
+          let repeatTimeObj = Utils.secondsToDhms(element.repeat);
+          if (repeatTimeObj.days == 1) {
+            element.repeat = repeatTimeObj.days + " day, " + repeatTimeObj.time
+          } else if (repeatTimeObj.days > 1) {
+            element.repeat = repeatTimeObj.days + " days, " + repeatTimeObj.time
+          } else {
+            element.repeat = repeatTimeObj.time;
+          }
+
+          // Time 
+          element.time = Utils.secondsToDhms(element.time).time;
+        });
         console.log("This is the getSchedule ", data.schedules)
       },
       error => { console.log("error", error) });
@@ -109,19 +123,30 @@ export class ScheduledProcessComponent implements OnInit {
   }
 
   public createSchedule() {
-    let schedule_name = <HTMLInputElement>document.getElementById("name")
-    let schedule_process = <HTMLSelectElement>document.getElementById("process")
-    let schedule_type = <HTMLSelectElement>document.getElementById("type")
+    let schedule_name_fld = <HTMLInputElement>document.getElementById("name")
+    let schedule_process_fld = <HTMLSelectElement>document.getElementById("process")
+    let schedule_type_fld = <HTMLSelectElement>document.getElementById("type")
 
-    let exclusive_state = <HTMLInputElement>document.getElementById("exclusive")
+    let exclusive_state_fld = <HTMLInputElement>document.getElementById("exclusive")
 
-    let repeat_interval_fld = <HTMLInputElement>document.getElementById("repeat")
-    var repeat_time = repeat_interval_fld.value != '' ? this.converTimeToSec(repeat_interval_fld.value) : 0
+    let repeat_day_fld = <HTMLInputElement>document.getElementById("rday")
+    let repeat_time_fld = <HTMLInputElement>document.getElementById("rtime")
+
     // check if time is in valid range
-    this.invalidRepeat = this.not_between(repeat_time)
+    this.invalidRepeat = Utils.not_between(repeat_time_fld.value)
     if (this.invalidRepeat) {
       return;
     }
+
+    let day_fld = <HTMLSelectElement>document.getElementById("day")
+
+    let time_fld = <HTMLInputElement>document.getElementById("time")
+    let day = 0;
+    let scheduled_time = 0;
+   
+
+    // total time with days and hh:mm:ss
+    let total_repeat_time = repeat_time_fld.value != '' ? Utils.convertTimeToSec(repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined
 
     /**
      *  "schedule_type": [
@@ -131,63 +156,57 @@ export class ScheduledProcessComponent implements OnInit {
      *      {"index": 4,"name": "MANUAL"}]
      *      For schedule type 'TIMED', show 'Day' and 'TIME' field on UI
      */
-    if (this.selected_schedule_type == 2) {
-      var day_fld = <HTMLSelectElement>document.getElementById("day")
-      var day = day_fld.value
-
-      var time_fld = <HTMLInputElement>document.getElementById("time")
-      var scheduled_time = time_fld.value != '' ? this.converTimeToSec(time_fld.value) : 0
-
+    if (this.selected_schedule_type == 2) {  // Condition to check if schedule type is TIMED == 2
+      day = Number(day_fld.value)
       // check if time is in valid range
-      this.invalidTime = this.not_between(scheduled_time)
+      this.invalidTime = Utils.not_between(time_fld.value)
       if (this.invalidTime) {
         return;
       }
+      // Time value in seconds for TIMED schedule
+      scheduled_time = time_fld.value != '' ? Utils.convertTimeToSec(time_fld.value) : undefined
     }
 
-    var payload = {
-      "name": schedule_name.value,
-      "process_name": schedule_process.value,
-      "type": schedule_type.value,
-      "repeat": repeat_time,
+    let payload = {
+      "name": schedule_name_fld.value,
+      "process_name": schedule_process_fld.value,
+      "type": schedule_type_fld.value,
+      "repeat": total_repeat_time,
       "day": day,
       "time": scheduled_time,
-      "exclusive": exclusive_state.checked
+      "exclusive": exclusive_state_fld.checked
     }
     this.schedulesService.createSchedule(payload).
       subscribe(
       data => {
-        this.getSchedules()
+        this.getSchedules();
+
+        // Clear form fields 
+        schedule_name_fld.value = ''
+        repeat_day_fld.value = ''
+        repeat_time_fld.value = ''
+        schedule_process_fld.value = this.scheduleProcess[0]; // set process dropdown to 0 index value
+        schedule_type_fld.value = '1';
+        this.setScheduleTypeKey(1) // To set schedule type key globally for required field handling on UI
+        time_fld != undefined ? time_fld.value = '' : 0
       },
       error => { console.log("error", error) })
   }
 
   /**
-   * To check supplied time range 
-   * @param time in seconds
+   * toggle update modal and pass recod info to update
+   * @param id Record id for update
    */
-  public not_between(time) {
-    // To check if Time in 00:00:01, 23:59:59 range
-    return time == 0 || time >= 86400
-  }
-
-  // Convert time in seconds 
-  converTimeToSec(timeValue) {
-    var repeatTime = timeValue.split(':')
-    var seconds = (+repeatTime[0]) * 60 * 60 + (+repeatTime[1]) * 60 + (+repeatTime[2])
-    return seconds;
-  }
-
-  editSchedule(id) {
+  private editSchedule(id) {
     console.log("Edit schedule", id)
     this.updateScheduleData = {
       id: id,
       schedule_process: this.scheduleProcess,
       schedule_type: this.scheduleType,
-      days: this.days 
+      day: this.days
     }
-    console.log("update: " , this.updateScheduleData);
-    
+    console.log("update: ", this.updateScheduleData);
+
     this.updateModal.toggleModal(true)
   }
 
@@ -200,7 +219,7 @@ export class ScheduledProcessComponent implements OnInit {
   }
 
   /**
-   * open modal dialog
+   * Open delete record modal dialog
    * @param id  schedule id to delete
    */
   openModal(id) {

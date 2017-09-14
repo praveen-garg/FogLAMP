@@ -51,6 +51,8 @@ export class SchedulesService {
    * 
    */
   public createSchedule(payload:any){
+      console.log("Payload", payload);
+      
       return this.http.post(this.GET_SCHEDULE, JSON.stringify(payload))
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))

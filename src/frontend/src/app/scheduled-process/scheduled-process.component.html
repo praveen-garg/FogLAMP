@@ -24,7 +24,7 @@
               <td><small>{{schedule.name}}</small></td>
               <td><small> {{schedule.type}}</small></td>
               <td><small> {{schedule.day}}</small></td>
-              <td><small> {{schedule.time | slice:0:8}}</small></td>
+              <td><small> {{schedule.time}}</small></td>
               <td><small> {{schedule.repeat}}</small></td>
               <td><small> {{schedule.exclusive}}</small></td>
                <td>
@@ -73,7 +73,7 @@
               <div class="columns">
                 <div class="column">
                   <div class="field">
-                    <label class="label">Process Name</label>
+                    <label class="label">Process</label>
                     <div class="control">
                       <div class="select">
                         <select id="process">
@@ -101,10 +101,13 @@
                   <div class="field" [ngClass]="{ 'has-error': f.submitted && invalidRepeat }">
                     <label class="label">Repeat (Interval)</label>
                     <p class="control">
-                      <input id="repeat" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" placeholder="hh:mm:ss"
-                        mask='00:00:00' (ngModelChange)="invalidRepeat=false">
+                      <input id="rday" class="input" type='number' min="0" max="365" placeholder="days">
+                      <input id="rtime" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" placeholder="hh:mm:ss"
+                        mask='00:00:00' (ngModelChange)="invalidRepeat=false"> 
                     </p>
-                    <div *ngIf="f.submitted && invalidRepeat" class="help is-danger level-left">Repeat must be in 00:00:01, 23:59:59 range</div>
+                  </div>
+                  <div class="field">
+                    <small id="error" *ngIf="f.submitted && invalidRepeat" class="help is-danger">Repeat hours must be in 00:00:00, 23:59:59 range</small>
                   </div>
                 </div>
               </div>
@@ -134,7 +137,7 @@
                       <input id="time" class="input" type='text' name="time" [(ngModel)]="invalidTime" #time="ngModel" placeholder="hh:mm:ss" mask='00:00:00'
                         (ngModelChange)="invalidTime=false">
                     </p>
-                    <div *ngIf="f.submitted && invalidTime" class="help is-danger level-left">Time must be in 00:00:01, 23:59:59 range</div>
+                    <div *ngIf="f.submitted && invalidTime" class="help is-danger level-left">Time must be in 00:00:00, 23:59:59 range</div>
                   </div>
                 </div>
               </div>
