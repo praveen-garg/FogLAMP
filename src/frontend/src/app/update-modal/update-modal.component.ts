@@ -55,8 +55,6 @@ export class UpdateModalComponent implements OnInit {
    * @param value  
    */
   public setScheduleTypeKey(value) {
-    console.log("The value is", value);
-
     if (value != undefined) {
       return this.scheduleType.find(object => object.name === value).index
     }
@@ -66,7 +64,6 @@ export class UpdateModalComponent implements OnInit {
    * getSelectedDay
    */
   public getSelectedDay(index) {
-    console.log("Selected day index", this.days);
     let selected_day = this.days[index - 1]
     return selected_day
   }
@@ -76,7 +73,6 @@ export class UpdateModalComponent implements OnInit {
    */
   public getSelectedDayIndex(day) {
     let day_index = this.days.indexOf(day) + 1;
-    console.log("Selected day index", day_index);
     return day_index
   }
 
@@ -91,7 +87,6 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.getSchedule(id).
       subscribe(
       data => {
-        console.log("DATA VALUE IS ", data)
         if (data.type == 'TIMED') {
           this.selected_schedule_type = this.setScheduleTypeKey(data.type)
           schedule_day = this.getSelectedDay(data.day)

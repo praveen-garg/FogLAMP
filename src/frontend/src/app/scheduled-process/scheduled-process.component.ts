@@ -198,15 +198,12 @@ export class ScheduledProcessComponent implements OnInit {
    * @param id Record id for update
    */
   private editSchedule(id) {
-    console.log("Edit schedule", id)
     this.updateScheduleData = {
       id: id,
       schedule_process: this.scheduleProcess,
       schedule_type: this.scheduleType,
       day: this.days
     }
-    console.log("update: ", this.updateScheduleData);
-
     this.updateModal.toggleModal(true)
   }
 

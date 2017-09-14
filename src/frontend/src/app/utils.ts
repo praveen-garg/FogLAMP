@@ -59,8 +59,6 @@ export default class Utils {
      * @param time in seconds
      */
   public static not_between(time) {
-    console.log("Not beetween", time);
-    
     if (time == undefined || time == "") {
       return true;
     }
@@ -83,6 +81,5 @@ export default class Utils {
     
     return totalSec < 0 || totalSec >= 86400
   }
-
 }
 
