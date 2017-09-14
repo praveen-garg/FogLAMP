@@ -7,7 +7,7 @@ import { SchedulesService, AlertService } from '../services/index';
   templateUrl: './modal.component.html'
 })
 export class ModalComponent implements OnInit {
-  @Input() childData: { id: Number, clicked: Boolean };
+  @Input() childData: { id: Number };
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
