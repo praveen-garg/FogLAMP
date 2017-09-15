@@ -27,7 +27,7 @@
               <td><small> {{schedule.time}}</small></td>
               <td><small> {{schedule.repeat}}</small></td>
               <td><small> {{schedule.exclusive}}</small></td>
-               <td>
+              <td>
                 <div (click)="editSchedule(schedule.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
               </td>
               <td>
@@ -103,7 +103,7 @@
                     <p class="control">
                       <input id="rday" class="input" type='number' min="0" max="365" placeholder="days">
                       <input id="rtime" class="input" type='text' name="repeat" [(ngModel)]="invalidRepeat" #range="ngModel" placeholder="hh:mm:ss"
-                        mask='00:00:00' (ngModelChange)="invalidRepeat=false"> 
+                        mask='00:00:00' (ngModelChange)="invalidRepeat=false">
                     </p>
                   </div>
                   <div class="field">
@@ -161,9 +161,15 @@
     <div class="tile is-parent">
       <div class="tile is-child card">
         <header class="card-header">
-          <p class="card-header-title">
-            Latest Tasks
-          </p>
+          <div class="card-header-title">
+            Tasks &nbsp;
+            <div class="select" (change)="getTasks($event.target.value)">
+              <select id="process">
+                <option >Latest</option>
+                <option >Running</option>
+              </select>
+            </div>
+          </div>
         </header>
         <div class="card-content">
           <table class="table is-striped is-narrow">
@@ -186,6 +192,7 @@
               <td><small>{{task.end_time != 'None'?(task.end_time | date: 'dd-MM-yyyy HH:mm:ss') : task.end_time}}</small></td>
               <td><small>{{task.exit_code}}</small></td>
               <td><small>{{task.reason}}</small></td>
+              <td><button *ngIf ="'RUNNING' == task.state" class="button is-small is-danger">Cancel</button></td>
             </tr>
           </table>
         </div>
