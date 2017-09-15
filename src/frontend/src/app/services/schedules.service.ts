@@ -11,8 +11,9 @@ export class SchedulesService {
   private GET_SCHEDULE_PROCESS = environment.BASE_URL + "schedule/process"
   private GET_SCHEDULE = environment.BASE_URL + "schedule"
 
-  private GET_TASK = environment.BASE_URL + "task"
+  private GET_TASKS = environment.BASE_URL + "task"
   private GET_LATEST_TASK = environment.BASE_URL + "task/latest"
+  private CANCEL_TASK = environment.BASE_URL + "task/cancel"
 
   constructor(private http:Http) { }
 
@@ -105,5 +106,25 @@ export class SchedulesService {
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
+
+  /**
+   *  GET | /foglamp/task
+   */
+  public getTasks(state:string) {
+     let params: URLSearchParams = new URLSearchParams();
+    return this.http.get(this.GET_TASKS, { params: {state:state} })
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
+  /**
+   *  PUT | /foglamp/task/cancel/{task_id}
+   */
+  public cancelTask(id) {
+    return this.http.put(this.CANCEL_TASK, id)
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
+  }
+
 
 }

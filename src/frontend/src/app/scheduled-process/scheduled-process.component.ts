@@ -103,13 +103,42 @@ export class ScheduledProcessComponent implements OnInit {
       error => { console.log("error", error) });
   }
 
+  /**
+   * Get tasks by state {RUNNING, LATEST}
+   * @param state Task state
+   */
+  public getTasks(state) {
+    if (state.toUpperCase() == 'RUNNING') {
+      this.getRunningTasks();
+      return;
+    }
+    this.getLatestTasks();
+  }
+
+  /**
+   * Get latest tasks
+   */
   public getLatestTasks(): void {
     this.tasksData = [];
     this.schedulesService.getLatestTask().
       subscribe(
       data => {
         this.tasksData = data.tasks;
-        console.log("Tasks data", data.tasks)
+        console.log("Latest tasks ", data.tasks)
+      },
+      error => { console.log("error", error) })
+  }
+
+  /**
+   * Get running tasks
+   */
+  public getRunningTasks(): void {
+    this.tasksData = [];
+    this.schedulesService.getTasks("RUNNING").
+      subscribe(
+      data => {
+        this.tasksData = data.tasks;
+        console.log("Running tasks ", this.tasksData)
       },
       error => { console.log("error", error) })
   }
@@ -143,7 +172,7 @@ export class ScheduledProcessComponent implements OnInit {
     let time_fld = <HTMLInputElement>document.getElementById("time")
     let day = 0;
     let scheduled_time = 0;
-   
+
 
     // total time with days and hh:mm:ss
     let total_repeat_time = repeat_time_fld.value != '' ? Utils.convertTimeToSec(repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined
