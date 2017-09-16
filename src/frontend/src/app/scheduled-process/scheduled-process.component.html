@@ -166,7 +166,7 @@
             <div class="select" (change)="getTasks($event.target.value)">
               <select ng-model="selectedTaskType" id="task-state">
                 <option>Latest</option>
-                <option >Running</option>
+                <option>Running</option>
               </select>
             </div>
           </div>
@@ -175,7 +175,6 @@
           <table class="table is-striped is-narrow">
             <thead>
               <tr>
-                <th>PID</th>
                 <th>Process</th>
                 <th>State</th>
                 <th>Start time</th>
@@ -185,7 +184,6 @@
               </tr>
             </thead>
             <tr *ngFor="let task of tasksData">
-              <td><small>{{task.pid}}</small></td>
               <td><small>{{task.process_name}}</small></td>
               <td><small>{{task.state}}</small></td>
               <td><small>{{task.start_time != 'None' ?(task.start_time | date: 'dd-MM-yyyy HH:mm:ss') : task.start_time}}</small></td>
