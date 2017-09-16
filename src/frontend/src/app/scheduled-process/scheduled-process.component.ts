@@ -32,6 +32,7 @@ export class ScheduledProcessComponent implements OnInit {
   // To handle field validtion on UI
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
+  public selectedTaskType = 'Latest' // Default is LATEST  
 
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
@@ -137,11 +138,35 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getTasks("RUNNING").
       subscribe(
       data => {
+        if(data.error){
+           this.alertService.error(data.error)
+        }
         this.tasksData = data.tasks;
         console.log("Running tasks ", this.tasksData)
       },
       error => { console.log("error", error) })
   }
+
+  public cancelRunninTask(id){
+    console.log("ID", id);
+     this.schedulesService.cancelTask(id).
+      subscribe(
+      data => {
+        if(data.error){
+           this.alertService.error(data.error)
+        }
+        if(data.message){
+          this.selectedTaskType = 'Running';
+          setTimeout(()=>
+          {this.getRunningTasks()},300);
+          this.alertService.success(data.message)
+          this.getRunningTasks();
+        }
+      },
+      error => { console.log("error", error) })
+  }
+  
+
 
   /**
    *  To set schedule type key globally for required field handling on UI

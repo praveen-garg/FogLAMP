@@ -121,10 +121,9 @@ export class SchedulesService {
    *  PUT | /foglamp/task/cancel/{task_id}
    */
   public cancelTask(id) {
-    return this.http.put(this.CANCEL_TASK, id)
+    let body = JSON.stringify({ "id": id });
+    return this.http.put(this.CANCEL_TASK +"/"+ id, body)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'))
   }
-
-
 }
