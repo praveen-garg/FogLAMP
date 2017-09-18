@@ -35,4 +35,26 @@ stop: `nginx -s stop`
 
 ## start with nginx
 
-`npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:8080
+`npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:
+
+## REST API URL Configuration:
+
+### Dev Mode:
+ Set api base URL in `environments/environment.ts` file  
+
+### Production Mode:
+Set api base URL in `environments/environment.prod.ts` file  
+
+
+## Third Party Libraries used
+[canvas-gauges](https://github.com/Mikhus/canvas-gauges) `MIT license`
+
+[@types/canvas-gauges](https://www.npmjs.com/package/@types/canvas-gauges) `MIT license`
+
+[chart.js](https://github.com/chartjs/Chart.js/) `MIT license` 
+
+[core-js](https://github.com/zloirock/core-js) `MIT license`
+
+[loadash](https://lodash.com/) `@Copyright JS Foundation` [Copyright](https://js.foundation/)
+
+[ngx-mask](https://github.com/NepipenkoIgor/ngx-mask)
