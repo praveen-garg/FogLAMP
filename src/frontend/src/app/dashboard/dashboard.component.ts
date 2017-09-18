@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfigurationService, StatisticsService } from '../services/index';
+import { StatisticsService } from '../services/index';
 import Utils from '../utils'
 
 @Component({
@@ -9,8 +8,6 @@ import Utils from '../utils'
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  congfigurationData = [];
-  categoryData = [];
   statisticsData = [];
   statHistoryData = [];
 
@@ -23,9 +20,7 @@ export class DashboardComponent implements OnInit {
   sentChart: string;
   sentValues: any;
 
-  constructor(private configService: ConfigurationService,
-    private statisticsService: StatisticsService,
-    private router: Router) {
+  constructor(private statisticsService: StatisticsService) {
 
     this.readingChart = "line";
     this.readingValues = [];
@@ -38,34 +33,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCategories();
     this.getStatistics();
     this.getStatisticsHistory();
-  }
-
-  public getCategories(): void {
-    this.configService.getCategories().
-      subscribe(
-      data => {
-        this.congfigurationData = data.categories;
-        console.log("This is the congfigurationData ", this.congfigurationData);
-        this.congfigurationData.forEach(element => {
-          this.getCategory(element.key);
-        });
-      },
-      error => { console.log("error", error) });
-  }
-
-  public getCategory(category_name: string): void {
-
-    this.configService.getCategory(category_name).
-      subscribe(
-      data => {
-        this.categoryData[category_name.trim()] = data
-        console.log("This is the categoryData ", this.categoryData);
-      },
-      error => { console.log("error", error) });
-
   }
 
   public getStatistics(): void {
@@ -90,34 +59,26 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
         this.statHistoryData = data.statistics;
+        console.log("Statistics History Data", data);
         this.statHistoryData.forEach(element => {
           Object.keys(element).forEach(aKey => {
             if (aKey.indexOf("READINGS") !== -1) {
               readingsValues.push(element[aKey])
               var tempDt = element['history_ts'];
-              console.log("This is the recieved", tempDt);
               readingsLabels.push(Utils.formateDate(tempDt))
-              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
             if (aKey.indexOf("PURGED") !== -1 && aKey.indexOf("UNSNPURGED") == -1) {
               purgedValues.push(element[aKey])
               var tempDt = element['history_ts'];
-              console.log("This is the recieved", tempDt);
               purgedLabels.push(Utils.formateDate(tempDt))
-              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
-            if (aKey.indexOf("SENT") !== -1 && aKey.indexOf("UNSENT") == -1) {
+            if (aKey.indexOf("SENT_1") !== -1 && aKey.indexOf("UNSENT") == -1) {
               sentValues.push(element[aKey])
               var tempDt = element['history_ts'];
-              console.log("This is the recieved", tempDt);
               sentLabels.push(Utils.formateDate(tempDt))
-              console.log("This is the formatted", Utils.formateDate(tempDt));
             }
           });
         });
-        console.log("This is the history readings ", readingsValues);
-        console.log("This is the stats history for purge: ", purgedValues);
-        console.log("This is the history sent ", sentValues);
         this.statsHistoryReadingsGraph(readingsLabels, readingsValues);
         this.statsHistoryPurgedGraph(purgedLabels, purgedValues);
         this.statsHistorySentGraph(sentLabels, sentValues);
@@ -165,17 +126,5 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
-  }
-
-  public showModal(config_item_key) {
-    console.log("show:", config_item_key)
-    var el = document.getElementById(config_item_key);
-    el.classList.add('is-active');
-  }
-
-  public closeModal(config_item_key) {
-    console.log("close:", config_item_key)
-    var el = document.getElementById(config_item_key);
-    el.classList.remove('is-active');
   }
 }
