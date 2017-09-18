@@ -32,6 +32,7 @@ export class ScheduledProcessComponent implements OnInit {
   // To handle field validtion on UI
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
+  public selectedTaskType = 'Latest' // Default is LATEST  
 
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
@@ -109,9 +110,11 @@ export class ScheduledProcessComponent implements OnInit {
    */
   public getTasks(state) {
     if (state.toUpperCase() == 'RUNNING') {
+      this.selectedTaskType = "Running" 
       this.getRunningTasks();
       return;
     }
+    this.selectedTaskType = "Latest" 
     this.getLatestTasks();
   }
 
@@ -137,11 +140,41 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getTasks("RUNNING").
       subscribe(
       data => {
+        if (data.error) {
+          this.alertService.error(data.error)
+        }
         this.tasksData = data.tasks;
         console.log("Running tasks ", this.tasksData)
       },
       error => { console.log("error", error) })
   }
+
+  public cancelRunninTask(id) {
+    console.log("Task UUID:", id);
+    this.schedulesService.cancelTask(id).
+      subscribe(
+      data => {
+        if (data.error) {
+          this.alertService.error(data.error)
+        }
+        if (data.message) {   
+          this.alertService.success(data.message + " Wait for 5 seconds!")
+          // TODO: remove cancelled task object from local list
+          setTimeout(()=>{ 
+            console.log("waiting...", this.selectedTaskType)
+            if (this.selectedTaskType == 'Running'){
+              this.getRunningTasks()
+            }
+            else {
+              this.getLatestTasks()
+            }
+          }, 5000);   
+        }
+      },
+      error => { console.log("error", error) })
+  }
+
+
 
   /**
    *  To set schedule type key globally for required field handling on UI
