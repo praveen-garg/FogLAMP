@@ -35,7 +35,7 @@ stop: `nginx -s stop`
 
 ## start with nginx
 
-`npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:
+`npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:8080
 
 ## REST API URL Configuration:
 
@@ -46,15 +46,22 @@ stop: `nginx -s stop`
 Set api base URL in `environments/environment.prod.ts` file  
 
 
-## Third Party Libraries used
-[canvas-gauges](https://github.com/Mikhus/canvas-gauges) `MIT license`
+## Used Libraries:
 
-[@types/canvas-gauges](https://www.npmjs.com/package/@types/canvas-gauges) `MIT license`
+#### Core:
+ Library      |   Version     | Latest Stable (? Y/n) | License
+------------- | ------------- | --------------------  | ------------
+ Angular 4    | 4.0.0         |        4.4.3          | MIT License
+ Angular CLI  | 1.2.4         |        1.4.2          | MIT License
+ TypeScript   | 2.4.2         |        2.5            | Apache License 2.0
+ rxjs         | 5.4.1         |        5.4.3          | Apache License 2.0
 
-[chart.js](https://github.com/chartjs/Chart.js/) `MIT license` 
 
-[core-js](https://github.com/zloirock/core-js) `MIT license`
-
-[loadash](https://lodash.com/) `@Copyright JS Foundation` [Copyright](https://js.foundation/)
-
-[ngx-mask](https://github.com/NepipenkoIgor/ngx-mask)
+#### Dev:
+ Library      |   Version     | Latest Stable (? Y/n) | License
+------------- | ------------- | --------------------  | ------------
+canvas-gauges |  2.1.4        |        Yes            | MIT license
+chart.js      |  2.6.0        |        2.7.0          | MIT license
+core-js       |  2.4.1        |        2.5.1          | MIT license
+loadash       |  4.17.4       |        Yes            | [@Copyright](https://js.foundation/)
+ngx-mask      |  1.0.3        |        Yes            | MIT license
