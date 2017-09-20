@@ -36,3 +36,32 @@ stop: `nginx -s stop`
 ## start with nginx
 
 `npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:8080
+
+## REST API URL Configuration:
+
+### Dev Mode:
+ Set api base URL in `environments/environment.ts` file  
+
+### Production Mode:
+Set api base URL in `environments/environment.prod.ts` file  
+
+
+## Used Libraries:
+
+#### Core:
+ Library      |   Version     | Latest Stable (? Y/n) | License
+------------- | ------------- | --------------------  | ------------
+ Angular 4    | 4.0.0         |        4.4.3          | MIT 
+ Angular CLI  | 1.2.4         |        1.4.2          | MIT 
+ TypeScript   | 2.4.2         |        2.5            | Apache 2.0
+ rxjs         | 5.4.1         |        5.4.3          | Apache 2.0
+
+
+#### Dev:
+ Library      |   Version     | Latest Stable (? Y/n) | License
+------------- | ------------- | --------------------  | ------------
+canvas-gauges |  2.1.4        |        Yes            | MIT 
+chart.js      |  2.6.0        |        2.7.0          | MIT 
+core-js       |  2.4.1        |        2.5.1          | MIT 
+loadash       |  4.17.4       |        Yes            | MIT
+ngx-mask      |  1.0.3        |        Yes            | MIT 
