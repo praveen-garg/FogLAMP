@@ -1,13 +1,16 @@
-.app-navbar {
+/*.app-navbar {
     position: fixed;
     min-width: 100%;
     max-height: 20%;
-    z-index: 2024;
     box-shadow: 0 2px 3px hsla(0,0%,7%,.1), 0 0 0 1px hsla(0,0%,7%,.1);
-}
+}*/
 
-.app-main{
+/*.app-main{
     padding-top: 5%;
     margin-left: 10%;
     
+}*/
+
+.ng-sidebar-container{
+    height: 100vh;
 }

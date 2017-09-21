@@ -30,6 +30,7 @@ import { InputDebounceComponent } from '../app/input-debounce/input-debounce.com
 import {NgxMaskModule} from 'ngx-mask';
 import { ModalComponent } from './modal/modal.component';
 import { UpdateModalComponent } from './update-modal/update-modal.component'  
+import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { UpdateModalComponent } from './update-modal/update-modal.component'
     routing,
     NgzioGaugeComponentModule,
     ChartModule,
-    NgxMaskModule
+    NgxMaskModule,
+    SidebarModule.forRoot()
   ],
   declarations: [
     AppComponent,
