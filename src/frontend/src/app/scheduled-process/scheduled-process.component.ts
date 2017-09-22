@@ -155,7 +155,7 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
-          this.alertService.error(data.error)
+          this.alertService.error(data.error.message)
         }
         if (data.message) {   
           this.alertService.success(data.message + " Wait for 5 seconds!")
