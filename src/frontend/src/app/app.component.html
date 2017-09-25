@@ -1,5 +1,5 @@
 <div class="app-navbar">
-    <app-navbar></app-navbar>
+    <app-navbar (toggle)="toggleSidebar($event)"></app-navbar>
 </div>
 <section class="main-content columns is-fullheight">
     <ng-sidebar-container [ngClass]="{'ng-sidebar-container':_opened}">

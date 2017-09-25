@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { ConfigurationService } from '../services/index';
 
@@ -10,10 +10,11 @@ import { POLLING_INTERVAL } from '../utils';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  @Output() toggle = new EventEmitter<string>();
   public timer: any = ''
   public ping_data = {}
   public ping_info = {is_alive:false, service_status:"service down"}
-
+  
   constructor(private configService: ConfigurationService) { }
   ngOnInit() {
     this.start();
@@ -46,6 +47,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnDestroy() {
     clearInterval(this.timer)
+  }
+
+  toggleClick() {
+    console.log("This is toggle");
+    this.toggle.next('toggleSidebar');
   }
 
 }

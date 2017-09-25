@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   private _opened: boolean = true;
 
   private toggleSidebar() {
+    console.log("This is sidebar");
     this._opened = !this._opened;
   }
 
@@ -38,5 +39,4 @@ export class AppComponent implements OnInit {
            this._opened= true;
         }
     }
- 
 }
