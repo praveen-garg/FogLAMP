@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../services/index';
+import { StatisticsService, AlertService } from '../services/index';
 import Utils from '../utils'
 
 @Component({
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   sentChart: string;
   sentValues: any;
 
-  constructor(private statisticsService: StatisticsService) {
+  constructor(private statisticsService: StatisticsService, private alertService: AlertService) {
 
     this.readingChart = "line";
     this.readingValues = [];
@@ -40,8 +40,12 @@ export class DashboardComponent implements OnInit {
   public getStatistics(): void {
     this.statisticsService.getStatistics().
       subscribe(data => {
-        this.statisticsData = data;
-        console.log("This is the statisticsData ", data);
+         console.log("This is the statisticsData ", data);
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
+        this.statisticsData = data
       },
       error => { console.log("error", error) });
   }
@@ -58,6 +62,10 @@ export class DashboardComponent implements OnInit {
 
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.statHistoryData = data.statistics;
         console.log("Statistics History Data", data);
         this.statHistoryData.forEach(element => {
