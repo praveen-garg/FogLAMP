@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener,ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { SidebarModule } from 'ng-sidebar';
 @Component({
   selector: 'app-root',
@@ -9,34 +9,35 @@ export class AppComponent implements OnInit {
   title = 'app';
   @ViewChild('sidebar') sidebar: SidebarModule;
   navMode = 'side';
-  constructor(
-  ) { }
+  constructor() { }
 
   private _opened: boolean = true;
 
   private toggleSidebar() {
-    console.log("This is sidebar");
-    this._opened = !this._opened;
+    if (this.navMode == "over") {
+       this._opened = !this._opened;
+    } 
   }
 
   ngOnInit() {
     if (window.innerWidth < 768) {
       this.navMode = 'over';
+      this._opened = false;
     }
   }
 
   @HostListener('window:resize', ['$event'])
-    onResize(event) {
-      console.log("resize");
-        if (event.target.innerWidth < 768) {
-          console.log("mobile");
-            this.navMode = 'over'; 
-            this._opened = false;
-        }
-        if (event.target.innerWidth > 768) {
-          console.log("desktop");
-           this.navMode = 'side';
-           this._opened= true;
-        }
+  onResize(event) {
+    console.log("resize");
+    if (event.target.innerWidth < 768) {
+      console.log("mobile");
+      this.navMode = 'over';
+      this._opened = false;
     }
+    if (event.target.innerWidth > 768) {
+      console.log("desktop");
+      this.navMode = 'side';
+      this._opened = true;
+    }
+  }
 }

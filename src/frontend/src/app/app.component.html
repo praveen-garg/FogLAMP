@@ -1,26 +1,18 @@
 <div class="app-navbar">
-    <app-navbar (toggle)="toggleSidebar($event)"></app-navbar>
+    <app-navbar (toggle)="toggleSidebar()"></app-navbar>
 </div>
-<section class="main-content columns is-fullheight">
-    <ng-sidebar-container [ngClass]="{'ng-sidebar-container':_opened}">
+<ng-sidebar-container>
+    <!-- A sidebar -->
+    <ng-sidebar #sidebar [(opened)]="_opened">
+        <app-side-menu  (toggle)="toggleSidebar()"></app-side-menu>
+    </ng-sidebar>
 
-      <!-- A sidebar -->
-      <ng-sidebar  #sidebar [(opened)]="_opened">
-         <app-side-menu></app-side-menu>
-      </ng-sidebar>
-
-      <!-- Page content -->
-      <!--<div ng-sidebar-content>
-        <button (click)="_toggleSidebar()">Toggle sidebar</button>
-      </div>-->
-
-    </ng-sidebar-container>
-    <div class="container column is-10">
-        <alert></alert>
-        <router-outlet></router-outlet>
+    <!-- Page content -->
+    <div ng-sidebar-content>
+        <div class="container column is-9">
+            <alert></alert>
+            <router-outlet></router-outlet>
+        </div>
+        <layout-footer></layout-footer>
     </div>
-</section>
-<!--<section class="section">       
-       
-</section>       -->
-<layout-footer></layout-footer>
+</ng-sidebar-container>
