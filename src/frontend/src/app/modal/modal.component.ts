@@ -27,10 +27,14 @@ export class ModalComponent implements OnInit {
  *  Delete schedule
  */
   public delete() {
-    console.log(this.childData.id)
     this.schedulesService.deleteSchedule(this.childData.id).
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.toggleModal(false)
         this.notify.emit()
         this.alertService.success("Schedule deleted successfully")

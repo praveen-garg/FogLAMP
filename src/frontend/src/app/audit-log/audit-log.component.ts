@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuditService } from '../services/index';
+import { AuditService, AlertService } from '../services/index';
 
 @Component({
   selector: 'app-audit-log',
@@ -16,7 +16,7 @@ export class AuditLogComponent implements OnInit {
   public source: String = ""
   public severity: String = ""
 
-  constructor(private auditService: AuditService) { }
+  constructor(private auditService: AuditService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.getLogSource()
@@ -28,6 +28,11 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getLogSource().
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.logSourceList = data.log_code
         console.log("Log code", this.logSourceList);
       },
@@ -38,6 +43,11 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getLogSeverity().
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.logSeverityList = data.log_severity
         console.log("Log severity ", this.logSeverityList);
       },
@@ -84,6 +94,11 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getAuditLogs(this.limit, this.offset, this.source, this.severity).
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.filterdData = data.audit
       },
       error => { console.log("error", error) })

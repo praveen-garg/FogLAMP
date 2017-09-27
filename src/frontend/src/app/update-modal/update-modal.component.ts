@@ -24,7 +24,8 @@ export class UpdateModalComponent implements OnInit {
   form: FormGroup;
   isValidRepeatRange:boolean = false;
   isValidTimeRange:boolean = false;
-  constructor(private schedulesService: SchedulesService, public fb: FormBuilder) { }
+  public selectedTypeValue:string;
+  constructor(private schedulesService: SchedulesService, public fb: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit() { }
 
@@ -87,6 +88,10 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.getSchedule(id).
       subscribe(
       data => {
+        if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         if (data.type == 'TIMED') {
           this.selected_schedule_type = this.setScheduleTypeKey(data.type)
           schedule_day = this.getSelectedDay(data.day)
@@ -161,6 +166,10 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.updateSchedule(this.childData.id, updatePayload).
       subscribe(
       data => {
+        if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+        }
         this.notify.emit()
         this.toggleModal(false)
       },
