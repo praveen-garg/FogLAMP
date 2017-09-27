@@ -47,7 +47,7 @@
                 <label class="label">Type</label>
                 <div class="control">
                   <div class="select">
-                    <select [(ngModel)]="selectedValue" (change)="selected_schedule_type = setScheduleTypeKey(selectedValue)" formControlName="type">
+                    <select [(ngModel)]="selectedTypeValue" (change)="selected_schedule_type = setScheduleTypeKey(selectedTypeValue)" formControlName="type">
                         <option  [selected]="type.name == type"  *ngFor="let type of scheduleType">{{type.name}}</option>
                     </select>
                   </div>

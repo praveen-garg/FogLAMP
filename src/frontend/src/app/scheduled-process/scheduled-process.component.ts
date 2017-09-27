@@ -33,6 +33,7 @@ export class ScheduledProcessComponent implements OnInit {
   public invalidRepeat: boolean = false
   public invalidTime: boolean = false
   public selectedTaskType = 'Latest' // Default is LATEST  
+  public scheduler_name: string; 
 
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
@@ -63,6 +64,10 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getScheduleType().
       subscribe(
       data => {
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.scheduleType = data.schedule_type
         console.log(this.scheduleType)
       },
@@ -74,6 +79,10 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getSchedules().
       subscribe(
       data => {
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.scheduleData = data.schedules
         this.scheduleData.forEach(element => {
           let repeatTimeObj = Utils.secondsToDhms(element.repeat);
@@ -98,6 +107,10 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getScheduledProcess().
       subscribe(
       data => {
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.scheduleProcess = data.processes
         console.log("This is the getScheduleProcess ", this.scheduleProcess)
       },
@@ -126,6 +139,10 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getLatestTask().
       subscribe(
       data => {
+         if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.tasksData = data.tasks;
         console.log("Latest tasks ", data.tasks)
       },
@@ -241,6 +258,11 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.createSchedule(payload).
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.getSchedules();
 
         // Clear form fields 
