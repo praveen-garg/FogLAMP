@@ -40,11 +40,12 @@ export class DashboardComponent implements OnInit {
   public getStatistics(): void {
     this.statisticsService.getStatistics().
       subscribe(data => {
-         console.log("This is the statisticsData ", data);
          if (data.error) {
+          console.log("error in response", data.error);
           this.alertService.error(data.error.message)
           return;
         }
+        console.log("This is the statisticsData ", data);
         this.statisticsData = data
       },
       error => { console.log("error", error) });
@@ -63,6 +64,7 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
          if (data.error) {
+          console.log("error in response", data.error);
           this.alertService.error(data.error.message)
           return;
         }

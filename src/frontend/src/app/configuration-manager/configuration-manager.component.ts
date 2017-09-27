@@ -18,6 +18,11 @@ export class ConfigurationManagerComponent implements OnInit {
     this.configService.getCategories().
       subscribe(
       data => {
+         if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         console.log("This is the congfigurationData ", data.categories);
         data.categories.forEach(element => {
           this.getCategory(element.key, element.description);
@@ -32,6 +37,7 @@ export class ConfigurationManagerComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
+          console.log("error in response", data.error);
           this.alertService.error(data.error.message)
           return;
         }
@@ -58,8 +64,8 @@ export class ConfigurationManagerComponent implements OnInit {
     this.configService.editConfigItem(category_name, config_item, value).
       subscribe(
       data => {
-        console.log("updated record: ", data)
         if (data.error) {
+          console.log("error in response", data.error);
           this.alertService.error(data.error.message)
           return;
         }

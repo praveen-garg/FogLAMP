@@ -167,6 +167,7 @@ export class UpdateModalComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
+          console.log("error in response", data.error);
           this.alertService.error(data.error.message)
         }
         this.notify.emit()
