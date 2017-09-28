@@ -21,7 +21,7 @@ import * as CanvasGauges from 'canvas-gauges';
     selector: 'radial-gauge',
     template: '<canvas #gauge></canvas>'
 })
-export class RadialGaugeComponent extends BaseGauge<CanvasGauges.RadialGauge,CanvasGauges.RadialGaugeOptions> {
+export class RadialGaugeComponent extends BaseGauge <CanvasGauges.RadialGauge, CanvasGauges.RadialGaugeOptions> {
     constructor(el: ElementRef, zone: NgZone) {
         super(el, zone);
     }

@@ -15,26 +15,26 @@ export class ModalComponent implements OnInit {
   ngOnInit() {}
 
   public toggleModal(isOpen: Boolean) {
-    let schedule_name = <HTMLDivElement>document.getElementById("modal-box")
+    let schedule_name = <HTMLDivElement>document.getElementById('modal-box');
     if (isOpen) {
-      schedule_name.classList.add('is-active')
-      return
+      schedule_name.classList.add('is-active');
+      return;
     }
-    schedule_name.classList.remove('is-active')
+    schedule_name.classList.remove('is-active');
   }
 
 /**
  *  Delete schedule
  */
   public delete() {
-    console.log(this.childData.id)
+    console.log(this.childData.id);
     this.schedulesService.deleteSchedule(this.childData.id).
       subscribe(
       data => {
-        this.toggleModal(false)
-        this.notify.emit()
-        this.alertService.success("Schedule deleted successfully")
+        this.toggleModal(false);
+        this.notify.emit();
+        this.alertService.success('Schedule deleted successfully');
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
 }

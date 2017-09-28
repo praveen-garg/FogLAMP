@@ -10,12 +10,11 @@ import { Observable } from 'rxjs/Rx';
 })
 
 export class HomeComponent {
-    currentUser: String
-    private timer:any = ''
-    xdata:{} = {}
-    private errorMessage:any = ''
+    currentUser: String;
+    private timer: any = '';
+    xdata: {} = {};
+    private errorMessage: any = '';
     options: Object;
-   
     constructor(private router: Router, private authService: AuthService) {
         this.currentUser = sessionStorage.getItem('currentUser');
         this.options = {
@@ -23,10 +22,9 @@ export class HomeComponent {
             maxValue: 255,
             // width: 300,
             // height: 300
-        }
-        this.options['data-type']="radial-gauge";
+        };
+        this.options['data-type'] = 'radial-gauge';
     }
-    
     /**
      *  Signout the current user
      */
@@ -36,29 +34,28 @@ export class HomeComponent {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/login']);
     }
-    
-    startCollecting(){
-        console.log("Collecting ...")
-        let theToken = sessionStorage.getItem('access_token')
+    startCollecting () {
+        console.log('Collecting ...');
+        let theToken = sessionStorage.getItem('access_token');
         this.authService.getData(theToken)
         .subscribe(
             (data) => { this.xdata = data; },
-            (error) => { this.errorMessage = <any>error },
+            (error) => { this.errorMessage = <any>error; },
             () => console.log(this.xdata)
         );
-        console.log(this.xdata)
+        console.log(this.xdata);
     }
-    start(){
-        clearInterval(this.timer)
+    start () {
+        clearInterval(this.timer);
         this.timer = setInterval(function () {
-            this.startCollecting()
-        }.bind(this), 2000);  
+            this.startCollecting();
+        }.bind(this), 2000);
     }
-    stop(){
-        clearInterval(this.timer)
+    stop () {
+        clearInterval(this.timer);
     }
 
     ngOnDestroy() {
-      clearInterval(this.timer)
+      clearInterval(this.timer);
     }
 }
