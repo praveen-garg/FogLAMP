@@ -1,30 +1,28 @@
-<!--<aside  class="x column is-12 is-narrow-mobile is-fullheight section">-->
-  <ul class="menu-list">
-    <li >
-      <a  [ngClass]="{'is-active': step==='/dashboard'}" (click)="onToggle('/dashboard')">
+<ul class="menu-list">
+  <li>
+    <a [ngClass]="{'is-active': step==='/dashboard'}" (click)="onToggle('/dashboard')">
            Dashboard
         </a>
-    </li>
-    <li>
-      <a  [ngClass]="{'is-active': step==='/configuration'}" (click)="onToggle('/configuration')"   >
+  </li>
+  <li>
+    <a [ngClass]="{'is-active': step==='/configuration'}" (click)="onToggle('/configuration')">
           Configuration
         </a>
-    </li>
-    <li>
-      <a  [ngClass]="{'is-active': step==='/scheduled-tasks'}" (click)="onToggle('/scheduled-tasks')">
+  </li>
+  <li>
+    <a [ngClass]="{'is-active': step==='/scheduled-tasks'}" (click)="onToggle('/scheduled-tasks')">
           Scheduled Tasks
         </a>
-    </li>
-     <li>
-      <a [ngClass]="{'is-active': step==='/audit'}" (click)="onToggle('/audit')">
+  </li>
+  <li>
+    <a [ngClass]="{'is-active': step==='/audit'}" (click)="onToggle('/audit')">
            Audit Logs
         </a>
-    </li>
-    <!-- TODO: These menu item should be dynamic -->
-    <li>
-      <a [ngClass]="{'is-active': step==='/assets'}" (click)="onToggle('/assets')">
+  </li>
+  <!-- TODO: These menu item should be dynamic -->
+  <li>
+    <a [ngClass]="{'is-active': step==='/assets'}" (click)="onToggle('/assets')">
            Assets &amp; Readings
         </a>
-    </li>
-  </ul>
-<!--</aside>-->
+  </li>
+</ul>

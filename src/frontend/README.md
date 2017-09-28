@@ -65,3 +65,4 @@ chart.js      |  2.6.0        |        2.7.0          | MIT
 core-js       |  2.4.1        |        2.5.1          | MIT 
 loadash       |  4.17.4       |        Yes            | MIT
 ngx-mask      |  1.0.3        |        Yes            | MIT 
+ng-sidebar    |  6.0.2        |        Yes            | MIT 

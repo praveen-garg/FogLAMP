@@ -50,7 +50,6 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleClick() {
-    console.log("This is toggle");
     this.toggle.next('toggleSidebar');
   }
 
