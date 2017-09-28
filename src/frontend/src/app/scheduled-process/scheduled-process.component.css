@@ -1,34 +1,27 @@
-.card-header{
-        background-color: whitesmoke;
+.card-header {
+    background-color: whitesmoke;
 }
 
-
- table.scroll {
-    overflow-x: hidden;
-    display: block;
+table.scroll {
     height: 300px;
 }
 
- table.scroll tbody {
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
 
 .fa-minus-circle {
-    color: rgb(178,34,34)
+    color: rgb(178, 34, 34)
 }
 
-#rday{
+#rday {
     float: left;
     width: 30%;
 }
 
-#rtime{
+#rtime {
     float: left;
     width: 50%;
     margin-left: 1%;
 }
 
-#error{
+#error {
     float: left;
 }
