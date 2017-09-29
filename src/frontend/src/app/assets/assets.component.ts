@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AssetsService } from '../services/index';
+import { AssetsService, AlertService } from '../services/index';
 
 @Component({
   selector: 'app-assets',
@@ -7,19 +7,24 @@ import { AssetsService } from '../services/index';
   styleUrls: ['./assets.component.css']
 })
 export class AssetsComponent implements OnInit {
- assets = [];
- assetsReadingsData = [];
-  constructor(private assetService: AssetsService) { }
+  assets = [];
+  assetsReadingsData = [];
+  constructor(private assetService: AssetsService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.getAsset();
   }
 
- public getAsset(): void {
+  public getAsset(): void {
     this.assets = [];
     this.assetService.getAsset().
       subscribe(
       data => {
+        if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.assets = data;
         console.log('This is the asset data ',  this.assets);
       },
@@ -35,6 +40,11 @@ export class AssetsComponent implements OnInit {
     this.assetService.getAssetReadings(encodeURIComponent(asset_code)).
       subscribe(
       data => {
+        if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message)
+          return;
+        }
         this.assetsReadingsData = [{
           asset_code: asset_code,
           data: data
@@ -43,9 +53,4 @@ export class AssetsComponent implements OnInit {
       },
       error => { console.log('error', error); });
   }
-
-  onChange(value) {
-    console.log(value);
-}
-
 }

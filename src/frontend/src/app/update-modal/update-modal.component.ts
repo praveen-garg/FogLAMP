@@ -22,9 +22,10 @@ export class UpdateModalComponent implements OnInit {
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
-  isValidRepeatRange: boolean = false;
-  isValidTimeRange: boolean = false;
-  constructor(private schedulesService: SchedulesService, public fb: FormBuilder) { }
+  isValidRepeatRange:boolean = false;
+  isValidTimeRange:boolean = false;
+  public selectedTypeValue: string;
+  constructor(private schedulesService: SchedulesService, public fb: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit() { }
 
@@ -89,9 +90,19 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.getSchedule(id).
       subscribe(
       data => {
+<<<<<<< HEAD
         if (data.type === 'TIMED') {
           this.selected_schedule_type = this.setScheduleTypeKey(data.type);
           schedule_day = this.getSelectedDay(data.day);
+=======
+        if (data.error) {
+          this.alertService.error(data.error.message)
+          return;
+        }
+        if (data.type == 'TIMED') {
+          this.selected_schedule_type = this.setScheduleTypeKey(data.type)
+          schedule_day = this.getSelectedDay(data.day)
+>>>>>>> fork-praveen/frontend
         } else {
           this.selected_schedule_type = this.setScheduleTypeKey(data.type);
         }
@@ -160,8 +171,12 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.updateSchedule(this.childData.id, updatePayload).
       subscribe(
       data => {
-        this.notify.emit();
-        this.toggleModal(false);
+        if (data.error) {
+          console.log("error in response", data.error);
+          this.alertService.error(data.error.message);
+        }
+        this.notify.emit()
+        this.toggleModal(false)
       },
       error => { console.log('error', error); });
   }
