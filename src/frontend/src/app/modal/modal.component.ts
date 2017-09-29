@@ -37,7 +37,7 @@ export class ModalComponent implements OnInit {
         }
         this.toggleModal(false);
         this.notify.emit();
-        this.alertService.success("Schedule deleted successfully");
+        this.alertService.success('Schedule deleted successfully');
       },
       error => { console.log('error', error); });
   }

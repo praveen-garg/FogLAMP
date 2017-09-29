@@ -30,10 +30,10 @@ export class AuditLogComponent implements OnInit {
       data => {
          if (data.error) {
           console.log('error in response', data.error);
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
-        this.logSourceList = data.log_code
+        this.logSourceList = data.log_code;
         console.log('Log code', this.logSourceList);
       },
       error => { console.log('error', error); });

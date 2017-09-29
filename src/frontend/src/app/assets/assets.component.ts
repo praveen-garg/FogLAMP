@@ -21,8 +21,8 @@ export class AssetsComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
-          console.log("error in response", data.error);
-          this.alertService.error(data.error.message)
+          console.log('error in response', data.error);
+          this.alertService.error(data.error.message);
           return;
         }
         this.assets = data;
@@ -41,8 +41,8 @@ export class AssetsComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
-          console.log("error in response", data.error);
-          this.alertService.error(data.error.message)
+          console.log('error in response', data.error);
+          this.alertService.error(data.error.message);
           return;
         }
         this.assetsReadingsData = [{
