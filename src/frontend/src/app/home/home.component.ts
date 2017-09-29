@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/index';
 import { Observable } from 'rxjs/Rx';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
     templateUrl: 'home.component.html',
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
     currentUser: String;
     private timer: any = '';
     xdata: {} = {};
@@ -25,37 +25,38 @@ export class HomeComponent {
         };
         this.options['data-type'] = 'radial-gauge';
     }
+
     /**
      *  Signout the current user
      */
-     logOut() {
+    logOut() {
         // remove access token and logged in user from session storage
         sessionStorage.removeItem('access_token');
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/login']);
     }
-    startCollecting () {
+    startCollecting() {
         console.log('Collecting ...');
         let theToken = sessionStorage.getItem('access_token');
         this.authService.getData(theToken)
-        .subscribe(
+            .subscribe(
             (data) => { this.xdata = data; },
             (error) => { this.errorMessage = <any>error; },
             () => console.log(this.xdata)
-        );
+            );
         console.log(this.xdata);
     }
-    start () {
+    start() {
         clearInterval(this.timer);
         this.timer = setInterval(function () {
             this.startCollecting();
         }.bind(this), 2000);
     }
-    stop () {
+    stop() {
         clearInterval(this.timer);
     }
 
     ngOnDestroy() {
-      clearInterval(this.timer);
+        clearInterval(this.timer);
     }
 }

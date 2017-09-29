@@ -265,7 +265,6 @@ export class ScheduledProcessComponent implements OnInit {
         schedule_process_fld.value = this.scheduleProcess[0]; // set process dropdown to 0 index value
         schedule_type_fld.value = '1';
         this.setScheduleTypeKey(1); // To set schedule type key globally for required field handling on UI
-        time_fld != undefined ? time_fld.value = '' : 0;
       },
       error => { console.log('error', error); });
   }
@@ -274,7 +273,7 @@ export class ScheduledProcessComponent implements OnInit {
    * toggle update modal and pass recod info to update
    * @param id Record id for update
    */
-  private editSchedule(id) {
+  public editSchedule(id) {
     this.updateScheduleData = {
       id: id,
       schedule_process: this.scheduleProcess,

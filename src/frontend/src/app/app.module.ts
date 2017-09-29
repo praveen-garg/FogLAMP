@@ -8,8 +8,10 @@ import { routing } from './app.routing';
 
 import { AuthGuard } from './guards/index';
 import { AlertComponent } from './directives/index';
-import { AlertService, AuthService, ConfigurationService,
-  StatisticsService, AssetsService, AuditService, SchedulesService } from './services/index';
+import {
+  AlertService, AuthService, ConfigurationService,
+  StatisticsService, AssetsService, AuditService, SchedulesService
+} from './services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
@@ -27,9 +29,9 @@ import { AssetsComponent } from '../app/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
-import {NgxMaskModule} from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { ModalComponent } from './modal/modal.component';
-import { UpdateModalComponent } from './update-modal/update-modal.component'; 
+import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
@@ -73,6 +75,6 @@ import { SidebarModule } from 'ng-sidebar';
     AuditService,
     SchedulesService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

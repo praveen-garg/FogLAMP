@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SchedulesService, AlertService } from '../services/index';
 import Utils from '../utils';
@@ -8,7 +8,7 @@ import Utils from '../utils';
   templateUrl: './update-modal.component.html',
   styleUrls: ['./update-modal.component.css']
 })
-export class UpdateModalComponent implements OnInit {
+export class UpdateModalComponent implements OnInit, OnChanges {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
@@ -30,7 +30,7 @@ export class UpdateModalComponent implements OnInit {
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.form = this.fb.group ({
+    this.form = this.fb.group({
       name: ['', [<any>Validators.required]],
       repeatDay: ['', [<any>Validators.required]],
       repeat: ['', [<any>Validators.required]],
@@ -130,13 +130,13 @@ export class UpdateModalComponent implements OnInit {
 
   public updateSchedule() {
     this.isValidRepeatRange = Utils.not_between(this.form.controls['repeat'].value);
-      if (this.isValidRepeatRange) {
-       return;
-     }
-     this.isValidTimeRange = Utils.not_between(this.form.controls['time'].value);
-     if (this.isValidTimeRange) {
-       return;
-     }
+    if (this.isValidRepeatRange) {
+      return;
+    }
+    this.isValidTimeRange = Utils.not_between(this.form.controls['time'].value);
+    if (this.isValidTimeRange) {
+      return;
+    }
     let RepeatTime = this.form.get('repeat').value != ('None' || undefined) ? Utils.convertTimeToSec(
       this.form.get('repeat').value, this.form.get('repeatDay').value) : 0;
     this.form.controls['repeat'].setValue(RepeatTime);
