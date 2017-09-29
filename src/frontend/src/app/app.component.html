@@ -1,11 +1,18 @@
-<section class="app-navbar">
-    <app-navbar></app-navbar>
-</section>
-<section class="section app-main">
-       <alert></alert>
-       <router-outlet></router-outlet>
-</section>
-<section class="section">       
-       <app-side-menu></app-side-menu>
-</section>       
-<layout-footer></layout-footer>
+<div class="app-navbar">
+    <app-navbar (toggle)="toggleSidebar()"></app-navbar>
+</div>
+<ng-sidebar-container>
+    <!-- A sidebar -->
+    <ng-sidebar #sidebar [(opened)]="_opened">
+        <app-side-menu  (toggle)="toggleSidebar()"></app-side-menu>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+        <div class="container column is-9">
+            <alert></alert>
+            <router-outlet></router-outlet>
+        </div>
+        <layout-footer></layout-footer>
+    </div>
+</ng-sidebar-container>

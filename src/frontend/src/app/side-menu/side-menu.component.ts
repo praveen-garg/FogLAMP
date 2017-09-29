@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-side-menu',
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SideMenuComponent implements OnInit {
   public step: string = '';
+  @Output() toggle:EventEmitter<any> = new EventEmitter();
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
@@ -24,5 +25,6 @@ export class SideMenuComponent implements OnInit {
   onToggle(step) {
     this.step = step;
     this.router.navigate([step]);
+    this.toggle.emit();
   }
 }

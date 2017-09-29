@@ -1,12 +1,19 @@
-<nav class="navbar">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <b>FogLAMP Management</b>
-        </a>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
+<nav class="nav has-shadow">
+  <div class="container">
+    <label for="menu-toggle" class="nav-toggle" (click)="toggleClick()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="nav-left">
+      <a class="nav-item">
+        <b>FogLAMP Management</b>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-item">
         <span [ngClass]="ping_info.is_alive?'tag is-success':'tag is-danger'">{{ping_info.service_status}}</span>
-        </div>
-      </div>
+      </a>
+    </div>
+  </div>
 </nav>
