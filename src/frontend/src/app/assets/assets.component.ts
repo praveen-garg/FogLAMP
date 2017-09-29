@@ -26,13 +26,13 @@ export class AssetsComponent implements OnInit {
           return;
         }
         this.assets = data;
-        console.log("This is the asset data ", this.assets);
+        console.log('This is the asset data ',  this.assets);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 
   public getAssetReading(asset_code): void {
-    console.log("This is the asset code ", asset_code);
+    console.log('This is the asset code ',  asset_code);
     this.assetsReadingsData = [];
     if (asset_code.toLowerCase() === 'select') {
       return;
@@ -48,9 +48,9 @@ export class AssetsComponent implements OnInit {
         this.assetsReadingsData = [{
           asset_code: asset_code,
           data: data
-        }]
-        console.log("This is the asset reading data ", this.assetsReadingsData);
+        }];
+        console.log('This is the asset reading data ',  this.assetsReadingsData);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 }

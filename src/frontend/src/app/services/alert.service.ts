@@ -27,23 +27,23 @@ export class AlertService {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'success', text: message });
         setTimeout(function () {
-            this.closeMessage()
-        }.bind(this), 3000); 
+            this.closeMessage();
+        }.bind(this), 3000);
     }
 
     error(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });
         setTimeout(function () {
-            this.closeMessage()
-        }.bind(this), 3000); 
+            this.closeMessage();
+        }.bind(this), 3000);
     }
 
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }
 
-    closeMessage(){
+    closeMessage () {
          this.subject.next();
     }
 }
