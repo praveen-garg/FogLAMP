@@ -152,7 +152,7 @@ export class UpdateModalComponent implements OnInit {
       this.form.get('time').setValue(0);
     }
 
-    var updatePayload = {
+    let updatePayload = {
       'name': this.form.get('name').value,
       'process_name': this.form.get('process_name').value,
       'type': this.form.get('type').value,

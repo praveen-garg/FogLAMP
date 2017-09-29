@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService, AlertService } from '../services/index';
-import Utils from '../utils'
+import Utils from '../utils';
 
 @Component({
   selector: 'app-dashboard',
@@ -52,14 +52,14 @@ export class DashboardComponent implements OnInit {
   }
 
   public getStatisticsHistory(): void {
-    var readingsValues = [];
-    var readingsLabels = [];
+    let readingsValues = [];
+    let readingsLabels = [];
 
-    var purgedValues = [];
-    var purgedLabels = [];
+    let purgedValues = [];
+    let purgedLabels = [];
 
-    var sentValues = [];
-    var sentLabels = [];
+    let sentValues = [];
+    let sentLabels = [];
 
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
@@ -74,17 +74,17 @@ export class DashboardComponent implements OnInit {
           Object.keys(element).forEach(aKey => {
             if (aKey.indexOf('READINGS') !== -1) {
               readingsValues.push(element[aKey]);
-              var tempDt = element['history_ts'];
+              let tempDt = element['history_ts'];
               readingsLabels.push(Utils.formateDate(tempDt));
             }
             if (aKey.indexOf('PURGED') !== -1 && aKey.indexOf('UNSNPURGED') === -1) {
               purgedValues.push(element[aKey]);
-              var tempDt = element['history_ts'];
+              let tempDt = element['history_ts'];
               purgedLabels.push(Utils.formateDate(tempDt));
             }
             if (aKey.indexOf('SENT_1') !== -1 && aKey.indexOf('UNSENT') === -1) {
               sentValues.push(element[aKey]);
-              var tempDt = element['history_ts'];
+              let tempDt = element['history_ts'];
               sentLabels.push(Utils.formateDate(tempDt));
             }
           });

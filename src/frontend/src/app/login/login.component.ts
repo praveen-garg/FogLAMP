@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         // Get SignedIn user details
         this.authService.getWhoAmi(token)
         .subscribe(
-            data => {
+            info => {
                 this.router.navigate([this.returnUrl]);
             });
       },
