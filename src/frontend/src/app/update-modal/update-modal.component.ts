@@ -90,19 +90,13 @@ export class UpdateModalComponent implements OnInit {
     this.schedulesService.getSchedule(id).
       subscribe(
       data => {
-<<<<<<< HEAD
-        if (data.type === 'TIMED') {
-          this.selected_schedule_type = this.setScheduleTypeKey(data.type);
-          schedule_day = this.getSelectedDay(data.day);
-=======
         if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
         if (data.type == 'TIMED') {
-          this.selected_schedule_type = this.setScheduleTypeKey(data.type)
-          schedule_day = this.getSelectedDay(data.day)
->>>>>>> fork-praveen/frontend
+          this.selected_schedule_type = this.setScheduleTypeKey(data.type);
+          schedule_day = this.getSelectedDay(data.day);
         } else {
           this.selected_schedule_type = this.setScheduleTypeKey(data.type);
         }
