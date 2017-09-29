@@ -21,18 +21,18 @@ export class AssetsComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
-          console.log("error in response", data.error);
-          this.alertService.error(data.error.message)
+          console.log('error in response', data.error);
+          this.alertService.error(data.error.message);
           return;
         }
         this.assets = data;
-        console.log("This is the asset data ", this.assets);
+        console.log('This is the asset data ',  this.assets);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 
   public getAssetReading(asset_code): void {
-    console.log("This is the asset code ", asset_code);
+    console.log('This is the asset code ',  asset_code);
     this.assetsReadingsData = [];
     if (asset_code.toLowerCase() === 'select') {
       return;
@@ -41,16 +41,16 @@ export class AssetsComponent implements OnInit {
       subscribe(
       data => {
         if (data.error) {
-          console.log("error in response", data.error);
-          this.alertService.error(data.error.message)
+          console.log('error in response', data.error);
+          this.alertService.error(data.error.message);
           return;
         }
         this.assetsReadingsData = [{
           asset_code: asset_code,
           data: data
-        }]
-        console.log("This is the asset reading data ", this.assetsReadingsData);
+        }];
+        console.log('This is the asset reading data ',  this.assetsReadingsData);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 }

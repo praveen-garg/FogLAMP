@@ -39,7 +39,7 @@ export class ChartComponent implements OnInit, OnChanges {
       let currentValue = changes['data'].currentValue;
       ['datasets', 'labels', 'xLabels', 'yLabels'].forEach(property => {
         this.chart.data[property] = currentValue[property];
-      })
+      });
       this.chart.update();
     }
   }

@@ -11,6 +11,7 @@ export class FilterPipe implements PipeTransform {
             return items;
         }
         return items.filter(singleItem =>
-        singleItem.source.toLowerCase().indexOf(value.toLowerCase()) !== -1 || singleItem.severity.toLowerCase().indexOf(value.toLowerCase()) !== -1) ;
+        singleItem.source.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+        singleItem.severity.toLowerCase().indexOf(value.toLowerCase()) !== -1) ;
     }
 }

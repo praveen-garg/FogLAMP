@@ -51,18 +51,18 @@ Set api base URL in `environments/environment.prod.ts` file
 #### Core:
  Library      |   Version     | Latest Stable (? Y/n) | License
 ------------- | ------------- | --------------------  | ------------
- Angular 4    | 4.0.0         |        4.4.3          | MIT 
- Angular CLI  | 1.2.4         |        1.4.2          | MIT 
+ Angular 4    | 4.4.3         |        4.4.4          | MIT 
+ Angular CLI  | 1.4.3         |        1.4.4          | MIT 
  TypeScript   | 2.4.2         |        2.5            | Apache 2.0
- rxjs         | 5.4.1         |        5.4.3          | Apache 2.0
+ rxjs         | 5.4.3         |        5.4.3          | Apache 2.0
 
 
 #### Dev:
  Library      |   Version     | Latest Stable (? Y/n) | License
 ------------- | ------------- | --------------------  | ------------
 canvas-gauges |  2.1.4        |        Yes            | MIT 
-chart.js      |  2.6.0        |        2.7.0          | MIT 
-core-js       |  2.4.1        |        2.5.1          | MIT 
+chart.js      |  2.7.0        |        Yes            | MIT 
+core-js       |  2.5.1        |        Yes            | MIT 
 loadash       |  4.17.4       |        Yes            | MIT
 ngx-mask      |  1.0.3        |        Yes            | MIT 
 ng-sidebar    |  6.0.2        |        Yes            | MIT 

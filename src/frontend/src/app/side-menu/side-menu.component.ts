@@ -19,7 +19,7 @@ export class SideMenuComponent implements OnInit {
         console.log(this.router.url);
         this.step = this.router.url;
       }
-    })
+    });
   }
 
   onToggle(step) {

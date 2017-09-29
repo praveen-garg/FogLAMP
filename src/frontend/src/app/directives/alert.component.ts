@@ -10,9 +10,7 @@ import { AlertService } from '../services/index';
 
 export class AlertComponent {
     message: any;
-    
     constructor(private alertService: AlertService) {}
-    
     ngOnInit() {
         this.alertService.getMessage().subscribe(message => { this.message = message; });
     }
@@ -20,7 +18,7 @@ export class AlertComponent {
     /**
      *  Close message
      */
-    closeMessage(){
+    closeMessage () {
         this.alertService.closeMessage();
     }
 }

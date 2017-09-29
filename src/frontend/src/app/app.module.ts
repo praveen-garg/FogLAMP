@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { routing }        from './app.routing';
+import { routing } from './app.routing';
 
 import { AuthGuard } from './guards/index';
 import { AlertComponent } from './directives/index';
-import { AlertService, AuthService, ConfigurationService, 
+import { AlertService, AuthService, ConfigurationService,
   StatisticsService, AssetsService, AuditService, SchedulesService } from './services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
@@ -29,7 +29,7 @@ import { InputDebounceComponent } from '../app/input-debounce/input-debounce.com
 
 import {NgxMaskModule} from 'ngx-mask';
 import { ModalComponent } from './modal/modal.component';
-import { UpdateModalComponent } from './update-modal/update-modal.component'  
+import { UpdateModalComponent } from './update-modal/update-modal.component'; 
 import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({

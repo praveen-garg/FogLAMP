@@ -43,7 +43,7 @@ export abstract class BaseGauge<T extends CanvasGauges.BaseGauge, T2 extends Can
     /**
      * Should contain instantiation of the Gauge object in the child component
      */
-    abstract ngOnInit():any
+    abstract ngOnInit(): any;
 
     /**
      * Returns options provided to the Gauge in a single object
@@ -52,7 +52,7 @@ export abstract class BaseGauge<T extends CanvasGauges.BaseGauge, T2 extends Can
         this.options = Object.assign(this.options || {} as T2, {
             renderTo: this.canvas.nativeElement
         });
-        //console.log(this.options)
+        // console.log(this.options)
         for (var i = 0; i < this.el.nativeElement.attributes.length; i++) {
             this.options[
                 this.el.nativeElement.attributes[i].name

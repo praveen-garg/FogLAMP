@@ -10,7 +10,6 @@ import { AlertService, AuthService } from '../services/index';
 export class LoginComponent implements OnInit {
     model: any = {};
     returnUrl: string;
-    
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }        
+    }
 
    /**
     *  login user
@@ -29,11 +28,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model.username, this.model.password).
     subscribe(
       data => {
-        let token = sessionStorage.getItem("access_token")
+        let token = sessionStorage.getItem('access_token');
         // Get SignedIn user details
         this.authService.getWhoAmi(token)
         .subscribe(
-            data=>{
+            info => {
                 this.router.navigate([this.returnUrl]);
             });
       },

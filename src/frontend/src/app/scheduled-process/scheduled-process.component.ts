@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchedulesService, AlertService } from '../services/index';
-
 import { ModalComponent } from '../modal/modal.component';
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
-
-import Utils from '../utils'
+import Utils from '../utils';
 
 enum weekDays {
   Monday = 1,
@@ -16,48 +14,46 @@ enum weekDays {
   Sunday = 7
 }
 
-
 @Component({
   selector: 'app-scheduled-process',
   templateUrl: './scheduled-process.component.html',
   styleUrls: ['./scheduled-process.component.css']
 })
 export class ScheduledProcessComponent implements OnInit {
-  public scheduleData = []
-  public scheduleProcess = []
-  public scheduleType = []
-  public tasksData = []
+  public scheduleData = [];
+  public scheduleProcess = [];
+  public scheduleType = [];
+  public tasksData = [];
   public days = [];
 
   // To handle field validtion on UI
-  public invalidRepeat: boolean = false
-  public invalidTime: boolean = false
-  public selectedTaskType = 'Latest' // Default is LATEST  
-  public scheduler_name: string; 
+  public invalidRepeat: boolean = false;
+  public invalidTime: boolean = false;
+  public selectedTaskType = 'Latest'; // Default is LATEST
+  public scheduler_name: string;
 
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
-  // Object to hold schedule id to delete 
+  // Object to hold schedule id to delete
   public childData: any;
   public updateScheduleData: any;
-
   @ViewChild(ModalComponent) child: ModalComponent;
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
-    this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value === 'string') as string[];
-    this.getScheduleType()
-    this.getSchedules()
-    this.getSchedulesProcesses()
-    this.getLatestTasks()
+    this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value == 'string') as string[];
+    this.getScheduleType();
+    this.getSchedules();
+    this.getSchedulesProcesses();
+    this.getLatestTasks();
 
     this.updateScheduleData = {
       schedule_process: this.scheduleProcess,
       schedule_type: this.scheduleType,
       day: this.days
-    }
+    };
   }
 
   public getScheduleType(): void {
@@ -65,13 +61,13 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
          if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
-        this.scheduleType = data.schedule_type
-        console.log(this.scheduleType)
+        this.scheduleType = data.schedule_type;
+        console.log(this.scheduleType);
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
 
   public getSchedules(): void {
@@ -80,26 +76,25 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
          if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
-        this.scheduleData = data.schedules
+        this.scheduleData = data.schedules;
         this.scheduleData.forEach(element => {
           let repeatTimeObj = Utils.secondsToDhms(element.repeat);
           if (repeatTimeObj.days == 1) {
-            element.repeat = repeatTimeObj.days + " day, " + repeatTimeObj.time
+            element.repeat = repeatTimeObj.days + ' day, ' + repeatTimeObj.time;
           } else if (repeatTimeObj.days > 1) {
-            element.repeat = repeatTimeObj.days + " days, " + repeatTimeObj.time
+            element.repeat = repeatTimeObj.days + ' days, ' + repeatTimeObj.time;
           } else {
             element.repeat = repeatTimeObj.time;
           }
-
-          // Time 
+          // Time
           element.time = Utils.secondsToDhms(element.time).time;
         });
-        console.log("This is the getSchedule ", data.schedules)
+        console.log('This is the getSchedule ', data.schedules);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 
   public getSchedulesProcesses(): void {
@@ -108,13 +103,13 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
          if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
-        this.scheduleProcess = data.processes
-        console.log("This is the getScheduleProcess ", this.scheduleProcess)
+        this.scheduleProcess = data.processes;
+        console.log('This is the getScheduleProcess ', this.scheduleProcess);
       },
-      error => { console.log("error", error) });
+      error => { console.log('error', error); });
   }
 
   /**
@@ -123,11 +118,11 @@ export class ScheduledProcessComponent implements OnInit {
    */
   public getTasks(state) {
     if (state.toUpperCase() == 'RUNNING') {
-      this.selectedTaskType = "Running" 
+      this.selectedTaskType = 'Running';
       this.getRunningTasks();
       return;
     }
-    this.selectedTaskType = "Latest" 
+    this.selectedTaskType = 'Latest';
     this.getLatestTasks();
   }
 
@@ -140,13 +135,13 @@ export class ScheduledProcessComponent implements OnInit {
       subscribe(
       data => {
          if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
           return;
         }
         this.tasksData = data.tasks;
-        console.log("Latest tasks ", data.tasks)
+        console.log('Latest tasks ', data.tasks);
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
 
   /**
@@ -154,78 +149,76 @@ export class ScheduledProcessComponent implements OnInit {
    */
   public getRunningTasks(): void {
     this.tasksData = [];
-    this.schedulesService.getTasks("RUNNING").
+    this.schedulesService.getTasks('RUNNING').
       subscribe(
       data => {
         if (data.error) {
-          this.alertService.error(data.error)
+          this.alertService.error(data.error);
         }
         this.tasksData = data.tasks;
-        console.log("Running tasks ", this.tasksData)
+        console.log('Running tasks ', this.tasksData);
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
 
   public cancelRunninTask(id) {
-    console.log("Task UUID:", id);
+    console.log('Task UUID:', id);
     this.schedulesService.cancelTask(id).
       subscribe(
       data => {
         if (data.error) {
-          this.alertService.error(data.error.message)
+          this.alertService.error(data.error.message);
         }
-        if (data.message) {   
-          this.alertService.success(data.message + " Wait for 5 seconds!")
+        if (data.message) {
+          this.alertService.success(data.message + ' Wait for 5 seconds!');
           // TODO: remove cancelled task object from local list
-          setTimeout(()=>{ 
-            console.log("waiting...", this.selectedTaskType)
-            if (this.selectedTaskType == 'Running'){
-              this.getRunningTasks()
+          setTimeout (() => {
+            console.log('waiting...', this.selectedTaskType);
+            if (this.selectedTaskType == 'Running') {
+              this.getRunningTasks();
+            } else {
+              this.getLatestTasks();
             }
-            else {
-              this.getLatestTasks()
-            }
-          }, 5000);   
+          }, 5000);
         }
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
-
-
 
   /**
    *  To set schedule type key globally for required field handling on UI
-   * @param value  
+   * @param value
    */
   public setScheduleTypeKey(value) {
     this.selected_schedule_type = value;
   }
 
   public createSchedule() {
-    let schedule_name_fld = <HTMLInputElement>document.getElementById("name")
-    let schedule_process_fld = <HTMLSelectElement>document.getElementById("process")
-    let schedule_type_fld = <HTMLSelectElement>document.getElementById("type")
+    let schedule_name_fld = <HTMLInputElement>document.getElementById('name');
+    let schedule_process_fld = <HTMLSelectElement>document.getElementById('process');
+    let schedule_type_fld = <HTMLSelectElement>document.getElementById('type');
 
-    let exclusive_state_fld = <HTMLInputElement>document.getElementById("exclusive")
+    let exclusive_state_fld = <HTMLInputElement>document.getElementById('exclusive');
 
-    let repeat_day_fld = <HTMLInputElement>document.getElementById("rday")
-    let repeat_time_fld = <HTMLInputElement>document.getElementById("rtime")
+    let repeat_day_fld = <HTMLInputElement>document.getElementById('rday');
+    let repeat_time_fld = <HTMLInputElement>document.getElementById('rtime');
 
     // check if time is in valid range
-    this.invalidRepeat = Utils.not_between(repeat_time_fld.value)
+    this.invalidRepeat = Utils.not_between(repeat_time_fld.value);
     if (this.invalidRepeat) {
       return;
     }
 
-    let day_fld = <HTMLSelectElement>document.getElementById("day")
+    let day_fld = <HTMLSelectElement>document.getElementById('day');
 
-    let time_fld = <HTMLInputElement>document.getElementById("time")
+    let time_fld = <HTMLInputElement>document.getElementById('time');
     let day = 0;
     let scheduled_time = 0;
 
 
     // total time with days and hh:mm:ss
-    let total_repeat_time = repeat_time_fld.value != '' ? Utils.convertTimeToSec(repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined
+    let total_repeat_time = repeat_time_fld.value != '' ? Utils.convertTimeToSec(
+      repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined;
 
     /**
      *  "schedule_type": [
@@ -236,45 +229,45 @@ export class ScheduledProcessComponent implements OnInit {
      *      For schedule type 'TIMED', show 'Day' and 'TIME' field on UI
      */
     if (this.selected_schedule_type == 2) {  // Condition to check if schedule type is TIMED == 2
-      day = Number(day_fld.value)
+      day = Number(day_fld.value);
       // check if time is in valid range
-      this.invalidTime = Utils.not_between(time_fld.value)
+      this.invalidTime = Utils.not_between(time_fld.value);
       if (this.invalidTime) {
         return;
       }
       // Time value in seconds for TIMED schedule
-      scheduled_time = time_fld.value != '' ? Utils.convertTimeToSec(time_fld.value) : undefined
+      scheduled_time = time_fld.value != '' ? Utils.convertTimeToSec(time_fld.value) : undefined;
     }
 
     let payload = {
-      "name": schedule_name_fld.value,
-      "process_name": schedule_process_fld.value,
-      "type": schedule_type_fld.value,
-      "repeat": total_repeat_time,
-      "day": day,
-      "time": scheduled_time,
-      "exclusive": exclusive_state_fld.checked
-    }
+      'name': schedule_name_fld.value,
+      'process_name': schedule_process_fld.value,
+      'type': schedule_type_fld.value,
+      'repeat': total_repeat_time,
+      'day': day,
+      'time': scheduled_time,
+      'exclusive': exclusive_state_fld.checked
+    };
     this.schedulesService.createSchedule(payload).
       subscribe(
       data => {
          if (data.error) {
-          console.log("error in response", data.error);
-          this.alertService.error(data.error.message)
+          console.log('error in response', data.error);
+          this.alertService.error(data.error.message);
           return;
         }
         this.getSchedules();
 
-        // Clear form fields 
-        schedule_name_fld.value = ''
-        repeat_day_fld.value = ''
-        repeat_time_fld.value = ''
+        // Clear form fields
+        schedule_name_fld.value = '';
+        repeat_day_fld.value = '';
+        repeat_time_fld.value = '';
         schedule_process_fld.value = this.scheduleProcess[0]; // set process dropdown to 0 index value
         schedule_type_fld.value = '1';
-        this.setScheduleTypeKey(1) // To set schedule type key globally for required field handling on UI
-        time_fld != undefined ? time_fld.value = '' : 0
+        this.setScheduleTypeKey(1); // To set schedule type key globally for required field handling on UI
+        time_fld != undefined ? time_fld.value = '' : 0;
       },
-      error => { console.log("error", error) })
+      error => { console.log('error', error); });
   }
 
   /**
@@ -287,13 +280,13 @@ export class ScheduledProcessComponent implements OnInit {
       schedule_process: this.scheduleProcess,
       schedule_type: this.scheduleType,
       day: this.days
-    }
-    this.updateModal.toggleModal(true)
+    };
+    this.updateModal.toggleModal(true);
   }
 
   /**
    * To reload schedule list after deletion of a schedule
-   * @param notify  
+   * @param notify
    */
   onNotify() {
     this.getSchedules();
@@ -305,9 +298,9 @@ export class ScheduledProcessComponent implements OnInit {
    */
   openModal(id) {
     // call child component method to toggle modal
-    this.child.toggleModal(true)
+    this.child.toggleModal(true);
     this.childData = {
       id: id
-    }
+    };
   }
 }
