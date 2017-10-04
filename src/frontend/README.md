@@ -10,6 +10,23 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
+## Build manager 
+
+Install Yarn through the Homebrew package manager. This will also install Node.js if it is not already installed.
+
+`brew install yarn`
+
+If you use nvm or similar, you should exclude installing Node.js so that nvm’s version of Node.js is used.
+
+`brew install yarn --without-node`
+
+To enable Yarn for Angular CLI, run the following command inside root directory: 
+
+`ng set packageManager=yarn`
+
+To install dependencies run the following command inside root directory:
+`yarn`  
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
