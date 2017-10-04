@@ -11,12 +11,12 @@ export class AppComponent implements OnInit {
   navMode = 'side';
   constructor() { }
 
-  private _opened: boolean = true;
+  public _opened: boolean = true;
 
-  private toggleSidebar() {
-    if (this.navMode == "over") {
-       this._opened = !this._opened;
-    } 
+  public toggleSidebar() {
+    if (this.navMode == 'over') {
+      this._opened = !this._opened;
+    }
   }
 
   ngOnInit() {
@@ -28,14 +28,14 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    console.log("resize");
+    console.log('resize');
     if (event.target.innerWidth < 768) {
-      console.log("mobile");
+      console.log('mobile');
       this.navMode = 'over';
       this._opened = false;
     }
     if (event.target.innerWidth > 768) {
-      console.log("desktop");
+      console.log('desktop');
       this.navMode = 'side';
       this._opened = true;
     }

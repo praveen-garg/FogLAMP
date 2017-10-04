@@ -8,9 +8,9 @@ import { AlertService } from '../services/index';
     styleUrls: ['./alert.component.css']
 })
 
-export class AlertComponent {
+export class AlertComponent implements OnInit {
     message: any;
-    constructor(private alertService: AlertService) {}
+    constructor(private alertService: AlertService) { }
     ngOnInit() {
         this.alertService.getMessage().subscribe(message => { this.message = message; });
     }
@@ -18,7 +18,7 @@ export class AlertComponent {
     /**
      *  Close message
      */
-    closeMessage () {
+    closeMessage() {
         this.alertService.closeMessage();
     }
 }

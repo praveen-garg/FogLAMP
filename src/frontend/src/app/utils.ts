@@ -32,7 +32,7 @@ export default class Utils {
   // Convert time in seconds
   public static convertTimeToSec(repeatTime: string, repeatDays?: number) {
     let seconds;
-    let repeat_interval = repeatTime.split(':');
+    const repeat_interval = repeatTime.split(':');
     if (repeatDays > 0) {
       seconds = (+repeatDays) * 86400 + (+repeat_interval[0]) * 60 * 60 + (+repeat_interval[1]) * 60 + (+repeat_interval[2]);
     } else {
@@ -43,11 +43,11 @@ export default class Utils {
 
   public static secondsToDhms(totalSeconds) {
     totalSeconds = Number(totalSeconds);
-    let days = Math.floor(totalSeconds / 86400);
-    let hours = Math.floor((totalSeconds % 86400) / 3600);
-    let minutes = Math.floor(((totalSeconds % 86400) % 3600) / 60);
-    let seconds = ((totalSeconds % 86400) % 3600) % 60;
-    let formatedTime = Utils.pad(hours, 2, 0) + ':' + Utils.pad(minutes, 2, 0) + ':' + Utils.pad(seconds, 2, 0);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor(((totalSeconds % 86400) % 3600) / 60);
+    const seconds = ((totalSeconds % 86400) % 3600) % 60;
+    const formatedTime = Utils.pad(hours, 2, 0) + ':' + Utils.pad(minutes, 2, 0) + ':' + Utils.pad(seconds, 2, 0);
     return {
       'days': days,
       'time': formatedTime
@@ -63,10 +63,10 @@ export default class Utils {
       return true;
     }
     // To check if Time in 00:00:00, 23:59:59 range
-    let timeUnits = time.split(':');
-    let hh = timeUnits[0];
-    let mm = timeUnits[1];
-    let ss = timeUnits[2];
+    const timeUnits = time.split(':');
+    const hh = timeUnits[0];
+    const mm = timeUnits[1];
+    const ss = timeUnits[2];
     if ((+hh) < 0 || (+hh) > 23) {
       return true;
     }
@@ -76,7 +76,7 @@ export default class Utils {
     if ((+ss) < 0 || (+ss) > 59) {
       return true;
     }
-    let totalSec = (+hh * 60 * 60) + (+mm * 60) + (+ss);
+    const totalSec = (+hh * 60 * 60) + (+mm * 60) + (+ss);
     console.log('Total sec', totalSec);
     return totalSec < 0 || totalSec >= 86400;
   }
