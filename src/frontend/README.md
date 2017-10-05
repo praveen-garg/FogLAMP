@@ -10,31 +10,49 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
-## Build
+## Installing yarn
 
+To install yarn follow the instruction provided on https://yarnpkg.com/en/docs/install
+
+To enable Yarn for Angular CLI, run the following command inside root directory: 
+`ng set packageManager=yarn`
+To install dependencies run the following command inside root directory:
+`yarn`  
+
+#### Why Yarn?
+* Yarn parallelizes operations to maximize resource utilization so install times are faster than ever.
+* Offline cache: package installation using Yarn, it places the package on your disk. During the next install, this package will be used instead of sending an HTTP request to get the tarball from the registry.
+* Deterministic Installs: Yarn uses lockfiles (yarn.lock) and a deterministic install algorithm. We can say goodbye to the "but it works on my machine" bugs.
+
+#### Yarn commands
+* `yarn`                    # Install all dependencies from package.json
+* `yarn install`            # Alias for yarn
+* `yarn init`               # Initialize an npm repository
+* `yarn add [package]`      # Install npm package
+* `yarn upgrade [package]`  # Upgrade npm package
+* `yarn remove [package]`   # Uninstall npm package
+
+To read more about yarn read https://yarnpkg.com/en/
+
+## Build
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
 ## Running unit tests
-
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
-
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Further help
-
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## nginx
-
 start: `nginx -c nginx.conf -p $(pwd)`
 
 stop: `nginx -s stop`
 
 ## start with nginx
-
 `npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:8080
 
 ## REST API URL Configuration:
@@ -45,7 +63,6 @@ stop: `nginx -s stop`
 ### Production Mode:
 Set api base URL in `environments/environment.prod.ts` file  
 
-
 ## Used Libraries:
 
 #### Core:
@@ -55,7 +72,6 @@ Set api base URL in `environments/environment.prod.ts` file
  Angular CLI  | 1.4.3         |        1.4.4          | MIT 
  TypeScript   | 2.4.2         |        2.5            | Apache 2.0
  rxjs         | 5.4.3         |        5.4.3          | Apache 2.0
-
 
 #### Dev:
  Library      |   Version     | Latest Stable (? Y/n) | License
