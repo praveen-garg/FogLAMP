@@ -33,6 +33,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { ModalComponent } from './modal/modal.component';
 import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
+import { SettingsComponent } from './settings/index';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { SidebarModule } from 'ng-sidebar';
     AuditLogComponent,
     InputDebounceComponent,
     ModalComponent,
-    UpdateModalComponent
+    UpdateModalComponent,
+    SettingsComponent
   ],
   providers: [
     AuthGuard,

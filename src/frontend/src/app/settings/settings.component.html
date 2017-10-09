@@ -1,0 +1,26 @@
+<div class='container is-fluid'>
+  <div class='columns is-mobile'>
+    <div class='column is-2'>
+      <label class='label'>Type</label>
+      <div class='select'>
+        <select id="protocol">
+            <option>http</option>
+            <option>https</option>
+          </select>
+      </div>
+    </div>
+    <div class='column'>
+      <label class='label'>IP Address</label>
+      <input id='ip' class='input' type='text' placeholder='0.0.0.0'>
+    </div>
+     <div class='column'>
+      <label class="label">Port</label>
+      <input id='port' class='input' type='numbe' maxlength="4" placeholder='8082'>
+    </div>
+  </div>
+  <div class="columns">
+     <div class='column'>
+        <button class='button is-primary is-pulled-right' (click)='resetEndPoint()'>Reset URL</button>
+    </div>
+  </div>
+</div>
