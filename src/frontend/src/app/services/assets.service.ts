@@ -10,8 +10,8 @@ export class AssetsService {
   constructor(private http: Http) { }
 
   /**
-  *    GET  | foglamp/asset
-  *    Return a summary count of all asset readings
+  * GET  | foglamp/asset
+  * Return a summary count of all asset readings
   */
   public getAsset() {
     return this.http.get(this.GET_ASSET)
@@ -23,9 +23,16 @@ export class AssetsService {
   *  /foglamp/asset/{asset_code}
   *  Return a set of asset readings for the given asset
   */
-  public getAssetReadings(asset_code) {
-    return this.http.get(this.GET_ASSET + '/' + asset_code)
+  public getAssetReadings(asset_code, limit: Number = 0, offset: Number = 0) {
+    if (limit == 0 && offset == 0) {
+      return this.http.get(this.GET_ASSET + '/' + asset_code)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'));
+    }else {
+      return this.http.get(this.GET_ASSET + '/' + asset_code, { params: {
+      limit: limit, skip: offset} })
+      .map(response => response.json())
+      .catch((error: Response) => Observable.throw(error.json().message || 'Server error'));
+    }
   }
 }
