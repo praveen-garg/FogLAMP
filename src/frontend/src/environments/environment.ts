@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'http://192.168.1.197:8082/foglamp/'
+  BASE_URL: localStorage.getItem('API_END_POINT') == null ? 'http://192.168.1.199:8082/foglamp/' : localStorage.getItem('API_END_POINT')
 };

@@ -25,4 +25,10 @@
            Assets &amp; Readings
         </a>
   </li>
+
+  <li>
+    <a [ngClass]="{'is-active': step==='/settings'}" (click)="onToggle('/settings')">
+           Settings
+        </a>
+  </li>
 </ul>
