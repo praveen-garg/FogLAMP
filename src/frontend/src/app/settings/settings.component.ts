@@ -16,12 +16,7 @@ export class SettingsComponent implements OnInit {
   port = this.endpoint[2].substring(0, this.endpoint[2].indexOf('/'));
   constructor(private router: Router) { }
 
-  ngOnInit() {
-    console.log("HOST", this.host);
-    console.log("PORT", this.port);
-    console.log("PROTOCOL", this.protocol);
-    
-  }
+  ngOnInit() { }
 
   public resetEndPoint() {
     const protocolField = <HTMLSelectElement>document.getElementById('protocol');
@@ -29,9 +24,8 @@ export class SettingsComponent implements OnInit {
     const portField = <HTMLInputElement>document.getElementById('port');
     const endpoint = protocolField.value + '://' + hostField.value + ':' + portField.value + '/foglamp/';
     localStorage.setItem('API_END_POINT', endpoint);
-    console.log('End Point', localStorage.getItem('API_END_POINT'));
-    this.router.navigate(['']);
-    window.location.reload();
-    this.toggle.emit();
+    location.reload()
+    location.href = '';
+    this.router.navigate([location.href]);
   }
 }
