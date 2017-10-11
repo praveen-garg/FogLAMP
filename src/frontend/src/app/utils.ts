@@ -3,7 +3,7 @@ export const POLLING_INTERVAL = 2000;   // milliseconds
 export default class Utils {
 
   public static formateDate(dt: string) {
-    const date = new Date(dt); // had to remove the colon (:) after the T in order to make it work
+    const date = new Date(dt.replace(/\s/, 'T')); // had to remove the colon (:) after the T in order to make it work
     // let day = date.getDate();
     // let monthIndex = date.getMonth();
     // let year = date.getFullYear();
