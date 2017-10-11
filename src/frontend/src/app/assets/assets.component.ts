@@ -7,30 +7,35 @@ import { AssetsService, AlertService } from '../services/index';
   styleUrls: ['./assets.component.css']
 })
 export class AssetsComponent implements OnInit {
-  public limit: Number = 20;
-  public offset: Number = 0;
+
+  assetCode: string = ""
+  limit: Number = 0;
+  offset: Number = 0;
+  
   assets = [];
   assetsReadingsData = [];
-  asssetCodeField = null;
+
   constructor(private assetService: AssetsService, private alertService: AlertService) { }
 
   ngOnInit() {
-    this.asssetCodeField = <HTMLSelectElement>document.getElementById('code');
     this.getAsset();
   }
 
+  public setAssetCode(aCode) {
+    this.assetCode = aCode;
+    console.log('assetCode: ', aCode);
+    this.getAssetReading();
+  }
   public setLimit(limit: Number) {
     this.limit = limit;
     console.log('Limit: ', limit);
-    this.getAssetReading(this.asssetCodeField.value);
+    this.getAssetReading();
   }
 
   public setOffset(offset: Number) {
     this.offset = offset;
     console.log('offset:', offset);
-    if (this.limit != null) {
-      this.getAssetReading(this.asssetCodeField.value);
-    }
+    this.getAssetReading();
   }
 
   public getAsset(): void {
@@ -49,15 +54,16 @@ export class AssetsComponent implements OnInit {
       error => { console.log('error', error); });
   }
 
-  public getAssetReading(asset_code): void {
+  public getAssetReading(): void {
+    console.log('Asset code: ', this.assetCode);
     console.log('Limit: ', this.limit);
     console.log('offset: ', this.offset);
-    console.log('This is the asset code ',  asset_code);
+    
     this.assetsReadingsData = [];
-    if (asset_code.toLowerCase() === 'select') {
+    if (this.assetCode.toLowerCase() === 'select') {
       return;
     }
-    this.assetService.getAssetReadings(encodeURIComponent(asset_code), this.limit, this.offset).
+    this.assetService.getAssetReadings(encodeURIComponent(this.assetCode), this.limit, this.offset).
       subscribe(
       data => {
         if (data.error) {
@@ -66,7 +72,7 @@ export class AssetsComponent implements OnInit {
           return;
         }
         this.assetsReadingsData = [{
-          asset_code: asset_code,
+          asset_code: this.assetCode,
           data: data
         }];
         console.log('This is the asset reading data ',  this.assetsReadingsData);
