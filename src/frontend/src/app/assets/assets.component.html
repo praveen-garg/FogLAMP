@@ -27,11 +27,21 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
         <h5 class="title"><small> Asset Readings </small></h5>
-        <div class="select">
-          <select (change)="getAssetReading($event.target.value)">
-            <option>Select</option>
-            <option *ngFor="let asset of assets"  [value]='asset.asset_code'>{{asset.asset_code}} ({{asset.count}})</option>
-          </select>
+        <div class="columns">
+          <div class="column">
+            <div class="select">
+              <select id="asset_code" (change)="setAssetCode($event.target.value)">
+                <option>Select</option>
+                <option *ngFor="let asset of assets"  [value]='asset.asset_code'>{{asset.asset_code}} ({{asset.count}})</option>
+              </select>
+            </div>
+          </div>
+          <div class="column">
+            <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
+          </div>
+          <div class="column">
+            <input-debounce placeholder="offset" (value)="setOffset($event)"></input-debounce>
+          </div>
         </div>
         <br/>
         <br/>

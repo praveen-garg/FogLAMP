@@ -10,8 +10,8 @@ export class AssetsService {
   constructor(private http: Http) { }
 
   /**
-  *    GET  | foglamp/asset
-  *    Return a summary count of all asset readings
+  * GET  | foglamp/asset
+  * Return a summary count of all asset readings
   */
   public getAsset() {
     return this.http.get(this.GET_ASSET)
@@ -21,10 +21,24 @@ export class AssetsService {
 
   /**
   *  /foglamp/asset/{asset_code}
-  *  Return a set of asset readings for the given asset
+  * @param asset_code
+  * @param limit
+  * @param offset
+  *  Return a set of asset readings for the given asset code
   */
-  public getAssetReadings(asset_code) {
-    return this.http.get(this.GET_ASSET + '/' + asset_code)
+  public getAssetReadings(asset_code, limit:Number=0, offset:Number=0) {
+    let _params = {}
+    if(limit && offset) {
+             _params = {params: {limit: limit, skip: offset}}
+
+    }
+    else if(limit) {
+       _params = {params: {limit: limit}}
+    } // offset works withOUT limit in postgres!
+    else if(offset) {
+      _params = { params: {skip: offset} }
+    }  
+    return this.http.get(this.GET_ASSET + '/' + asset_code, _params)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'));
   }
