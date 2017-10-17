@@ -34,6 +34,7 @@ import { ModalComponent } from './modal/modal.component';
 import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
+import { PaginationComponent } from './pagination/index';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { SettingsComponent } from './settings/index';
     InputDebounceComponent,
     ModalComponent,
     UpdateModalComponent,
-    SettingsComponent
+    SettingsComponent,
+    PaginationComponent
   ],
   providers: [
     AuthGuard,
