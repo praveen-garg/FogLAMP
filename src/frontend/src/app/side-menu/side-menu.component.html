@@ -27,6 +27,12 @@
   </li>
 
   <li>
+    <a [ngClass]="{'is-active': step==='/services-health'}" (click)="onToggle('/services-health')">
+           Services Health
+        </a>
+  </li>
+
+  <li>
     <a [ngClass]="{'is-active': step==='/settings'}" (click)="onToggle('/settings')">
            Settings
         </a>

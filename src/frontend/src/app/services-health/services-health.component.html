@@ -1,0 +1,39 @@
+<div class="tile is-parent">
+  <article class="tile is-child box">
+    <div class="item">
+      Service Status
+    </div>
+    <hr align="center">
+    <table class="table is-bordered is-striped is-narrow">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Service Port</th>
+          <th>Address</th>
+          <th>Management Port</th>
+          <th>Protocol</th>
+          <th>Status</th>
+          <th>Ping</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of service_data">
+          <td>{{service.name}}</td>
+          <td>{{service.type}}</td>
+          <td>{{service.service_port}}</td>
+          <td>{{service.management_port}}</td>
+          <td>{{service.address}}</td>
+          <td>{{service.protocol}}</td>
+          <td><span [ngClass]="ping_info.is_alive?'tag is-success':'tag is-danger'">{{ping_info.service_status}}</span></td>
+          <td><span (click)="checkServiceHealth(service.management_port)"> <i class="fa fa-refresh" aria-hidden="true"></i></span></td>
+        </tr>
+        <!--<tr>
+          <td>Device</td>
+          <td><span class="tag is-primary">Yes</span></td>
+          <td><span class="tag is-success">Running</span></td>
+        </tr>-->
+      </tbody>
+    </table>
+  </article>
+</div>
