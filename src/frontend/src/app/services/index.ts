@@ -5,3 +5,4 @@ export * from './statistics.service';
 export * from './assets.service';
 export * from  './audit.service';
 export * from './schedules.service';
+export * from './services-health.service';
