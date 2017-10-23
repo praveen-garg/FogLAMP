@@ -11,8 +11,8 @@ import { environment } from '../../environments/environment';
 export class ServicesHealthComponent implements OnInit {
   public timer: any = '';
   public service_data;
-  public ping_data = {};
-  public ping_info = { is_alive: false, service_status: 'service down' };
+  // public ping_data = {};
+  // public ping_info = { is_alive: false, service_status: 'service down' };
   constructor(private servicesHealthService: ServicesHealthService) { }
 
   ngOnInit() {
