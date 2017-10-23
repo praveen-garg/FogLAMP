@@ -23,7 +23,7 @@ export class ServicesHealthComponent implements OnInit {
     this.servicesHealthService.getServicesData()
       .subscribe(
       (data) => {
-        console.log("Service Status", data.services);
+        console.log('Service Status', data.services);
         this.service_data = data.services;
       },
       (error) => {
@@ -32,15 +32,17 @@ export class ServicesHealthComponent implements OnInit {
       );
   }
 
+  // TODO: FOGL-516
   checkServiceHealth(port) {
-    console.log("Port:", port);
-    let service = this.service_data.filter(service => service.management_port == port);
-    
+    console.log('Port:', port);
+    /*
+    const service = this.service_data.filter(service => service.management_port == port);
+
     if (service[0].address === 'localhost') {
       service[0].address = environment.BASE_URL.substring(environment.BASE_URL.indexOf('/') + 2, environment.BASE_URL.lastIndexOf(':'));
     }
-    
-    let URL = service[0].protocol + "://" + service[0].address + ":" + service[0].management_port + "/";
+
+    const URL = service[0].protocol + '://' + service[0].address + ':' + service[0].management_port + '/';
     this.servicesHealthService.checkServiceHealth(URL)
       .subscribe(
       (data) => {
@@ -51,7 +53,8 @@ export class ServicesHealthComponent implements OnInit {
         console.log('error: ', error);
         this.ping_info = { is_alive: false, service_status: 'service down' };
       },
-      // () => console.log(this.ping_info)
+      () => console.log(this.ping_info)
     );
+    */
   }
 }
