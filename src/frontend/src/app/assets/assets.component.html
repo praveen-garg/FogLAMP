@@ -30,12 +30,11 @@
         <div class="columns">
           <div class="column">
             <div class="select">
-              <select id="asset_code" (ngModelChange)="setAssetCode($event)" [(ngModel)]="selectedAsset">
-                <option>Select</option>
+              <select (ngModelChange)="setAssetCode($event)" [(ngModel)]="selectedAsset">
+                <option disabled>Select</option>
                 <option *ngFor="let asset of assets" [ngValue]='asset'>{{asset.asset_code}} ({{asset.count}})</option>
               </select>
             </div>
-            {{ count}}
           </div>
           <div class="column">
             <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
@@ -67,24 +66,20 @@
                   <hr class="dropdown-divider"> 
                 </tr>
               </td>
-              <!--<td>
-                <tr *ngFor="let d of asset.data"> 
-                  <small>{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</small>
-                  <hr class="dropdown-divider">
-                </tr>
-              </td>-->
             </tr>
-            <my-pagination
-              [count]= asset.count
-              [page]="page"
-              [perPage]= 20
-              [pagesToShow]="5"
-              (goPrev)="onPrev()"
-              (goNext)="onNext()"
-              (goPage)="goToPage($event)">
-            </my-pagination>
-          <tbody>
+          </tbody> 
         </table>
+        <div *ngIf= asset>
+          <my-pagination
+            [count]= asset.count
+            [page]="page"
+            [perPage]= 20
+            [pagesToShow]="5"
+            (goPrev)="onPrev()"
+            (goNext)="onNext()"
+            (goPage)="goToPage($event)">
+          </my-pagination>
+        </div>
       </article>
     </div>
   </div>

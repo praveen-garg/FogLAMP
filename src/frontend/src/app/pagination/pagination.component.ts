@@ -3,8 +3,7 @@ import { AssetsComponent } from '../assets/index';
 
 @Component({
     selector: 'my-pagination',
-    templateUrl: 'pagination.component.html',
-    styleUrls: ['./pagination.component.css']
+    templateUrl: 'pagination.component.html'
 })
 
 export class PaginationComponent  {
@@ -49,7 +48,7 @@ export class PaginationComponent  {
     }
 
     lastPage(): boolean {
-        return this.perPage * this.page > this.count;
+        return this.perPage * this.page >= this.count;
     }
 
     getPages(): number[] {
