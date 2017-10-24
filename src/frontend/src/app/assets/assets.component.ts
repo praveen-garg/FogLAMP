@@ -10,14 +10,15 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: Object;
   asset: Object;
-  limit: Number = 0;
-  offset: Number = 0;
+  limit: number = 0;
+  offset: number = 0;
 
   loading = false;
   total = 0;
   page = 1;
-  paginationLimit = 20;
-  
+  paginationLimit: number = 20;
+  recordCount: number = 0;
+
   assets = [];
   assetsReadingsData = [];
 
@@ -29,8 +30,12 @@ export class AssetsComponent implements OnInit {
 
   goToPage(n: number): void {
     this.page = n;
-    this.limit = this.paginationLimit;
-    this.offset = ((this.page) - 1) * 20;
+    if (this.limit !== 0) {
+      this.paginationLimit = this.limit;
+    } else {
+      this.limit = this.paginationLimit;
+    }
+    this.offset = ((this.page) - 1) * this.paginationLimit;
     console.log('page: ', this.page);
     console.log('LIMIT: ', this.limit);
     console.log('OFFSET: ', this.offset);
@@ -39,8 +44,12 @@ export class AssetsComponent implements OnInit {
 
   onNext(): void {
     this.page++;
-    this.limit = this.paginationLimit;
-    this.offset = ((this.page) - 1) * 20;
+    if (this.limit !== 0) {
+      this.paginationLimit = this.limit;
+    } else {
+      this.limit = this.paginationLimit;
+    }
+    this.offset = ((this.page) - 1) * this.paginationLimit;
     console.log('LIMIT: ', this.limit);
     console.log('OFFSET: ', this.offset);
     this.getAssetReading();
@@ -48,9 +57,12 @@ export class AssetsComponent implements OnInit {
 
   onPrev(): void {
     this.page--;
-    console.log('onPrev: ', 'onPrev1');
-    this.limit = this.paginationLimit;
-    this.offset = ((this.page) - 1) * 20;
+    if (this.limit !== 0) {
+      this.paginationLimit = this.limit;
+    } else {
+      this.limit = this.paginationLimit;
+    }
+    this.offset = ((this.page) - 1) * this.paginationLimit;
     console.log('limit: ', this.limit);
     console.log('OFFSET: ', this.offset);
     this.getAssetReading();
@@ -58,17 +70,21 @@ export class AssetsComponent implements OnInit {
 
   public setAssetCode(assetData) {
     this.asset = assetData;
+    if (this.offset !== 0) {
+      this.recordCount = this.asset['count'] - this.offset;
+    }
     console.log('asset: ', assetData);
     this.getAssetReading();
   }
-  public setLimit(limit: Number) {
+  public setLimit(limit: number) {
     this.limit = limit;
     console.log('Limit: ', limit);
     this.getAssetReading();
   }
 
-  public setOffset(offset: Number) {
+  public setOffset(offset: number) {
     this.offset = offset;
+    this.recordCount = this.asset['count'] - this.offset;
     console.log('offset:', offset);
     this.getAssetReading();
   }
@@ -90,16 +106,19 @@ export class AssetsComponent implements OnInit {
   }
 
   public getAssetReading(): void {
+    if (this.offset === 0) {
+      this.recordCount = this.asset['count'];
+    }
     console.log('Asset code: ', this.asset['asset_code']);
     console.log('Limit: ', this.limit);
     console.log('offset: ', this.offset);
+    console.log('recordCount: ', this.recordCount);
     
     // TODO: Set 'Select' as default selected option.
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
     }
-    // TODO: Fix limit and offset issue with pagination.
     this.assetService.getAssetReadings(encodeURIComponent(this.asset['asset_code']), this.limit, this.offset).
       subscribe(
       data => {
@@ -110,7 +129,7 @@ export class AssetsComponent implements OnInit {
         }
         this.assetsReadingsData = [{
           asset_code: this.asset['asset_code'],
-          count: this.asset['count'],
+          count: this.recordCount,
           data: data
         }];
         console.log('This is the asset reading data ',  this.assetsReadingsData);

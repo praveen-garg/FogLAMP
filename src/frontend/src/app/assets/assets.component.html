@@ -71,10 +71,10 @@
         </table>
         <div *ngIf= asset>
           <my-pagination
-            [count]= asset.count
+            [count]= this.recordCount
             [page]="page"
-            [perPage]= 20
-            [pagesToShow]="5"
+            [perPage]= this.limit
+            [pagesToShow]="3"
             (goPrev)="onPrev()"
             (goNext)="onNext()"
             (goPage)="goToPage($event)">

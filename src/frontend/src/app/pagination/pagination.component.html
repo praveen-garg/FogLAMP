@@ -1,9 +1,9 @@
- <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
   <button class="button pagination-previous" (click)="onPrev()" [attr.disabled]="page === 1 || loading">Previous</button>
   <button class="button pagination-next" (click)="onNext()" [attr.disabled]="lastPage() || loading">Next</button>
   <ul class="pagination-list">
     <li><span class="pagination-ellipsis">&hellip;</span></li>
-    <li><a class="{{(page === pageNum) ? 'button is-primary' : 'pagination-link'}}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)">{{ pageNum }}</a></li>
+    <li><a class="{{(page === pageNum) ? 'button is-primary' : 'pagination-link'}}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)">{{pageNum}}</a></li>
     <li><span class="pagination-ellipsis">&hellip;</span></li>
   </ul>
 </nav>
