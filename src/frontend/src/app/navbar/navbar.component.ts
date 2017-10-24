@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 
-import { ConfigurationService } from '../services/index';
+import { ServicesHealthService } from '../services/index';
 
 import { POLLING_INTERVAL } from '../utils';
 
@@ -14,14 +14,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public timer: any = '';
   public ping_data = {};
   public ping_info = { is_alive: false, service_status: 'service down' };
-  constructor(private configService: ConfigurationService) { }
+  constructor(private servicesHealthService: ServicesHealthService) { }
   ngOnInit() {
     this.start();
   }
 
   pingService() {
     // console.log("pingService ...")
-    this.configService.pingService()
+    this.servicesHealthService.pingService()
       .subscribe(
       (data) => {
         this.ping_data = data;
