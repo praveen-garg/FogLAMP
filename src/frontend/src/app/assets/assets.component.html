@@ -30,14 +30,12 @@
         <div class="columns">
           <div class="column">
             <div class="select">
-              <!-- TODO: Set 'Select' as default selected option. -->
               <select (ngModelChange)="setAssetCode($event)" [(ngModel)]="selectedAsset">
                 <option disabled>Select</option>
                 <option *ngFor="let asset of assets" [ngValue]='asset'>{{asset.asset_code}} ({{asset.count}})</option>
               </select>
             </div>
-          </div>
-          <!-- TODO: Fix limit and offset issue with pagination. -->
+          </div> 
           <div class="column">
             <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
           </div>

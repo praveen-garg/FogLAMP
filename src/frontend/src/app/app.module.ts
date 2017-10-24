@@ -9,8 +9,8 @@ import { routing } from './app.routing';
 import { AuthGuard } from './guards/index';
 import { AlertComponent } from './directives/index';
 import {
-  AlertService, AuthService, ConfigurationService,
-  StatisticsService, AssetsService, AuditService, SchedulesService
+  AlertService, AuthService, AssetsService, AuditService, ConfigurationService,
+  StatisticsService, ServicesHealthService, SchedulesService
 } from './services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
@@ -35,6 +35,7 @@ import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
 import { PaginationComponent } from './pagination/index';
+import { ServicesHealthComponent } from './services-health/index';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { PaginationComponent } from './pagination/index';
     ModalComponent,
     UpdateModalComponent,
     SettingsComponent,
-    PaginationComponent
+    PaginationComponent,
+    ServicesHealthComponent
   ],
   providers: [
     AuthGuard,
@@ -77,7 +79,8 @@ import { PaginationComponent } from './pagination/index';
     StatisticsService,
     AssetsService,
     AuditService,
-    SchedulesService
+    SchedulesService,
+    ServicesHealthService
   ],
   bootstrap: [AppComponent]
 })

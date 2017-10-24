@@ -1,6 +1,4 @@
  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-  <!-- <span>{{ getMin() }} to {{ getMax() }} of {{ count }} Records</span>
-  <span>{{ totalPages() }} pages</span> -->
   <button class="button pagination-previous" (click)="onPrev()" [attr.disabled]="page === 1 || loading">Previous</button>
   <button class="button pagination-next" (click)="onNext()" [attr.disabled]="lastPage() || loading">Next</button>
   <ul class="pagination-list">

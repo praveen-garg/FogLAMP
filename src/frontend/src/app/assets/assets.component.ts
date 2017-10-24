@@ -94,10 +94,12 @@ export class AssetsComponent implements OnInit {
     console.log('Limit: ', this.limit);
     console.log('offset: ', this.offset);
     
+    // TODO: Set 'Select' as default selected option.
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
     }
+    // TODO: Fix limit and offset issue with pagination.
     this.assetService.getAssetReadings(encodeURIComponent(this.asset['asset_code']), this.limit, this.offset).
       subscribe(
       data => {

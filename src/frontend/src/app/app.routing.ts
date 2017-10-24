@@ -8,7 +8,7 @@ import { ScheduledProcessComponent } from './scheduled-process/index';
 import { AssetsComponent } from './assets/index';
 import { AuditLogComponent } from './audit-log/index';
 import { SettingsComponent } from './settings/index';
-
+import { ServicesHealthComponent } from './services-health/index'
 
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent},
@@ -19,6 +19,7 @@ const appRoutes: Routes = [
     { path: 'assets', component: AssetsComponent },
     { path: 'audit', component: AuditLogComponent },
     { path: 'settings', component: SettingsComponent },
+    { path: 'services-health', component: ServicesHealthComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: ''}
 ];
