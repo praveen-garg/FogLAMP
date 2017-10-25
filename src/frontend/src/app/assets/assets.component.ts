@@ -13,10 +13,7 @@ export class AssetsComponent implements OnInit {
   limit: number = 20;
   offset: number = 0;
 
-  loading = false;
-  total = 0;
   page = 1;
-  currentIndex = 1;
   recordCount: number = 0;
   tempOffset: number = 0
   assets = [];
