@@ -10,7 +10,7 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: Object;
   asset: Object;
-  limit: number = 0;
+  limit: number = 20;
   offset: number = 0;
 
   loading = false;
@@ -77,13 +77,29 @@ export class AssetsComponent implements OnInit {
     this.getAssetReading();
   }
   public setLimit(limit: number) {
-    this.limit = limit;
+    if (this.page !== 1) {
+      this.page = 1;
+      this.offset = 0;
+    }
+    if (limit === null) {
+      this.limit = 20;
+    } else {
+      this.limit = limit;
+    }
     console.log('Limit: ', limit);
     this.getAssetReading();
   }
 
   public setOffset(offset: number) {
-    this.offset = offset;
+    if (this.page !== 1) {
+      this.page = 1;
+      this.offset = 0;
+    }
+    if (offset === null) {
+      this.offset = 0;
+    } else {
+      this.offset = offset;
+    }
     this.recordCount = this.asset['count'] - this.offset;
     console.log('offset:', offset);
     this.getAssetReading();
