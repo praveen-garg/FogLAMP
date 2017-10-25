@@ -127,12 +127,15 @@ class Storage(AbstractStorage):
 
     def _get_storage_service(self):
         """ get Storage service """
+        from foglamp.core.server import _FOGLAMP_ROOT
 
         # TODO: URL to service registry api?
-        conn = http.client.HTTPConnection("{0}:{1}".format("", ""))
-        # TODO: need to set http / https based on service protocol
+        file = open(_FOGLAMP_ROOT + "/.port.txt", "r")
+        port_str = file.read()
 
-        conn.request('GET', url='/foglamp/service')
+        conn = http.client.HTTPConnection("{0}:{1}".format("0.0.0.0", int(port_str.strip())))
+        # TODO: need to set http / https based on service protocol
+        conn.request('GET', url='/foglamp/service?name=FogLAMP%20Storage')
         r = conn.getresponse()
 
         # TODO: FOGL-615
@@ -150,17 +153,17 @@ class Storage(AbstractStorage):
         return svc
 
     def connect(self):
-        # svc = self._get_storage_service()
-        # if len(svc) == 0:
-        #     raise InvalidServiceInstance
-        # self.service = Service(s_id=svc["id"], s_name=svc["name"], s_type=svc["type"], s_port=svc["service_port"],
-        #                        m_port=svc["management_port"], s_address=svc["address"], s_protocol=svc["protocol"])
-        found_services = Service.Instances.get(name="FogLAMP Storage")
-        svc = found_services[0]
-        # retry for a while?
-        if svc is None:
+        svc = self._get_storage_service()
+        if len(svc) == 0:
             raise InvalidServiceInstance
-        self.service = svc
+        self.service = Service(s_id=svc["id"], s_name=svc["name"], s_type=svc["type"], s_port=svc["service_port"],
+                               m_port=svc["management_port"], s_address=svc["address"], s_protocol=svc["protocol"])
+        # found_services = Service.Instances.get(name="FogLAMP Storage")
+        # svc = found_services[0]
+        # # retry for a while?
+        # if svc is None:
+        #     raise InvalidServiceInstance
+        # self.service = svc
         return self
 
     def disconnect(self):

@@ -114,6 +114,14 @@ class Server:
             address, cls.core_management_port = core_server.sockets[0].getsockname()
             _logger.info('Management API started on http://%s:%s', address, cls.core_management_port)
 
+            # write to file?
+            try:
+                file = open(_FOGLAMP_ROOT + "/.port.txt", "w")
+                file.write(str(cls.core_management_port))
+                file.close()
+            except:
+                _logger.error("could not create port info file")
+
             # start storage
             loop.run_until_complete(cls._start_storage(loop))
             # start scheduler
