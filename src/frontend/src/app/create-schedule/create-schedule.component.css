@@ -1,3 +1,7 @@
+.card-header {
+    background-color: whitesmoke;
+}
+
 #rday {
     float: left;
     width: 30%;
