@@ -43,7 +43,7 @@
     <div class="tile">
     <div class="tile is-parent">
       <div class="tile is-child">
-        <app-create-schedule></app-create-schedule>
+        <app-create-schedule (notify)='onNotify()' (scheduleData)='setScheduleProcessAndType($event)'></app-create-schedule>
       </div>
     </div>
   </div>

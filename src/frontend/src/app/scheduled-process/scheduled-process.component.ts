@@ -3,6 +3,7 @@ import { SchedulesService, AlertService } from '../services/index';
 import { ModalComponent } from '../modal/modal.component';
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
 import Utils from '../utils';
+import * as _ from 'lodash';
 
 enum weekDays {
   Monday = 1,
@@ -34,13 +35,12 @@ export class ScheduledProcessComponent implements OnInit {
   public updateScheduleData: any;
   @ViewChild(ModalComponent) child: ModalComponent;
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
+
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value == 'string') as string[];
-    this.getScheduleType();
     this.getSchedules();
-    this.getSchedulesProcesses();
     this.getLatestTasks();
 
     this.updateScheduleData = {
@@ -50,33 +50,19 @@ export class ScheduledProcessComponent implements OnInit {
     };
   }
 
-  public getScheduleType(): void {
-    this.schedulesService.getScheduleType().
-      subscribe(
-      data => {
-         if (data.error) {
-          this.alertService.error(data.error.message);
-          return;
-        }
-        this.scheduleType = data.schedule_type;
-        console.log(this.scheduleType);
-      },
-      error => { console.log('error', error); });
-  }
-
   public getSchedules(): void {
     this.scheduleData = [];
     this.schedulesService.getSchedules().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           this.alertService.error(data.error.message);
           return;
         }
         this.scheduleData = data.schedules;
         this.scheduleData.forEach(element => {
           const repeatTimeObj = Utils.secondsToDhms(element.repeat);
-          if (repeatTimeObj.days === 1) {
+          if (repeatTimeObj.days == 1) {
             element.repeat = repeatTimeObj.days + ' day, ' + repeatTimeObj.time;
           } else if (repeatTimeObj.days > 1) {
             element.repeat = repeatTimeObj.days + ' days, ' + repeatTimeObj.time;
@@ -91,19 +77,17 @@ export class ScheduledProcessComponent implements OnInit {
       error => { console.log('error', error); });
   }
 
-  public getSchedulesProcesses(): void {
-    this.scheduleProcess = [];
-    this.schedulesService.getScheduledProcess().
-      subscribe(
-      data => {
-         if (data.error) {
-          this.alertService.error(data.error.message);
-          return;
-        }
-        this.scheduleProcess = data.processes;
-        console.log('This is the getScheduleProcess ', this.scheduleProcess);
-      },
-      error => { console.log('error', error); });
+  /**
+   * Get ScheduleType, ScheduleProcess from create-schedule.component.ts
+   * @param data:  record {ScheduleType, ScheduleProcess} transmitted from
+   * child compoent create-schedule.component.ts
+   */
+  public setScheduleProcessAndType(data) {
+    if (_.some(data, { name: 'STARTUP' })) {
+      this.scheduleType = data;
+    } else {
+      this.scheduleProcess = data;
+    }
   }
 
   /**
@@ -111,7 +95,7 @@ export class ScheduledProcessComponent implements OnInit {
    * @param state Task state
    */
   public getTasks(state) {
-    if (state.toUpperCase() === 'RUNNING') {
+    if (state.toUpperCase() == 'RUNNING') {
       this.selectedTaskType = 'Running';
       this.getRunningTasks();
       return;
@@ -128,7 +112,7 @@ export class ScheduledProcessComponent implements OnInit {
     this.schedulesService.getLatestTask().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           this.alertService.error(data.error.message);
           return;
         }
@@ -166,9 +150,9 @@ export class ScheduledProcessComponent implements OnInit {
         if (data.message) {
           this.alertService.success(data.message + ' Wait for 5 seconds!');
           // TODO: remove cancelled task object from local list
-          setTimeout (() => {
+          setTimeout(() => {
             console.log('waiting...', this.selectedTaskType);
-            if (this.selectedTaskType === 'Running') {
+            if (this.selectedTaskType == 'Running') {
               this.getRunningTasks();
             } else {
               this.getLatestTasks();

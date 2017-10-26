@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { SchedulesService, AlertService } from '../services/index';
 import Utils from '../utils';
 
@@ -15,9 +15,18 @@ export class CreateScheduleComponent implements OnInit {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
+  @Output() notify: EventEmitter<any> = new EventEmitter<any>();
+  @Output() scheduleData: EventEmitter<any> = new EventEmitter<any>();
+
+  public scheduleProcess = [];
+  public scheduleType = [];
+
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getScheduleType();
+    this.getSchedulesProcesses();
+  }
 
   public createSchedule() {
     const schedule_name_fld = <HTMLInputElement>document.getElementById('name');
@@ -40,7 +49,6 @@ export class CreateScheduleComponent implements OnInit {
     let day = 0;
     let scheduled_time = 0;
 
-
     // total time with days and hh:mm:ss
     const total_repeat_time = repeat_time_fld.value !== '' ? Utils.convertTimeToSec(
       repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined;
@@ -53,7 +61,7 @@ export class CreateScheduleComponent implements OnInit {
      *      {"index": 4,"name": "MANUAL"}]
      *      For schedule type 'TIMED', show 'Day' and 'TIME' field on UI
      */
-    if (this.selected_schedule_type === 2) {  // Condition to check if schedule type is TIMED == 2
+    if (this.selected_schedule_type == 2) {  // Condition to check if schedule type is TIMED == 2
       day = Number(day_fld.value);
       // check if time is in valid range
       this.invalidTime = Utils.not_between(time_fld.value);
@@ -81,13 +89,13 @@ export class CreateScheduleComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        // this.getSchedules();
+        this.notify.emit();
 
         // Clear form fields
         schedule_name_fld.value = '';
         repeat_day_fld.value = '';
         repeat_time_fld.value = '';
-        schedule_process_fld.value = ''; // this.scheduleProcess[0]; // set process dropdown to 0 index value
+        schedule_process_fld.value = this.scheduleProcess[0]; // set process dropdown to 0 index value
         schedule_type_fld.value = '1';
         this.setScheduleTypeKey(1); // To set schedule type key globally for required field handling on UI
       },
@@ -101,4 +109,36 @@ export class CreateScheduleComponent implements OnInit {
   public setScheduleTypeKey(value) {
     this.selected_schedule_type = value;
   }
+
+   public getSchedulesProcesses(): void {
+    this.scheduleProcess = [];
+    this.schedulesService.getScheduledProcess().
+      subscribe(
+      data => {
+        if (data.error) {
+          this.alertService.error(data.error.message);
+          return;
+        }
+        this.scheduleProcess = data.processes;
+        console.log('This is the getScheduleProcess ', this.scheduleProcess);
+        this.scheduleData.emit(this.scheduleProcess);
+      },
+      error => { console.log('error', error); });
+  }
+
+   public getScheduleType(): void {
+    this.schedulesService.getScheduleType().
+      subscribe(
+      data => {
+        if (data.error) {
+          this.alertService.error(data.error.message);
+          return;
+        }
+        this.scheduleType = data.schedule_type;
+        console.log(this.scheduleType);
+        this.scheduleData.emit(this.scheduleType);
+      },
+      error => { console.log('error', error); });
+  }
+
 }

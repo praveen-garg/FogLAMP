@@ -45,8 +45,8 @@
             <div class="control">
               <div class="select">
                 <select id="type" #t (change)="setScheduleTypeKey(t.value)">
-                        <option [value]='type.index' *ngFor="let type of scheduleType">{{type.name}}</option>
-                      </select>
+                      <option [value]='type.index' *ngFor="let type of scheduleType">{{type.name}}</option>
+               </select>
               </div>
             </div>
           </div>
