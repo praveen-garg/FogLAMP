@@ -12,12 +12,13 @@ import signal
 import asyncio
 from aiohttp import web
 import subprocess
+import http
+import json
 
 from foglamp import logger
 from foglamp.core import routes
 from foglamp.core import middleware
 from foglamp.core.service_registry.instance import Service
-from foglamp.storage.storage import Storage
 from foglamp.core.scheduler import Scheduler
 
 __author__ = "Amarendra K. Sinha, Praveen Garg, Terris Linenbach"
@@ -192,11 +193,35 @@ class Server:
 
         # see http://host:<core_mgt_port>/foglamp/service for registered services
 
-    @staticmethod
-    def stop_storage():
-        # TODO: make client call to service mgt API to ask to shutdown storage?
+    @classmethod
+    def stop_storage(cls):
+        # TODO: Move to service mgt API to ask to shutdown storage?
         try:
-            Storage().shutdown()
+            """ stop Storage service """
+
+            found_services = Service.Instances.get(name="FogLAMP Storage")
+            svc = found_services[0]
+            if svc is None:
+                return
+
+            management_api_url = '{}:{}'.format(svc._address, svc._management_port)
+
+            conn = http.client.HTTPConnection(management_api_url)
+            # TODO: need to set http / https based on service protocol
+
+            conn.request('POST', url='/foglamp/service/shutdown', body=None)
+            r = conn.getresponse()
+
+            # TODO: FOGL-615
+            # log error with message if status is 4xx or 5xx
+            if r.status in range(400, 500):
+                _logger.error("Client error code: %d", r.status)
+            if r.status in range(500, 600):
+                _logger.error("Server error code: %d", r.status)
+
+            res = r.read().decode()
+            conn.close()
+            return json.loads(res)
         except Exception as ex:
             _logger.exception(str(ex))
 

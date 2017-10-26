@@ -20,7 +20,7 @@ from foglamp import logger
 from foglamp.core.service_registry.service_registry import Service
 from foglamp.storage.exceptions import *
 from foglamp.storage.utils import Utils
-
+from foglamp.core.server import _FOGLAMP_ROOT
 
 _LOGGER = logger.setup(__name__)
 
@@ -104,38 +104,22 @@ class Storage(AbstractStorage):
         conn.close()
         return json.loads(res)
 
-    # TODO: remove me, and allow this call in service registry API
-    def shutdown(self):
-        """ stop Storage service """
-
-        conn = http.client.HTTPConnection(self.management_api_url)
-        # TODO: need to set http / https based on service protocol
-
-        conn.request('POST', url='/foglamp/service/shutdown', body=None)
-        r = conn.getresponse()
-
-        # TODO: FOGL-615
-        # log error with message if status is 4xx or 5xx
-        if r.status in range(400, 500):
-            _LOGGER.error("Client error code: %d", r.status)
-        if r.status in range(500, 600):
-            _LOGGER.error("Server error code: %d", r.status)
-
-        res = r.read().decode()
-        conn.close()
-        return json.loads(res)
-
     def _get_storage_service(self):
         """ get Storage service """
-        from foglamp.core.server import _FOGLAMP_ROOT
 
-        # TODO: URL to service registry api?
-        file = open(_FOGLAMP_ROOT + "/.port.txt", "r")
-        port_str = file.read()
+        try:
+            with open(_FOGLAMP_ROOT + "/.port.txt", "r") as port_file:
+                port_str = port_file.read()
 
-        conn = http.client.HTTPConnection("{0}:{1}".format("0.0.0.0", int(port_str.strip())))
+            host = "0.0.0.0"
+            port = int(port_str.strip())
+        except Exception as ex:
+            _LOGGER.error("Could not read core management port. See ", str(ex))
+            raise "Could not read core management port"
+
+        conn = http.client.HTTPConnection("{0}:{1}".format(host, port))
         # TODO: need to set http / https based on service protocol
-        conn.request('GET', url='/foglamp/service?name=FogLAMP%20Storage')
+        conn.request('GET', url='/foglamp/service?name=FogLAMP Storage')
         r = conn.getresponse()
 
         # TODO: FOGL-615
