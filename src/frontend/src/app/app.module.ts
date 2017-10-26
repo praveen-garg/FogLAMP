@@ -34,6 +34,7 @@ import { ModalComponent } from './modal/modal.component';
 import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
+import { PaginationComponent } from './pagination/index';
 import { ServicesHealthComponent } from './services-health/index';
 
 @NgModule({
@@ -67,6 +68,7 @@ import { ServicesHealthComponent } from './services-health/index';
     ModalComponent,
     UpdateModalComponent,
     SettingsComponent,
+    PaginationComponent,
     ServicesHealthComponent
   ],
   providers: [
