@@ -35,6 +35,7 @@ import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
 import { ServicesHealthComponent } from './services-health/index';
+import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { ServicesHealthComponent } from './services-health/index';
     ModalComponent,
     UpdateModalComponent,
     SettingsComponent,
-    ServicesHealthComponent
+    ServicesHealthComponent,
+    CreateScheduleComponent
   ],
   providers: [
     AuthGuard,
