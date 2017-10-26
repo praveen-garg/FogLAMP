@@ -8,14 +8,14 @@ import { AssetsService, AlertService } from '../services/index';
 })
 export class AssetsComponent implements OnInit {
 
-  selectedAsset: Object = 'Select'
+  selectedAsset: Object = 'Select' // Selected asset object (asset_coded, asset_count)
   asset: Object;
-  limit: number = 20;
+  limit: number = 20;        
   offset: number = 0;
 
-  page = 1;
-  recordCount: number = 0;
-  tempOffset: number = 0
+  page = 1;                   // Default page is 1 in pagination
+  recordCount: number = 0;    // Total no. of records during pagination
+  tempOffset: number = 0      // Temporary offset during pagination
   assets = [];
   assetsReadingsData = [];
 
@@ -25,21 +25,33 @@ export class AssetsComponent implements OnInit {
     this.getAsset();
   }
 
+  /**
+   *  Go to the page on which user clicked in pagination
+   */
   goToPage(n: number): void {
     this.page = n;
     this.setLimitOffset();
   }
 
+  /**
+   *  Go to the next page
+   */
   onNext(): void {
     this.page++;
     this.setLimitOffset();
   }
 
+  /**
+   *  Go to the previous page
+   */
   onPrev(): void {
     this.page--;
     this.setLimitOffset();
   }
 
+  /**
+   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev() methods)
+   */
   setLimitOffset() {
     if (this.limit === 0) {
       this.limit = 20;
@@ -63,6 +75,10 @@ export class AssetsComponent implements OnInit {
     console.log('asset: ', assetData);
     this.getAssetReading();
   }
+
+  /**
+   *  Set limit
+   */
   public setLimit(limit: number) {
     if (this.page !== 1) {
       this.page = 1;
@@ -77,15 +93,17 @@ export class AssetsComponent implements OnInit {
     this.getAssetReading();
   }
 
+  /**
+   *  Set offset
+   */
   public setOffset(offset: number) {
     if (this.page !== 1) {
       this.page = 1;
-      this.tempOffset = this.offset;
-    } else {
-      this.offset = offset;
-    }
+    } 
+    this.offset = offset;
+    this.tempOffset = offset
     this.recordCount = this.asset['count'] - this.offset;
-    this.setLimitOffset();
+    this.getAssetReading();
   }
 
   public getAsset(): void {
@@ -104,6 +122,9 @@ export class AssetsComponent implements OnInit {
       error => { console.log('error', error); });
   }
 
+  /**
+   *  Get data of Asset Readings
+   */
   public getAssetReading(): void {
     if (this.offset === 0) {
       this.recordCount = this.asset['count'];
