@@ -34,6 +34,7 @@ import { ModalComponent } from './modal/modal.component';
 import { UpdateModalComponent } from './update-modal/update-modal.component';
 import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
+import { PaginationComponent } from './pagination/index';
 import { ServicesHealthComponent } from './services-health/index';
 import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
@@ -69,6 +70,7 @@ import { CreateScheduleComponent } from './create-schedule/create-schedule.compo
     UpdateModalComponent,
     SettingsComponent,
     ServicesHealthComponent,
+    PaginationComponent,
     CreateScheduleComponent
   ],
   providers: [

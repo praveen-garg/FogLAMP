@@ -30,12 +30,12 @@
         <div class="columns">
           <div class="column">
             <div class="select">
-              <select id="asset_code" (change)="setAssetCode($event.target.value)">
-                <option>Select</option>
-                <option *ngFor="let asset of assets"  [value]='asset.asset_code'>{{asset.asset_code}} ({{asset.count}})</option>
+              <select (ngModelChange)="setAssetCode($event)" [(ngModel)]="selectedAsset">
+                <option disabled>Select</option>
+                <option *ngFor="let asset of assets" [ngValue]='asset'>{{asset.asset_code}} ({{asset.count}})</option>
               </select>
             </div>
-          </div>
+          </div> 
           <div class="column">
             <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
           </div>
@@ -58,23 +58,28 @@
               <td>
                 <tr *ngFor="let d of asset.data">
                   <td>
-                  {{d.reading | json}} 
+                  {{d.reading | json}}
                   </td> 
                   <td>
                     <span class="tag is-rounded">{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
                   </td>
-                  <hr class="dropdown-divider">
+                  <hr class="dropdown-divider"> 
                 </tr>
               </td>
-              <!--<td>
-                <tr *ngFor="let d of asset.data"> 
-                  <small>{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</small>
-                  <hr class="dropdown-divider">
-                </tr>
-              </td>-->
             </tr>
-            <tbody>
+          </tbody> 
         </table>
+        <div *ngIf= asset>
+          <my-pagination
+            [count]= this.recordCount
+            [page]="page"
+            [perPage]= this.limit
+            [pagesToShow]="3"
+            (goPrev)="onPrev()"
+            (goNext)="onNext()"
+            (goPage)="goToPage($event)">
+          </my-pagination>
+        </div>
       </article>
     </div>
   </div>
