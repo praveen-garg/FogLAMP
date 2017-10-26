@@ -119,7 +119,7 @@ class Storage(AbstractStorage):
 
         conn = http.client.HTTPConnection("{0}:{1}".format(host, port))
         # TODO: need to set http / https based on service protocol
-        conn.request('GET', url='/foglamp/service?name=FogLAMP Storage')
+        conn.request('GET', url='/foglamp/service?name=FogLAMP%20Storage')
         r = conn.getresponse()
 
         # TODO: FOGL-615
