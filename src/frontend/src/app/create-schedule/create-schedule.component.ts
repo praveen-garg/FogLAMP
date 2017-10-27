@@ -16,7 +16,8 @@ export class CreateScheduleComponent implements OnInit {
   public selected_schedule_type: Number = 1;
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
-  @Output() scheduleData: EventEmitter<any> = new EventEmitter<any>();
+  @Output() process: EventEmitter<any> = new EventEmitter<any>();
+  @Output() type: EventEmitter<any> = new EventEmitter<any>();
 
   public scheduleProcess = [];
   public scheduleType = [];
@@ -121,7 +122,7 @@ export class CreateScheduleComponent implements OnInit {
         }
         this.scheduleProcess = data.processes;
         console.log('This is the getScheduleProcess ', this.scheduleProcess);
-        this.scheduleData.emit(this.scheduleProcess);
+        this.process.emit(this.scheduleProcess);
       },
       error => { console.log('error', error); });
   }
@@ -136,7 +137,7 @@ export class CreateScheduleComponent implements OnInit {
         }
         this.scheduleType = data.schedule_type;
         console.log(this.scheduleType);
-        this.scheduleData.emit(this.scheduleType);
+        this.type.emit(this.scheduleType);
       },
       error => { console.log('error', error); });
   }

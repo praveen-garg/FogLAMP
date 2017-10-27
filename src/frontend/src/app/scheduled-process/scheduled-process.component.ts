@@ -3,7 +3,6 @@ import { SchedulesService, AlertService } from '../services/index';
 import { ModalComponent } from '../modal/modal.component';
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
 import Utils from '../utils';
-import * as _ from 'lodash';
 
 enum weekDays {
   Monday = 1,
@@ -78,16 +77,21 @@ export class ScheduledProcessComponent implements OnInit {
   }
 
   /**
-   * Get ScheduleType, ScheduleProcess from create-schedule.component.ts
-   * @param data:  record {ScheduleType, ScheduleProcess} transmitted from
-   * child compoent create-schedule.component.ts
+   * Get ScheduleProcess from create-schedule.component.ts
+   * @param data:  ScheduleProcess record transmitted from
+   * child component create-schedule.component.ts
    */
-  public setScheduleProcessAndType(data) {
-    if (_.some(data, { name: 'STARTUP' })) {
-      this.scheduleType = data;
-    } else {
-      this.scheduleProcess = data;
-    }
+  public setScheduleProcess(data) {
+    this.scheduleProcess = data;
+  }
+
+  /**
+   * Get ScheduleType from create-schedule.component.ts
+   * @param data:  ScheduleType record transmitted from
+   * child component create-schedule.component.ts
+   */
+  public setScheduleType(data) {
+    this.scheduleType = data;
   }
 
   /**

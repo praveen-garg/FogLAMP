@@ -41,12 +41,12 @@
       </div>
     </div>
     <div class="tile">
-    <div class="tile is-parent">
-      <div class="tile is-child">
-        <app-create-schedule (notify)='onNotify()' (scheduleData)='setScheduleProcessAndType($event)'></app-create-schedule>
+      <div class="tile is-parent">
+        <div class="tile is-child">
+          <app-create-schedule (notify)='onNotify()' (process)='setScheduleProcess($event)' (type)='setScheduleType($event)'></app-create-schedule>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
   <div class="tile">
