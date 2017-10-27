@@ -22,7 +22,7 @@ import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from '../app/configuration-manager/index';
 
 import { ChartModule } from './chart/index';
-import { ScheduledProcessComponent } from '../app/scheduled-process/index';
+import { ScheduledProcessComponent } from '../app/scheduler/scheduled-process/index';
 import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
 import { AssetsComponent } from '../app/assets/assets.component';
@@ -36,8 +36,8 @@ import { SidebarModule } from 'ng-sidebar';
 import { SettingsComponent } from './settings/index';
 import { PaginationComponent } from './pagination/index';
 import { ServicesHealthComponent } from './services-health/index';
-import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
-import { ListTasksComponent } from './list-tasks/list-tasks.component';
+import { CreateScheduleComponent } from './scheduler/create-schedule/create-schedule.component';
+import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component';
 
 @NgModule({
   imports: [

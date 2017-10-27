@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SchedulesService, AlertService } from '../services/index';
-import { ModalComponent } from '../modal/modal.component';
-import { UpdateModalComponent } from '../update-modal/update-modal.component';
-import Utils from '../utils';
+import { SchedulesService, AlertService } from '../../services/index';
+import { ModalComponent } from '../../modal/modal.component';
+import { UpdateModalComponent } from '../../update-modal/update-modal.component';
+import Utils from '../../utils';
 
 enum weekDays {
   Monday = 1,
