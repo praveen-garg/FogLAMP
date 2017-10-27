@@ -8,14 +8,14 @@ import { AssetsService, AlertService } from '../services/index';
 })
 export class AssetsComponent implements OnInit {
 
-  selectedAsset: Object = 'Select' // Selected asset object (asset_coded, asset_count)
-  asset: Object;
-  limit: number = 20;        
-  offset: number = 0;
+  selectedAsset: any = 'Select'; // Selected asset object (asset_coded, asset_count)
+  asset: any;
+  limit = 20;
+  offset = 0;
 
   page = 1;                   // Default page is 1 in pagination
-  recordCount: number = 0;    // Total no. of records during pagination
-  tempOffset: number = 0      // Temporary offset during pagination
+  recordCount = 0;    // Total no. of records during pagination
+  tempOffset = 0;     // Temporary offset during pagination
   assets = [];
   assetsReadingsData = [];
 
@@ -99,9 +99,9 @@ export class AssetsComponent implements OnInit {
   public setOffset(offset: number) {
     if (this.page !== 1) {
       this.page = 1;
-    } 
+    }
     this.offset = offset;
-    this.tempOffset = offset
+    this.tempOffset = offset;
     this.recordCount = this.asset['count'] - this.offset;
     this.getAssetReading();
   }
@@ -117,7 +117,7 @@ export class AssetsComponent implements OnInit {
           return;
         }
         this.assets = data;
-        console.log('This is the asset data ',  this.assets);
+        console.log('This is the asset data ', this.assets);
       },
       error => { console.log('error', error); });
   }
@@ -132,9 +132,8 @@ export class AssetsComponent implements OnInit {
     console.log('Asset code: ', this.asset['asset_code']);
     console.log('Limit: ', this.limit);
     console.log('offset: ', this.offset);
-    console.log('tempOffset: ', this.tempOffset); 
+    console.log('tempOffset: ', this.tempOffset);
     console.log('recordCount: ', this.recordCount);
-    
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
@@ -152,7 +151,7 @@ export class AssetsComponent implements OnInit {
           count: this.recordCount,
           data: data
         }];
-        console.log('This is the asset reading data ',  this.assetsReadingsData);
+        console.log('This is the asset reading data ', this.assetsReadingsData);
       },
       error => { console.log('error', error); });
   }

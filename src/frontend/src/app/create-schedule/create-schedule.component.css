@@ -1,0 +1,18 @@
+.card-header {
+    background-color: whitesmoke;
+}
+
+#rday {
+    float: left;
+    width: 30%;
+}
+
+#rtime {
+    float: left;
+    width: 50%;
+    margin-left: 1%;
+}
+
+#error {
+    float: left;
+}
