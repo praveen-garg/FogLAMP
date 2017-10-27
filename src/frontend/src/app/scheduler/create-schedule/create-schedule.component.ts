@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { SchedulesService, AlertService } from '../services/index';
-import Utils from '../utils';
+import { SchedulesService, AlertService } from '../../services/index';
+import Utils from '../../utils';
 
 @Component({
   selector: 'app-create-schedule',
