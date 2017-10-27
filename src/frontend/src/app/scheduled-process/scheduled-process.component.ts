@@ -23,10 +23,8 @@ export class ScheduledProcessComponent implements OnInit {
   public scheduleData = [];
   public scheduleProcess = [];
   public scheduleType = [];
-  public tasksData = [];
   public days = [];
 
-  public selectedTaskType = 'Latest'; // Default is LATEST
   public scheduler_name: string;
 
   // Object to hold schedule id to delete
@@ -40,7 +38,6 @@ export class ScheduledProcessComponent implements OnInit {
   ngOnInit() {
     this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value == 'string') as string[];
     this.getSchedules();
-    this.getLatestTasks();
 
     this.updateScheduleData = {
       schedule_process: this.scheduleProcess,
@@ -92,79 +89,6 @@ export class ScheduledProcessComponent implements OnInit {
    */
   public setScheduleType(data) {
     this.scheduleType = data;
-  }
-
-  /**
-   * Get tasks by state {RUNNING, LATEST}
-   * @param state Task state
-   */
-  public getTasks(state) {
-    if (state.toUpperCase() == 'RUNNING') {
-      this.selectedTaskType = 'Running';
-      this.getRunningTasks();
-      return;
-    }
-    this.selectedTaskType = 'Latest';
-    this.getLatestTasks();
-  }
-
-  /**
-   * Get latest tasks
-   */
-  public getLatestTasks(): void {
-    this.tasksData = [];
-    this.schedulesService.getLatestTask().
-      subscribe(
-      data => {
-        if (data.error) {
-          this.alertService.error(data.error.message);
-          return;
-        }
-        this.tasksData = data.tasks;
-        console.log('Latest tasks ', data.tasks);
-      },
-      error => { console.log('error', error); });
-  }
-
-  /**
-   * Get running tasks
-   */
-  public getRunningTasks(): void {
-    this.tasksData = [];
-    this.schedulesService.getTasks('RUNNING').
-      subscribe(
-      data => {
-        if (data.error) {
-          this.alertService.error(data.error);
-        }
-        this.tasksData = data.tasks;
-        console.log('Running tasks ', this.tasksData);
-      },
-      error => { console.log('error', error); });
-  }
-
-  public cancelRunninTask(id) {
-    console.log('Task UUID:', id);
-    this.schedulesService.cancelTask(id).
-      subscribe(
-      data => {
-        if (data.error) {
-          this.alertService.error(data.error.message);
-        }
-        if (data.message) {
-          this.alertService.success(data.message + ' Wait for 5 seconds!');
-          // TODO: remove cancelled task object from local list
-          setTimeout(() => {
-            console.log('waiting...', this.selectedTaskType);
-            if (this.selectedTaskType == 'Running') {
-              this.getRunningTasks();
-            } else {
-              this.getLatestTasks();
-            }
-          }, 5000);
-        }
-      },
-      error => { console.log('error', error); });
   }
 
   /**

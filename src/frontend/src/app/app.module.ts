@@ -37,6 +37,7 @@ import { SettingsComponent } from './settings/index';
 import { PaginationComponent } from './pagination/index';
 import { ServicesHealthComponent } from './services-health/index';
 import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
+import { ListTasksComponent } from './list-tasks/list-tasks.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { CreateScheduleComponent } from './create-schedule/create-schedule.compo
     SettingsComponent,
     ServicesHealthComponent,
     PaginationComponent,
-    CreateScheduleComponent
+    CreateScheduleComponent,
+    ListTasksComponent
   ],
   providers: [
     AuthGuard,
