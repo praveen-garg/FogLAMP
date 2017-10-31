@@ -36,17 +36,17 @@ export class FogLAMPPage {
     return element(by.css('#app app-configuration-manager')).getText();
   }
 
-  getTitleSchedules() {
+  getSchedulesTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-scheduled-process .is-parent > div > header p')).getText();
   }
 
-  getTitleCreateSchedule() {
+  getCreateScheduleTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-scheduled-process app-create-schedule header p')).getText();
   }
 
-  getTitleTasks() {
+  getTasksTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-scheduled-process app-list-tasks header > div')).getText();
   }
@@ -56,12 +56,12 @@ export class FogLAMPPage {
     return element(by.css('app-audit-log nav small')).getText();
   }
 
-  getSelectTag() {
+  getAuditLogsSelectTag() {
     browser.ignoreSynchronization = true;
     return element.all(by.css('app-audit-log div:nth-child(1) select')).count();
   }
 
-  getInputTag() {
+  getAuditLogsInputTag() {
     browser.ignoreSynchronization = true;
     return element.all(by.css('app-audit-log input')).count();
   }
@@ -71,6 +71,7 @@ export class FogLAMPPage {
     return element(by.css('app-assets div:nth-child(1) > div > article > h5 > small')).getText();
   }
 
+  // TODO: e2e tests for 'Service Health' and 'Settings' Tab in the next commit
   getAssetReadingsTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-assets div:nth-child(2) > div > article > h5 > small')).getText();

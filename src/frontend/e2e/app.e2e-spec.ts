@@ -39,16 +39,16 @@ describe('foglampapp App', () => {
 
   it('Should Display Scheduled Tasks', () => {
     page.navToScheduledTasks();
-    expect(page.getTitleSchedules()).toEqual('Schedules');
-    expect(page.getTitleCreateSchedule()).toEqual('Create Schedule');
-    expect(page.getTitleTasks()).toContain('Tasks');
+    expect(page.getSchedulesTitle()).toEqual('Schedules');
+    expect(page.getCreateScheduleTitle()).toEqual('Create Schedule');
+    expect(page.getTasksTitle()).toContain('Tasks');
   });
 
   it('Should Display Audits Logs', () => {
     page.navToAuditLogs();
     expect(page.getAuditLogsTitle()).toEqual('Audit Logs');
-    expect(page.getSelectTag()).toEqual(2);
-    expect(page.getInputTag()).toEqual(2);
+    expect(page.getAuditLogsSelectTag()).toEqual(2);
+    expect(page.getAuditLogsInputTag()).toEqual(2);
   });
 
   it('Should Display Assets & Readings', () => {
