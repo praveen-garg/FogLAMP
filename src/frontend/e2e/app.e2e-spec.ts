@@ -56,4 +56,28 @@ describe('foglampapp App', () => {
     expect(page.getAssetsTitle()).toEqual('Assets');
     expect(page.getAssetReadingsTitle()).toEqual('Asset Readings');
   });
+
+  it('Should Display Service Health', () => {
+    var ColumnsName = [
+      'Name',
+      'Type',
+      'Protocol',
+      'Address',
+      'Service Port',
+      'Management Port'
+    ];
+    page.navToServiceHealth();
+    expect(page.getServiceStatusTitle()).toEqual('Service Status');
+    expect(page.getRefreshButton()).toEqual('Refresh  ');
+    for (var ColumnName in ColumnsName) {
+      expect(page.getServiceHealthColNames()).toContain(ColumnsName[ColumnName]);
+    }
+  });
+
+  it('Should Display Settings', () => {
+    page.navToSettings();
+    expect(page.getServiceHealthSelectTag()).toEqual(1);
+    expect(page.getServiceHealthInputTag()).toEqual(2);
+    expect(page.getServiceHealthButton()).toEqual('Set the URL & Restart')
+  });
 });

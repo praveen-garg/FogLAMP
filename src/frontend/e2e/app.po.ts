@@ -21,6 +21,14 @@ export class FogLAMPPage {
     return browser.get('/assets');
   }
 
+  navToServiceHealth() {
+    return browser.get('/services-health');
+  }
+
+  navToSettings() {
+    return browser.get('/settings');
+  }
+
   getNavTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('.container .nav-item b')).getText();
@@ -71,9 +79,38 @@ export class FogLAMPPage {
     return element(by.css('app-assets div:nth-child(1) > div > article > h5 > small')).getText();
   }
 
-  // TODO: e2e tests for 'Service Health' and 'Settings' Tab in the next commit
   getAssetReadingsTitle() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-assets div:nth-child(2) > div > article > h5 > small')).getText();
+  }
+
+  getServiceStatusTitle() {
+    browser.ignoreSynchronization = true;
+    return element(by.css('app-services-health div:nth-child(1) strong')).getText();
+  }
+
+  getRefreshButton() {
+    browser.ignoreSynchronization = true;
+    return element(by.css('app-services-health button')).getText();
+  }
+
+  getServiceHealthColNames() {
+    browser.ignoreSynchronization = true;
+    return element(by.css('app-services-health table tr')).getText();
+  }
+
+  getServiceHealthSelectTag() {
+    browser.ignoreSynchronization = true;
+    return element.all(by.css('app-settings .column div')).count();
+  }
+
+  getServiceHealthInputTag() {
+    browser.ignoreSynchronization = true;
+    return element.all(by.css('app-settings div input')).count();
+  }
+
+  getServiceHealthButton() {
+    browser.ignoreSynchronization = true;
+    return element(by.css('app-settings button')).getText();
   }
 }
