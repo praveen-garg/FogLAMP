@@ -344,8 +344,9 @@ class Readings(Storage):
 
     _base_url = ""
 
-    def __init__(self, core_mgt_host, core_mgt_port):
-        super().__init__(core_management_host=core_mgt_host, core_management_port=core_mgt_port)
+    def __init__(self, core_mgt_host, core_mgt_port, svc=None):
+        super().__init__(core_management_host=core_mgt_host, core_management_port=core_mgt_port,
+                         svc=svc)
         self.__class__._base_url = self.base_url
 
     @classmethod
