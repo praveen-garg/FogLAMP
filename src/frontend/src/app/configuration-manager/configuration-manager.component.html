@@ -35,7 +35,7 @@
                 <button id="btn-save-{{v.key.trim()}}" class="button is-small is-primary" (click)="saveConfigValue(category?.key.trim(), v?.key.trim(), true)">Save</button>
               </div>
               <div class="control">
-                <button id="btn-cancel-{{v.key.trim()}}" class="button is-small is-link" disabled (click)="restoreConfigFieldValue(v.key.trim(),false)">Cancel</button>
+                <button id="btn-cancel-{{v.key.trim()}}" class="button is-text" disabled (click)="restoreConfigFieldValue(v.key.trim(),false)">Cancel</button>
               </div>
             </div>
           </div>
