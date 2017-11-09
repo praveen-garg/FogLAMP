@@ -13,14 +13,18 @@
       <label class='label'>Host</label>
       <input id='host' class='input' type='text' placeholder='0.0.0.0' [ngModel]='host'>
     </div>
-     <div class='column'>
+    <div class='column'>
       <label class="label">Port</label>
-      <input id='port' class='input' type='numbe' maxlength="4" placeholder='8082' [ngModel]='port'>
+      <input id='port' class='input' type='number' maxlength="4" placeholder='8081' [ngModel]='port'>
+    </div>
+    <div class='column'>
+      <label class="label">Management Port</label>
+      <input id='management_port' class='input' type='number' maxlength="5" placeholder='0' [ngModel]='management_port'>
     </div>
   </div>
   <div class="columns">
-     <div class='column'>
-        <button class='button is-primary is-pulled-right' (click)='resetEndPoint()'>Set the URL &amp; Restart</button>
+    <div class='column'>
+      <button class='button is-primary is-pulled-right' (click)='resetEndPoint()'>Set the URL &amp; Restart</button>
     </div>
   </div>
 </div>
