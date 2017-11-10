@@ -39,6 +39,14 @@ export class AlertService {
         }.bind(this), 3000);
     }
 
+    warning(message: string, keepAfterNavigationChange = false) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.subject.next({ type: 'warning', text: message });
+        setTimeout(function () {
+            this.closeMessage();
+        }.bind(this), 5000);
+    }
+
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }
