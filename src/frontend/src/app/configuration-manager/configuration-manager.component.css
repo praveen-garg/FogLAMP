@@ -4,3 +4,6 @@
 .card-header{
         background-color: whitesmoke;
 }
+.card-content{
+       overflow: auto;
+}

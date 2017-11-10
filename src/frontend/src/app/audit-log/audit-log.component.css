@@ -8,5 +8,9 @@
 }
 
 .panel{
-    margin-top: 10px; 
+  margin-top: 10px; 
+}
+
+thead {
+  text-align: center;
 }
