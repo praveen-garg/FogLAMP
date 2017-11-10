@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ServicesHealthService } from '../services/index';
 import { POLLING_INTERVAL } from '../utils';
 import { environment } from '../../environments/environment';
+import { AlertService } from './../services/alert.service';
+import Utils from '../utils';
 
 @Component({
   selector: 'app-services-health',
@@ -11,8 +13,9 @@ import { environment } from '../../environments/environment';
 export class ServicesHealthComponent implements OnInit {
   public timer: any = '';
   public service_data;
-  constructor(private servicesHealthService: ServicesHealthService) { }
+  constructor(private servicesHealthService: ServicesHealthService, private alertService: AlertService) { }
 
+  time: number;
   ngOnInit() {
     this.getServiceData();
   }
@@ -21,7 +24,14 @@ export class ServicesHealthComponent implements OnInit {
     this.servicesHealthService.getAllServices()
       .subscribe(
       (data) => {
+        if (data.error) {
+          console.log('error in response', data.error);
+          this.alertService.warning('Could not connect to Core Managment API, ' +
+            'Make sure to set correct <a href="/settings"> core management port </a>');
+          return;
+        }
         this.service_data = data.services;
+        this.time = Utils.getCureentDate();
       },
       (error) => {
         console.log('error: ', error);

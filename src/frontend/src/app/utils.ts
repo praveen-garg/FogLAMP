@@ -80,4 +80,8 @@ export default class Utils {
     console.log('Total sec', totalSec);
     return totalSec < 0 || totalSec >= 86400;
   }
+
+  public static getCureentDate() {
+    return  Date.now();
+  }
 }

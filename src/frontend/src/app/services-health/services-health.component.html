@@ -29,7 +29,7 @@
           <td>{{service.address}}</td>
           <td>{{service.service_port}}</td>
           <td>{{service.management_port}}</td>
-          <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span></td>
+          <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span><span class='tag is-light'>Last updated at: {{time|date:'MMM d, y hh:mm:ss'}}</span></td>
         </tr>
       </tbody>
     </table>
