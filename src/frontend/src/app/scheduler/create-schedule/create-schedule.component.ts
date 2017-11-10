@@ -15,6 +15,9 @@ export class CreateScheduleComponent implements OnInit {
   // Default selected schedule type is STARTUP = 1
   public selected_schedule_type: Number = 1;
 
+  // variable to hold schedular name for data binding in DOM
+  public scheduler_name;
+
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Output() process: EventEmitter<any> = new EventEmitter<any>();
   @Output() type: EventEmitter<any> = new EventEmitter<any>();
