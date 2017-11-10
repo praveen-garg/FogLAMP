@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -27,38 +27,42 @@ To install dependencies run the following command inside root directory:
 #### Yarn commands
 * `yarn`                    # Install all dependencies from package.json
 * `yarn install`            # Alias for yarn
-* `yarn init`               # Initialize an npm repository
 * `yarn add [package]`      # Install npm package
 * `yarn upgrade [package]`  # Upgrade npm package
 * `yarn remove [package]`   # Uninstall npm package
 
 To read more about yarn read https://yarnpkg.com/en/
 
-## Build
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
 ## Running unit tests
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Run `yarn e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure app is able to communication with web API.
 
 ## Further help
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## nginx
+## Build
+Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. It uses the `-prod` flag with `ng` for a production build.
+
+## Deploy with nginx
+`yarn build` and start nginx from frontend directory with given conf file; see next section. 
+
+To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
+
+
+## start with nginx
 start: `nginx -c nginx.conf -p $(pwd)`
 
 stop: `nginx -s stop`
 
-## start with nginx
-`npm run build` and start nginx from frontend directory with given conf file; see above. you should be able to access it on 0.0.0.0:8080
+you should be able to access it on 0.0.0.0:8080
 
 ## REST API URL Configuration:
 
 ### Dev Mode:
- Set api base URL in `environments/environment.ts` file  
+Set api base URL in `environments/environment.ts` file  
 
 ### Production Mode:
 Set api base URL in `environments/environment.prod.ts` file  
