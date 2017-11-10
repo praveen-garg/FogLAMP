@@ -31,9 +31,11 @@ export class ServicesHealthComponent implements OnInit {
           return;
         }
         this.service_data = data.services;
-        this.time = Utils.getCureentDate();
+        this.time = Utils.getCurrentDate();
       },
       (error) => {
+        this.alertService.warning('Could not connect to Core Managment API, ' +
+            'Make sure to set correct <a href="/settings"> core management port </a>');
         console.log('error: ', error);
       });
   }

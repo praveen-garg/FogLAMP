@@ -81,7 +81,7 @@ export default class Utils {
     return totalSec < 0 || totalSec >= 86400;
   }
 
-  public static getCureentDate() {
+  public static getCurrentDate() {
     return  Date.now();
   }
 }
