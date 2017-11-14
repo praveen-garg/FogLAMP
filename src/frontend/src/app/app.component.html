@@ -1,18 +1,16 @@
 <div class="app-navbar">
     <app-navbar (toggle)="toggleSidebar()"></app-navbar>
 </div>
-<ng-sidebar-container>
+ <ng-sidebar-container contentClass="columns">
     <!-- A sidebar -->
-    <ng-sidebar #sidebar [(opened)]="_opened">
+     <ng-sidebar #sidebar [(opened)]="_opened" sidebarClass="side column is-2">
         <app-side-menu  (toggle)="toggleSidebar()"></app-side-menu>
-    </ng-sidebar>
+    </ng-sidebar> 
 
     <!-- Page content -->
-    <div ng-sidebar-content>
-        <div class="container column is-9">
-            <alert></alert>
-            <router-outlet></router-outlet>
-        </div>
+    <div ng-sidebar-content class="column is-10 is-offset-2">
+        <alert></alert>
+        <router-outlet></router-outlet>
         <app-footer></app-footer>
     </div>
 </ng-sidebar-container>

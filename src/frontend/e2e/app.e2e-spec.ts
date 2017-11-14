@@ -77,7 +77,7 @@ describe('foglampapp App', () => {
   it('Should Display Settings', () => {
     page.navToSettings();
     expect(page.getServiceHealthSelectTag()).toEqual(1);
-    expect(page.getServiceHealthInputTag()).toEqual(2);
+    expect(page.getServiceHealthInputTag()).toEqual(3);
     expect(page.getServiceHealthButton()).toEqual('Set the URL & Restart')
   });
 });
