@@ -32,10 +32,15 @@ _DEFAULT_CONFIG = {
         'type': 'integer',
         'default': '6683',
     },
-    'uri': {
+    'host': {
         'description': 'URI to accept data on',
         'type': 'string',
         'default': '0.0.0.0',
+    },
+    'uri': {
+        'description': 'URI to accept data on',
+        'type': 'string',
+        'default': 'sensor-reading',
     }
 }
 
@@ -50,21 +55,23 @@ def plugin_init(config):
 
     _LOGGER.info("Retrieve HTTP Listener Configuration %s", config)
 
-    host = config['uri']['value']
-    port = config['port']['value']
+    host = config['host']['value']
+    port = config['port']['value']  # Make port dynamic? its unattended env! expose as service port?
+    uri = config['uri']['value']
 
-    return {'host': host, 'port': port}
+    return {'host': host, 'port': port, 'uri': uri}
 
 
 def plugin_start(data):
 
     host = data['host']
     port = data['port']
+    uri = data['uri']
 
     loop = asyncio.get_event_loop()
 
     app = web.Application(middlewares=[middleware.error_middleware])
-    app.router.add_route('POST', '/', HttpSouthIngest.render_post)
+    app.router.add_route('POST', '/{}'.format(uri), HttpSouthIngest.render_post)
     handler = app.make_handler()
     coro = loop.create_server(handler, host, port)
     server = asyncio.ensure_future(coro)
@@ -72,6 +79,7 @@ def plugin_start(data):
     data['app'] = app
     data['handler'] = handler
     data['server'] = server
+
 
 def plugin_reconfigure(config):
     pass
@@ -89,8 +97,8 @@ def plugin_shutdown(data):
     asyncio.ensure_future(app.cleanup())
 
 
-class HttpSouthIngest():
-    """Handles incoming sensor readings from HTTP Listner"""
+class HttpSouthIngest(object):
+    """Handles incoming sensor readings from HTTP Listener"""
 
     @staticmethod
     async def render_post(request):
@@ -115,19 +123,23 @@ class HttpSouthIngest():
                             }
                         }
                     }
-        Example: curl -X POST http://localhost:6683 -d '{"timestamp": "2017-01-02T01:02:03.23232Z-05:00", "asset": "pump1", "key": "80a43623-ebe5-40d6-8d80-3f892da9b3b4", "readings": {"velocity": "500", "temperature": {"value": "32", "unit": "kelvin"}}}'
+        Example:
+            curl -X POST http://localhost:6683/sensor-reading
+            -d '{"timestamp": "2017-01-02T01:02:03.23232Z-05:00", "asset": "pump1", "key": "80a43623-ebe5-40d6-8d80-3f892da9b3b4", "readings": {"velocity": "500", "temperature": {"value": "32", "unit": "kelvin"}}}'
         """
         # TODO: The payload is documented at
         # https://docs.google.com/document/d/1rJXlOqCGomPKEKx2ReoofZTXQt9dtDiW_BHU7FYsj-k/edit#
         # and will be moved to a .rst file
 
-        code = web.HTTPInternalServerError.status_code
-        increment_discarded_counter = True
+        increment_discarded_counter = False
+
         # TODO: Decide upon the correct format of message
-        message = {'error': 'Exception in Add readings - failed'}
+        message = {'result': "success"}
+        code = web.HTTPOk.status_code
 
         try:
             if not Ingest.is_available():
+                increment_discarded_counter = True
                 message = {"busy": True}
             else:
                 payload = await request.json()
@@ -145,22 +157,22 @@ class HttpSouthIngest():
                 except KeyError:
                     readings = payload.get('sensor_values')  # sensor_values is deprecated
 
-                increment_discarded_counter = False
-
                 await Ingest.add_readings(asset=asset, timestamp=timestamp, key=key, readings=readings)
 
-                # Success
-                message = "success"
-                code = web.HTTPOk.status_code
         except (ValueError, TypeError) as e:
+            increment_discarded_counter = True
             code = web.HTTPBadRequest.status_code
             message = {'error': str(e)}
-            _LOGGER.exception('ValueError/TypeError in Add readings - failed')
+            _LOGGER.exception(str(e))
         except Exception as e:
-            _LOGGER.exception(message['error'])
+            increment_discarded_counter = True
+            code = web.HTTPInternalServerError.status_code
+            message = {'error': str(e)}
+            _LOGGER.exception(str(e))
 
         if increment_discarded_counter:
             Ingest.increment_discarded_readings()
-
-        return web.json_response({'message':message, 'status':code})
-
+        # expect keys in response:
+        # (code = 2xx) result Or busy
+        # (code = 4xx, 5xx) error
+        return web.json_response(message.update({"status": code}))
