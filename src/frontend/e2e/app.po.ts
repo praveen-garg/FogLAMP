@@ -31,12 +31,12 @@ export class FogLAMPPage {
 
   getNavTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('.container .nav-item b')).getText();
+    return element(by.css('#app .navbar-start b')).getText();
   }
 
   getAppStatus() {
     browser.ignoreSynchronization = true;
-    return element(by.css('#app .nav-right span')).getText();
+    return element(by.css('#app .navbar-end span')).getText();
   }
 
   getConfigTitles() {
