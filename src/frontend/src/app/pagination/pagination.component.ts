@@ -15,6 +15,8 @@ export class PaginationComponent  {
     @Output() goPrev = new EventEmitter<boolean>();
     @Output() goNext = new EventEmitter<boolean>();
     @Output() goPage = new EventEmitter<number>();
+    @Output() goFirst = new EventEmitter<boolean>();
+    @Output() goLast = new EventEmitter<number>();
 
     constructor() {}
 
@@ -42,12 +44,27 @@ export class PaginationComponent  {
         this.goNext.emit(true);
     }
 
+    onFirst(): void {
+        this.goFirst.emit(true);
+    }
+
+    onLast(): void {
+        const n = this.totalPages();
+        this.goLast.emit(n);
+    }
+
     totalPages(): number {
         return Math.ceil(this.count / this.perPage) || 0;
     }
 
     lastPage(): boolean {
         return this.perPage * this.page >= this.count;
+    }
+
+    middlePage(): number {
+        const n = this.totalPages();
+        const p = Math.ceil(n/2);
+        return p;
     }
 
     getPages(): number[] {

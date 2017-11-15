@@ -1,9 +1,10 @@
 <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-  <button class="button pagination-previous" (click)="onPrev()" [disabled]="page === 1">Previous</button>
-  <button class="button pagination-next" (click)="onNext()" [disabled]="lastPage()">Next</button>
+  <button class="button pagination-previous" (click)="onLast()" [disabled]="page === 1"><i class="fa fa-backward" aria-hidden="true"></i></button>
+  <button class="button pagination-previous" (click)="onPrev()" [disabled]="page === 1"><i class="fa fa-caret-left" aria-hidden="true"></i></button>
+  <button class="button pagination-next" (click)="onNext()" [disabled]="lastPage()"><i class="fa fa-caret-right" aria-hidden="true"></i></button>
+  <button class="button pagination-next" (click)="onFirst()" [disabled]="lastPage()"><i class="fa fa-forward" aria-hidden="true"></i></button>
   <ul class="pagination-list">
-    <li><span class="pagination-ellipsis">&hellip;</span></li>
-    <li><a class="{{(page === pageNum) ? 'button is-primary' : 'pagination-link'}}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)">{{pageNum}}</a></li>
-    <li><span class="pagination-ellipsis">&hellip;</span></li>
+    <!-- <li><a class="{{(page === pageNum) ? 'button is-primary' : 'pagination-link'}}" *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)">{{pageNum}}</a></li> -->
+    <li><a class="button is-primary">{{middlePage()}}</a></li>
   </ul>
 </nav>
