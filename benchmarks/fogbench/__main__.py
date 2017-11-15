@@ -64,6 +64,8 @@ import asyncio
 from aiocoap import *
 from cbor2 import dumps
 
+import aiohttp.client
+
 # FIXME: remove relative import
 from .exceptions import *
 
@@ -160,7 +162,7 @@ def _prepare_sensor_reading(data, supported_format_types):
     return readings
 
 
-def read_out_file(_file=None, _keep=False, _iterations=1, _interval=0):
+def read_out_file(_file=None, _keep=False, _iterations=1, _interval=0, payload_protocol=None):
     # TODO: Create class and move global variables to __init__
     global _start_time
     global _end_time
@@ -189,7 +191,11 @@ def read_out_file(_file=None, _keep=False, _iterations=1, _interval=0):
         # Start sending the messages to server
         _start_time.append(datetime.now())  # Start time of every iteration
         for r in readings_list:
-            loop.run_until_complete(send_to_coap(r))
+            if payload_protocol == "sensor/coap":
+                loop.run_until_complete(send_to_coap(r))
+            elif payload_protocol == "sensor/http":
+                loop.run_until_complete(send_to_http(r))
+            # else ?
         _end_time.append(datetime.now())  # End time of every iteration
         _tot_msgs_transferred.append(msg_transferred_itr)
         _tot_byte_transferred.append(byte_transferred_itr)
@@ -202,6 +208,16 @@ def read_out_file(_file=None, _keep=False, _iterations=1, _interval=0):
 
     if not _keep:
         os.remove(_file)
+
+
+async def send_to_http(payload):
+    async with aiohttp.ClientSession() as session:
+        url = "{}://{}:{}/sensor-reading".format("http", arg_host, arg_port)
+        async with session.post(url, data=payload) as resp:
+            # TODO: check, should we wait for acknowledgement response
+            resp = await resp.text()
+        # return resp
+
 
 async def send_to_coap(payload):
     """
@@ -233,7 +249,7 @@ def get_statistics(_stats_type=None, _out_file=None):
     global _tot_byte_transferred
     global _num_iterated
     if _stats_type == 'total':
-        stat += (u"Total Statistics:\n")
+        stat += u"Total Statistics:\n"
         stat += (u"\nStart Time: {}".format(datetime.strftime(_start_time[0], "%Y-%m-%d %H:%M:%S.%f")))
         stat += (u"\nEnd Time:   {}\n".format(datetime.strftime(_end_time[-1], "%Y-%m-%d %H:%M:%S.%f")))
         stat += (u"\nTotal Messages Transferred: {}".format(sum(_tot_msgs_transferred)))
@@ -261,10 +277,11 @@ def get_statistics(_stats_type=None, _out_file=None):
     # should we also show total time diff? end_time - start_time
 
 
-def check_coap_server():
+def check_server():
     # TODO: Temporary info
     print(">>> Make sure device service is running "
-          "& CoAP server is listening on specified host and port")
+          "& listening on specified host and port")
+
 
 parser = argparse.ArgumentParser(prog='fogbench')
 parser.description = '%(prog)s -- a Python script used to test FogLAMP (simulate payloads)'
@@ -278,11 +295,14 @@ parser.add_argument('-o', '--output', default=None, help='Set the statistics out
 parser.add_argument('-I', '--iterations', help='The number of iterations of the test (default: 1)')
 parser.add_argument('-O', '--occurrences', help='The number of occurrences of the template (default: 1)')
 
-parser.add_argument('-H', '--host', help='CoAP server host address (default: localhost)', action=check_coap_server())
+parser.add_argument('-p', '--payload', help='Type of payload and protocol (default: sensor/coap)')
+
+parser.add_argument('-H', '--host', help='CoAP server host address (default: localhost)', action=check_server())
 parser.add_argument('-P', '--port', help='The FogLAMP port. (default: 5683)')
 parser.add_argument('-i', '--interval', default=0, help='The interval in seconds for each iteration (default: 0)')
 
-parser.add_argument('-S', '--statistics', default='total', choices=['total'], help='The type of statistics to collect (default: total)')
+parser.add_argument('-S', '--statistics', default='total', choices=['total'],
+                    help='The type of statistics to collect (default: total)')
 
 namespace = parser.parse_args(sys.argv[1:])
 infile = '{0}'.format(namespace.template if namespace.template else '')
@@ -301,9 +321,13 @@ arg_stats_type = '{0}'.format(namespace.statistics) if namespace.statistics else
 arg_host = '{0}'.format(namespace.host) if namespace.host else 'localhost'
 arg_port = int(namespace.port) if namespace.port else 5683
 
+# make name better?
+arg_payload_protocol = '{0}'.format(namespace.payload) if namespace.payload else 'sensor/coap'
+
 sample_file = os.path.join(os.path.dirname(__file__), "foglamp_running_sample.{}".format(os.getpid()))
 parse_template_and_prepare_json(_template_file=infile, _write_to_file=sample_file, _occurrences=arg_occurrences)
-read_out_file(_file=sample_file, _keep=keep_the_file, _iterations=arg_iterations, _interval=arg_interval)  # and send to coap
+read_out_file(_file=sample_file, _keep=keep_the_file, _iterations=arg_iterations, _interval=arg_interval,
+              payload_protocol=arg_payload_protocol)  # and send to coap or http based on payload_protocol
 get_statistics(_stats_type=arg_stats_type, _out_file=statistics_file)
 
 """ Expected output from given template
