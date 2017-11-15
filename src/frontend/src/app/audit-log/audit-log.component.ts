@@ -17,7 +17,7 @@ export class AuditLogComponent implements OnInit {
   public severity: String = '';
 
   page = 1;             // Default page is 1 in pagination
-  recordCount = 100;    // Total no. of records during pagination
+  recordCount = 100;    // Total no. of records during pagination (For now it is hard coded, TODO: FOGL-714)
   tempOffset = 0;       // Temporary offset during pagination
 
   constructor(private auditService: AuditService, private alertService: AlertService) { }
@@ -44,21 +44,22 @@ export class AuditLogComponent implements OnInit {
     this.setLimitOffset();
   }
 
-  /**
-   *  Go to the previous page
-   */
-  goFirst(): void {
-    this.page = 1;
-    this.setLimitOffset();
-  }
+  // /**
+  //  *  Go to the previous page
+  //  */
+  // onFirst(): void {
+  //   this.page = 1;
+  //   this.setLimitOffset();
+  // }
 
-  /**
-   *  Go to the next page
-   */
-  goLast(n: number): void {
-    this.page = n;
-    this.setLimitOffset();
-  }
+  // /**
+  //  *  Go to the next page
+  //  */
+  // onLast(n: number): void {
+  //   const p = Math.ceil(this.recordCount / this.limit) || 0;
+  //   this.page = p;
+  //   this.setLimitOffset();
+  // }
 
   /**
    *  Go to the previous page
@@ -138,11 +139,6 @@ export class AuditLogComponent implements OnInit {
     this.tempOffset = offset;
     this.recordCount = this.recordCount - this.offset;
     this.getAuditLogs();
-    // this.offset = offset;
-    // console.log('offset:', offset);
-    // if (this.limit != null) {
-    //   this.getAuditLogs();
-    // }
   }
 
   public getAuditLogs(): void {

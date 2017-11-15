@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { AssetsComponent } from '../assets/index';
 
 @Component({
@@ -18,7 +18,15 @@ export class PaginationComponent  {
     @Output() goFirst = new EventEmitter<boolean>();
     @Output() goLast = new EventEmitter<number>();
 
+    middlePg : any;
+    lastPg : any;
+
     constructor() {}
+
+    ngOnInit() {
+        this.middlePg = this.middlePage();
+        this.lastPg = this.totalPages();
+    }
 
     getMin(): number {
         return ((this.perPage * this.page) - this.perPage) + 1;
