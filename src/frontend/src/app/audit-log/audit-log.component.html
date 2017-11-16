@@ -57,18 +57,18 @@
       </tr>
       </tbody>
     </table>
-     <!-- <div *ngIf= logs> -->
-      <my-pagination
-        [count]= this.recordCount
-        [page]="page"
-        [perPage]= this.limit
-        [pagesToShow]="3"
-        (goPrev)="onPrev()"
-        (goNext)="onNext()"
-        (goFirst)="onFirst()"
-        (goLast)="onLast()"
-        (goPage)="goToPage($event)">
-      </my-pagination>
-    <!-- </div>  -->
+      <div *ngIf= filterdData> 
+        <my-pagination
+          [count]= this.recordCount
+          [page]="page"
+          [perPage]= this.limit
+          [pagesToShow]="3"
+          (goPrev)="onPrev()"
+          (goNext)="onNext()"
+          (goFirst)="onFirst()"
+          (goLast)="onLast()"
+          (goPage)="goToPage($event)">
+        </my-pagination>
+      </div>  
   </nav>
 </div>

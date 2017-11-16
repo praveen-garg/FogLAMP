@@ -3,11 +3,18 @@
   <button class="button pagination-previous" (click)="onPrev()" [disabled]="page === 1">{{ page-1 }}&nbsp;<i class="fa fa-caret-left" aria-hidden="true"></i></button>
   <button class="button pagination-next" (click)="onNext()" [disabled]="lastPage()"><i class="fa fa-caret-right" aria-hidden="true">&nbsp; {{ page+1 }}</i></button>
   <!-- <button class="button pagination-next" (click)="onLast()" [disabled]="lastPage()"><i class="fa fa-forward" aria-hidden="true"></i></button> -->
-  <ul class="pagination-list">
+  <ul class="pagination-list" *ngIf="lastPg >= 3">
     <li><a class="{{(page === 1) ? 'button is-primary' : 'pagination-link'}}" (click)="onFirst()">1</a></li>
     <li><span class="pagination-ellipsis">&hellip;</span></li> 
     <li><a class="{{(page === middlePg) ? 'button is-primary' : 'pagination-link'}}" (click)="onPage(middlePage())">{{middlePage()}}</a></li>
     <li><span class="pagination-ellipsis">&hellip;</span></li>
+    <li><a class="{{(page === lastPg) ? 'button is-primary' : 'pagination-link'}}" (click)="onLast()">{{totalPages()}}</a></li>
+  </ul>
+  <ul class="pagination-list" *ngIf="lastPg === 1">
+    <li><a class="button is-primary" (click)="onFirst()">1</a></li>
+  </ul>
+  <ul class="pagination-list" *ngIf="lastPg === 2">
+    <li><a class="{{(page === 1) ? 'button is-primary' : 'pagination-link'}}" (click)="onFirst()">1</a></li>
     <li><a class="{{(page === lastPg) ? 'button is-primary' : 'pagination-link'}}" (click)="onLast()">{{totalPages()}}</a></li>
   </ul>
 </nav>

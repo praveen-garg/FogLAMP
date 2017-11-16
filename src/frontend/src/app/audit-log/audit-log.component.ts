@@ -44,22 +44,22 @@ export class AuditLogComponent implements OnInit {
     this.setLimitOffset();
   }
 
-  // /**
-  //  *  Go to the previous page
-  //  */
-  // onFirst(): void {
-  //   this.page = 1;
-  //   this.setLimitOffset();
-  // }
+  /**
+   *  Go to the previous page
+   */
+  onFirst(): void {
+    this.page = 1;
+    this.setLimitOffset();
+  }
 
-  // /**
-  //  *  Go to the next page
-  //  */
-  // onLast(n: number): void {
-  //   const p = Math.ceil(this.recordCount / this.limit) || 0;
-  //   this.page = p;
-  //   this.setLimitOffset();
-  // }
+  /**
+   *  Go to the next page
+   */
+  onLast(n: number): void {
+    const p = Math.ceil(this.recordCount / this.limit) || 0;
+    this.page = p;
+    this.setLimitOffset();
+  }
 
   /**
    *  Go to the previous page

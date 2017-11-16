@@ -10,10 +10,10 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: any = 'Select'; // Selected asset object (asset_coded, asset_count)
   asset: any;
-  limit = 20;
+  limit = 200;
   offset = 0;
 
-  page = 1;                   // Default page is 1 in pagination
+  page = 1;           // Default page is 1 in pagination
   recordCount = 0;    // Total no. of records during pagination
   tempOffset = 0;     // Temporary offset during pagination
   assets = [];
@@ -46,6 +46,23 @@ export class AssetsComponent implements OnInit {
    */
   onPrev(): void {
     this.page--;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the previous page
+   */
+  onFirst(): void {
+    this.page = 1;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the next page
+   */
+  onLast(n: number): void {
+    const p = Math.ceil(this.recordCount / this.limit) || 0;
+    this.page = p;
     this.setLimitOffset();
   }
 
