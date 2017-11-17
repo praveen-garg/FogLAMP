@@ -8,7 +8,7 @@ import Utils from '../utils';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  statisticsData = [];
+  statisticsData = {};
   statHistoryData = [];
 
   readingChart: string;
@@ -46,8 +46,15 @@ export class DashboardComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        console.log('This is the statisticsData ', data);
-        this.statisticsData = data;
+        console.log('recived statisticsData ', data);
+        // this.statisticsData = data;
+        const o: object = {};
+        data.forEach(element => {
+          o[element.key] = element.value;
+        });
+        this.statisticsData = o;
+
+         console.log('This is the statisticsData ', this.statisticsData);
       },
       error => { console.log('error', error); });
   }
