@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuditService, AlertService } from '../services/index';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuditService, AlertService} from '../services/index';
+import { PaginationComponent } from '../pagination/index'
 
 @Component({
   selector: 'app-audit-log',
@@ -17,8 +18,10 @@ export class AuditLogComponent implements OnInit {
   public severity: String = '';
 
   page = 1;             // Default page is 1 in pagination
-  recordCount = 100;    // Total no. of records during pagination (For now it is hard coded, TODO: FOGL-714)
+  recordCount = 0;      
   tempOffset = 0;       // Temporary offset during pagination
+
+  @ViewChild(PaginationComponent) paginationComp:  PaginationComponent;
 
   constructor(private auditService: AuditService, private alertService: AlertService) { }
 
@@ -135,9 +138,12 @@ export class AuditLogComponent implements OnInit {
     if (this.page !== 1) {
       this.page = 1;
     }
+    if (offset === null) {
+      offset = 0;
+    }
     this.offset = offset;
     this.tempOffset = offset;
-    this.recordCount = this.recordCount - this.offset;
+    this.recordCount = this.filterdData[0].count - this.offset;
     this.getAuditLogs();
   }
 
@@ -160,12 +166,15 @@ export class AuditLogComponent implements OnInit {
     if (type === 'severity') {
       this.severity = event.target.value.trim().toLowerCase() === 'severity' ? '' : event.target.value.trim().toLowerCase();
     }
+    if (this.offset !== 0) {
+      this.recordCount = this.filterdData[0].count - this.offset;
+    }
     this.auditLogSubscriber();
   }
 
   auditLogSubscriber() {
+    console.log('tempOffset: ', this.tempOffset);
     console.log('Limit: ', this.limit, 'Offset: ', this.offset);
-    console.log('tempOffset: ', this.tempOffset, 'recordCount: ', this.recordCount);
     this.auditService.getAuditLogs(this.limit, this.tempOffset, this.source, this.severity).
       subscribe(
       data => {
@@ -174,7 +183,13 @@ export class AuditLogComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.filterdData = data.audit;
+        this.filterdData = [{
+          audit: data.audit,
+          count: 100                // TODO: FOGL-714. For now it is hard coded.
+        }];
+        this.recordCount = this.filterdData[0].count;
+        const n = this.paginationComp.totalPages();
+        console.log('totalPages: ', n, 'recordCount: ', this.recordCount);
       },
       error => { console.log('error', error); });
   }

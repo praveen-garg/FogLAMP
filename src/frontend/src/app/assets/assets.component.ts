@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AssetsService, AlertService } from '../services/index';
+import { PaginationComponent } from '../pagination/index'
 
 @Component({
   selector: 'app-assets',
@@ -18,6 +19,8 @@ export class AssetsComponent implements OnInit {
   tempOffset = 0;     // Temporary offset during pagination
   assets = [];
   assetsReadingsData = [];
+
+  @ViewChild(PaginationComponent) paginationComp:  PaginationComponent;
 
   constructor(private assetService: AssetsService, private alertService: AlertService) { }
 
@@ -117,6 +120,9 @@ export class AssetsComponent implements OnInit {
     if (this.page !== 1) {
       this.page = 1;
     }
+    if (offset === null) {
+      offset = 1;
+    }
     this.offset = offset;
     this.tempOffset = offset;
     this.recordCount = this.asset['count'] - this.offset;
@@ -165,7 +171,8 @@ export class AssetsComponent implements OnInit {
           count: this.recordCount,
           data: data
         }];
-        console.log('This is the asset reading data ', this.assetsReadingsData);
+        const n = this.paginationComp.totalPages();
+        console.log('This is the asset reading data ', this.assetsReadingsData, 'and totalPages', n);
       },
       error => { console.log('error', error); });
   }

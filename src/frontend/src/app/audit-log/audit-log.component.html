@@ -42,17 +42,17 @@
           <th>Details</th>
         </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let logs of filterdData">
-        <td>{{logs.source}}</td>
+      <tbody *ngFor="let logs of filterdData" >
+      <tr *ngFor="let log of logs.audit">
+        <td>{{log.source}}</td>
         <td>
-          <small> {{logs.severity}}</small>
+          <small> {{log.severity}}</small>
         </td>
         <td>
-          <span class="tag is-rounded"> {{logs.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+          <span class="tag is-rounded"> {{log.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
         </td>
         <td>
-          <small> {{logs.details | json}}</small>
+          <small> {{log.details | json}}</small>
         </td>
       </tr>
       </tbody>

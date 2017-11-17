@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AssetsComponent } from '../assets/index';
 
 @Component({
@@ -19,25 +19,18 @@ export class PaginationComponent  {
     @Output() goLast = new EventEmitter<number>();
 
     middlePg : any;
-    lastPg : any;
+    totalPg : any;
 
-    constructor() {}
+    constructor(private cdRef:ChangeDetectorRef) {}
+
+    ngAfterViewChecked()
+    {
+        this.cdRef.detectChanges();
+    }
 
     ngOnInit() {
         this.middlePg = this.middlePage();
-        this.lastPg = this.totalPages();
-    }
-
-    getMin(): number {
-        return ((this.perPage * this.page) - this.perPage) + 1;
-    }
-
-    getMax(): number {
-        let max = this.perPage * this.page;
-        if (max > this.count) {
-        max = this.count;
-        }
-        return max;
+        this.totalPg = this.totalPages();
     }
 
     onPage(n: number): void {
@@ -61,8 +54,13 @@ export class PaginationComponent  {
         this.goLast.emit(n);
     }
 
-    totalPages(): number {
-        return Math.ceil(this.count / this.perPage) || 0;
+    public totalPages(): number {
+        console.log('count22', this.count);
+        console.log('perPage22', this.perPage);
+        const n = Math.ceil(this.count / this.perPage) || 0;
+        this.totalPg = n;
+        console.log('totalPages2', this.totalPg);
+        return n;
     }
 
     lastPage(): boolean {
@@ -72,29 +70,7 @@ export class PaginationComponent  {
     middlePage(): number {
         const n = this.totalPages();
         const p = Math.ceil(n/2);
+        this.middlePg = p;
         return p;
-    }
-
-    getPages(): number[] {
-        const c = Math.ceil(this.count / this.perPage);
-        const p = this.page || 1;
-        const pagesToShow = this.pagesToShow || 9;
-        const pages: number[] = [];
-        pages.push(p);
-        const times = pagesToShow - 1;
-        for (let i = 0; i < times; i++) {
-        if (pages.length < pagesToShow) {
-            if (Math.min.apply(null, pages) > 1) {
-            pages.push(Math.min.apply(null, pages) - 1);
-            }
-        }
-        if (pages.length < pagesToShow) {
-            if (Math.max.apply(null, pages) < c) {
-            pages.push(Math.max.apply(null, pages) + 1);
-            }
-        }
-        }
-        pages.sort((a, b) => a - b);
-        return pages;
     }
 }
