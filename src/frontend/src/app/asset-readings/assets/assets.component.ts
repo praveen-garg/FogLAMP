@@ -26,7 +26,7 @@ export class AssetsComponent implements OnInit {
   public isSummary = false;
 
   @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
-  @ViewChild(ChartModalComponent) chartModalDemoComponent: ChartModalComponent;
+  @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
   constructor(private assetService: AssetsService, private alertService: AlertService) { }
 
@@ -77,6 +77,7 @@ export class AssetsComponent implements OnInit {
   }
 
   public setAssetCode(assetData) {
+    console.log(assetData);
     this.isChart = true;
     this.isSummary = true;
     this.asset = assetData;
@@ -172,9 +173,9 @@ export class AssetsComponent implements OnInit {
   /**
   * Open asset chart modal dialog
   */
-  public showAssetDemoChart(asset_code) {
-    this.chartModalDemoComponent.plotReadingsGraph(asset_code);
-    this.chartModalDemoComponent.toggleModal(true);
+  public showAssetChart(asset_code) {
+    this.chartModalComponent.plotReadingsGraph(asset_code);
+    this.chartModalComponent.toggleModal(true);
   }
 
 }

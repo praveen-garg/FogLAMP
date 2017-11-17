@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartModalDemoComponent } from './chart-modal-demo.component';
+import { ChartModalComponent } from './chart-modal.component';
 
-describe('ChartModalDemoComponent', () => {
-  let component: ChartModalDemoComponent;
-  let fixture: ComponentFixture<ChartModalDemoComponent>;
+describe('ChartModalComponent', () => {
+  let component: ChartModalComponent;
+  let fixture: ComponentFixture<ChartModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartModalDemoComponent ]
+      declarations: [ ChartModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartModalDemoComponent);
+    fixture = TestBed.createComponent(ChartModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

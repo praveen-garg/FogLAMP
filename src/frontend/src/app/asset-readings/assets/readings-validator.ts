@@ -2,67 +2,6 @@ import Utils from '../../utils';
 export default class ReadingsValidator {
 
     public static validate(assetReadingsData) {
-        const finalReadings = [];
-        let chart_type = '';
-        let isValid = true;
-
-        assetReadingsData.forEach(readingRecord => {
-            let readings = readingRecord.reading;
-            readings = Utils.sortByKeys(readings);
-            const ts = readingRecord.timestamp;
-            const keysCount = Object.keys(readings).length;
-            switch (keysCount) {
-                case 1:
-                    const val = readings[Object.keys(readings)[0]];
-                    if (!this.isNumber(val)) {
-                        isValid = false;
-                        console.log('NaN', val);
-                        break;
-                    }
-                    const firstReadingObj = { 'x': ts, 'y': val };
-                    finalReadings.push(firstReadingObj);
-                    chart_type = 'line';
-                    break;
-                case 2:
-                    const first = readings[Object.keys(readings)[0]];
-                    const second = readings[Object.keys(readings)[1]];
-
-                    if (!this.isNumber(first) || !this.isNumber(second)) {
-                        isValid = false;
-                        console.log('NaN', first, second);
-                        break;
-                    }
-                    const secondReadingObj = { 'x': first, 'y': second };
-                    finalReadings.push(secondReadingObj);
-                    chart_type = 'scatter';
-                    break;
-                case 3:
-                    const val1 = readings[Object.keys(readings)[0]];
-                    const val2 = readings[Object.keys(readings)[1]];
-                    const val3 = readings[Object.keys(readings)[2]];
-
-                    if (!this.isNumber(val1) || !this.isNumber(val2) || !this.isNumber(val3)) {
-                        isValid = false;
-                        console.log('NaN', val1, val2, val3);
-                        break;
-                    }
-                    const thirdReadingObj = { 'x': val1, 'y': val2, 'r': val3 };
-                    finalReadings.push(thirdReadingObj);
-                    chart_type = 'bubble';
-                    break;
-                default:
-                    console.log('No valid data!');
-            }
-        });
-        const assetObject = {
-            readings: finalReadings,
-            chartType: chart_type,
-            validRecord: isValid
-        };
-        return assetObject;
-    }
-
-    public static validateReadings(assetReadingsData) {
         let isValid = true;
         assetReadingsData.forEach(readingRecord => {
             const readings = readingRecord.reading;

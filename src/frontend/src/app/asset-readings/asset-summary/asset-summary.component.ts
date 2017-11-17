@@ -37,7 +37,7 @@ export class AssetSummaryComponent implements OnInit {
           console.log('error in response', data.error);
           return;
         }
-        const validRecord = ReadingsValidator.validateReadings(data);
+        const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.assetSummaryService.getReadingSummary(assetCode, data[0]);
           this.assetSummaryService.assetReadingSummary.subscribe(

@@ -27,7 +27,7 @@ export class ChartModalComponent implements OnInit {
   ngOnInit() { }
 
   public toggleModal(shouldOpen: Boolean) {
-    const chart_modal = <HTMLDivElement>document.getElementById('chart_modal_demo');
+    const chart_modal = <HTMLDivElement>document.getElementById('chart_modal');
     if (shouldOpen) {
       chart_modal.classList.add('is-active');
       return;
@@ -50,7 +50,7 @@ export class ChartModalComponent implements OnInit {
           console.log('error in response', data.error);
           return;
         }
-        const validRecord = ReadingsValidator.validateReadings(data);
+        const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.getAssetTimeReading(data);
           this.assetSummaryService.getReadingSummary(assetCode, data[0]);

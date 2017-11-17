@@ -24,7 +24,7 @@
                 </a>
               </td>
               <td>
-                <a (click)="showAssetDemoChart(asset.asset_code)" class="is-pulled-right">
+                <a (click)="showAssetChart(asset.asset_code)" class="is-pulled-right">
                   <i class="fa fa-line-chart" aria-hidden="true"></i>
                 </a>
               </td>
@@ -66,7 +66,7 @@
                   </button>
               </th>
               <th *ngIf="isChart">
-                <button (click)="showAssetDemoChart(asset.asset_code)" class="button is-pulled-right">
+                <button (click)="showAssetChart(asset.asset_code)" class="button is-pulled-right">
                   <i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp; Trends 
                 </button>
               </th>
