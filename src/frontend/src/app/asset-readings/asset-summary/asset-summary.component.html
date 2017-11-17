@@ -1,0 +1,30 @@
+<div id="summary_modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{assetCode}}</p>
+      <button class="delete" aria-label="close" (click)="toggleModal(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <p *ngIf='!isValidData'> Not Available </p>
+      <table *ngIf='isValidData' class="table is-striped is-narrow scroll is-responsive">
+        <thead>
+          <tr>
+            <th>Reading</th>
+            <th>Average</th>
+            <th>Min</th>
+            <th>Max</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let readings of assetReadingSummary">
+          <tr *ngFor="let reading of readings.summary">
+            <td>{{readings.key}}</td>
+            <td>{{reading.average}}</td>
+            <td>{{reading.min}}</td>
+            <td>{{reading.max}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>

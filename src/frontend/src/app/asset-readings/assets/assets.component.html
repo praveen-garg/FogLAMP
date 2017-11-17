@@ -7,7 +7,9 @@
           <thead>
             <tr>
               <th>Asset</th>
-              <th>Readings count</th>
+              <th>Readings</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -15,6 +17,16 @@
               <td>{{asset.asset_code}}</td>
               <td>
                 <small> {{asset.count}}</small>
+              </td>
+              <td>
+                <a (click)="showAssetSummary(asset.asset_code)" class="is-pulled-right">
+                  <i class="fa fa-list-alt" aria-hidden="true"></i>
+                </a>
+              </td>
+              <td>
+                <a (click)="showAssetChart(asset.asset_code)" class="is-pulled-right">
+                  <i class="fa fa-line-chart" aria-hidden="true"></i>
+                </a>
               </td>
             </tr>
             <tbody>
@@ -35,7 +47,7 @@
                 <option *ngFor="let asset of assets" [ngValue]='asset'>{{asset.asset_code}} ({{asset.count}})</option>
               </select>
             </div>
-          </div> 
+          </div>
           <div class="column">
             <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
           </div>
@@ -43,13 +55,21 @@
             <input-debounce placeholder="offset" (value)="setOffset($event)"></input-debounce>
           </div>
         </div>
-        <br/>
-        <br/>
         <table class="table is-striped is-narrow scroll is-responsive">
           <thead>
             <tr>
               <th>Asset</th>
               <th>Readings</th>
+              <th *ngIf="isSummary">
+                <button (click)="showAssetSummary(asset.asset_code)" class="button is-pulled-right">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp; Summary
+                  </button>
+              </th>
+              <th *ngIf="isChart">
+                <button (click)="showAssetChart(asset.asset_code)" class="button is-pulled-right">
+                  <i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp; Trends 
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -58,25 +78,21 @@
               <td>
                 <tr *ngFor="let d of asset.data">
                   <td>
-                  {{d.reading | json}}
-                  </td> 
+                    {{d.reading | json}}
+                  </td>
                   <td>
                     <span class="tag is-rounded">{{d.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
                   </td>
-                  <hr class="dropdown-divider"> 
+                  <hr class="dropdown-divider">
                 </tr>
               </td>
             </tr>
-          </tbody> 
+          </tbody>
         </table>
-        <div *ngIf= asset>
-          <my-pagination
-            [count]= this.recordCount
-            [page]="page"
-            [perPage]= this.limit
-            [pagesToShow]="3"
-            (goPrev)="onPrev()"
-            (goNext)="onNext()"
+        <app-asset-summary></app-asset-summary>
+        <app-chart-modal></app-chart-modal>
+        <div *ngIf=asset>
+          <my-pagination [count]=this.recordCount [page]="page" [perPage]=this.limit [pagesToShow]="3" (goPrev)="onPrev()" (goNext)="onNext()"
             (goPage)="goToPage($event)">
           </my-pagination>
         </div>

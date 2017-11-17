@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AssetsService, AlertService } from '../services/index';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AssetsService, AlertService } from '../../services/index';
+import { AssetSummaryComponent } from './../asset-summary/asset-summary.component';
+import { ChartModalComponent } from './../chart-modal/chart-modal.component';
 
 @Component({
   selector: 'app-assets',
@@ -18,6 +20,13 @@ export class AssetsComponent implements OnInit {
   tempOffset = 0;     // Temporary offset during pagination
   assets = [];
   assetsReadingsData = [];
+
+  public assetData: Object;
+  public isChart = false;
+  public isSummary = false;
+
+  @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
+  @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
   constructor(private assetService: AssetsService, private alertService: AlertService) { }
 
@@ -68,11 +77,13 @@ export class AssetsComponent implements OnInit {
   }
 
   public setAssetCode(assetData) {
+    console.log(assetData);
+    this.isChart = true;
+    this.isSummary = true;
     this.asset = assetData;
     if (this.offset !== 0) {
       this.recordCount = this.asset['count'] - this.offset;
     }
-    console.log('asset: ', assetData);
     this.getAssetReading();
   }
 
@@ -129,11 +140,6 @@ export class AssetsComponent implements OnInit {
     if (this.offset === 0) {
       this.recordCount = this.asset['count'];
     }
-    console.log('Asset code: ', this.asset['asset_code']);
-    console.log('Limit: ', this.limit);
-    console.log('offset: ', this.offset);
-    console.log('tempOffset: ', this.tempOffset);
-    console.log('recordCount: ', this.recordCount);
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
@@ -155,4 +161,21 @@ export class AssetsComponent implements OnInit {
       },
       error => { console.log('error', error); });
   }
+
+  /**
+ * Open asset summary modal dialog
+ */
+  public showAssetSummary(asset_code) {
+    this.assetSummaryComponent.getReadingSummary(asset_code);
+    this.assetSummaryComponent.toggleModal(true);
+  }
+
+  /**
+  * Open asset chart modal dialog
+  */
+  public showAssetChart(asset_code) {
+    this.chartModalComponent.plotReadingsGraph(asset_code);
+    this.chartModalComponent.toggleModal(true);
+  }
+
 }
