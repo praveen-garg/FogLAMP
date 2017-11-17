@@ -10,7 +10,7 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: any = 'Select'; // Selected asset object (asset_coded, asset_count)
   asset: any;
-  limit = 200;
+  limit = 20;
   offset = 0;
 
   page = 1;           // Default page is 1 in pagination
@@ -50,7 +50,7 @@ export class AssetsComponent implements OnInit {
   }
 
   /**
-   *  Go to the previous page
+   *  Go to the first page
    */
   onFirst(): void {
     this.page = 1;
@@ -58,7 +58,7 @@ export class AssetsComponent implements OnInit {
   }
 
   /**
-   *  Go to the next page
+   *  Go to the last page
    */
   onLast(n: number): void {
     const p = Math.ceil(this.recordCount / this.limit) || 0;
@@ -67,7 +67,7 @@ export class AssetsComponent implements OnInit {
   }
 
   /**
-   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev() methods)
+   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev(), onFirst(), onLast()  methods)
    */
   setLimitOffset() {
     if (this.limit === 0) {
@@ -146,11 +146,8 @@ export class AssetsComponent implements OnInit {
     if (this.offset === 0) {
       this.recordCount = this.asset['count'];
     }
-    console.log('Asset code: ', this.asset['asset_code']);
-    console.log('Limit: ', this.limit);
-    console.log('offset: ', this.offset);
-    console.log('tempOffset: ', this.tempOffset);
-    console.log('recordCount: ', this.recordCount);
+    console.log('Limit: ', this.limit, 'Offset: ', this.offset, 'Asset code: ', this.asset['asset_code']);
+    console.log('tempOffset: ', this.tempOffset, 'recordCount: ', this.recordCount);
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;

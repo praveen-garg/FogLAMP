@@ -45,7 +45,7 @@ export class AuditLogComponent implements OnInit {
   }
 
   /**
-   *  Go to the previous page
+   *  Go to the first page
    */
   onFirst(): void {
     this.page = 1;
@@ -53,7 +53,7 @@ export class AuditLogComponent implements OnInit {
   }
 
   /**
-   *  Go to the next page
+   *  Go to the last page
    */
   onLast(n: number): void {
     const p = Math.ceil(this.recordCount / this.limit) || 0;
@@ -70,7 +70,7 @@ export class AuditLogComponent implements OnInit {
   }
 
   /**
-   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev() methods)
+   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev(), onFirst(), onLast() methods)
    */
   setLimitOffset() {
     if (this.limit === 0) {
@@ -164,10 +164,8 @@ export class AuditLogComponent implements OnInit {
   }
 
   auditLogSubscriber() {
-    console.log('Limit: ', this.limit);
-    console.log('offset: ', this.offset);
-    console.log('tempOffset: ', this.tempOffset);
-    console.log('recordCount: ', this.recordCount);
+    console.log('Limit: ', this.limit, 'Offset: ', this.offset);
+    console.log('tempOffset: ', this.tempOffset, 'recordCount: ', this.recordCount);
     this.auditService.getAuditLogs(this.limit, this.tempOffset, this.source, this.severity).
       subscribe(
       data => {
