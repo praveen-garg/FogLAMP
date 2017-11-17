@@ -4,7 +4,7 @@
       <article class="tile is-child box">
         <h4> Readings Statistics History </h4>
         <br/>
-        <chart [type]="readingChart" [data]="readingValues" [options]=""></chart>
+        <chart [type]="readingChart" [data]="readingValues" [options]="chartOptions"></chart>
         <br/>
         <h6>Total since startup:<b> {{statisticsData['READINGS']}} </b></h6>
       </article>
@@ -15,7 +15,7 @@
       <article class="tile is-child box">
         <h4> Sent Statistics History </h4>
         <br/>
-        <chart [type]="sentChart" [data]="sentValues" [options]=""></chart>
+        <chart [type]="sentChart" [data]="sentValues" [options]="chartOptions"></chart>
         <br/>
         <h6>Total since startup:<b> {{statisticsData['SENT_1']}} </b></h6>
       </article>
@@ -26,7 +26,7 @@
       <article class="tile is-child box">
         <h4> Purge Statistics History </h4>
         <br/>
-        <chart [type]="purgeChart" [data]="purgedValues" [options]=""></chart>
+        <chart [type]="purgeChart" [data]="purgedValues" [options]="chartOptions"></chart>
         <br/>
         <h6>Total since startup:<b> {{statisticsData['PURGED']}} </b></h6>
       </article>

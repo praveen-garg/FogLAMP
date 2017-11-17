@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectorRef } from '@angular/core';
-import { AssetsComponent } from '../assets/index';
+import { AssetsComponent } from '../asset-readings/assets/index';
 
 @Component({
     selector: 'my-pagination',

@@ -25,7 +25,7 @@ import { ChartModule } from './chart/index';
 import { ScheduledProcessComponent } from '../app/scheduler/scheduled-process/index';
 import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
-import { AssetsComponent } from '../app/assets/assets.component';
+import { AssetsComponent } from '../app/asset-readings/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
 import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
 
@@ -38,6 +38,10 @@ import { PaginationComponent } from './pagination/index';
 import { ServicesHealthComponent } from './services-health/index';
 import { CreateScheduleComponent } from './scheduler/create-schedule/create-schedule.component';
 import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component';
+import { AssetSummaryComponent } from './asset-readings/asset-summary/asset-summary.component';
+import { ChartModalComponent } from './asset-readings/chart-modal/chart-modal.component';
+import { AssetSummaryService } from './asset-readings/asset-summary/asset-summary-service';
+
 
 @NgModule({
   imports: [
@@ -73,7 +77,9 @@ import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component'
     ServicesHealthComponent,
     PaginationComponent,
     CreateScheduleComponent,
-    ListTasksComponent
+    ListTasksComponent,
+    AssetSummaryComponent,
+    ChartModalComponent
   ],
   providers: [
     AuthGuard,
@@ -84,7 +90,8 @@ import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component'
     AssetsService,
     AuditService,
     SchedulesService,
-    ServicesHealthService
+    ServicesHealthService,
+    AssetSummaryService
   ],
   bootstrap: [AppComponent]
 })
