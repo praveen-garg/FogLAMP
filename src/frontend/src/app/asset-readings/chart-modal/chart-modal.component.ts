@@ -75,7 +75,7 @@ export class ChartModalComponent implements OnInit {
     let d1;
     let d2;
     let d3;
-    assetChartRecord.forEach(data => {
+    assetChartRecord.reverse().forEach(data => {
       let count = 0;
       Object.keys(data.reading).forEach(key => {
         count++;

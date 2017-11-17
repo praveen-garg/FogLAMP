@@ -19,17 +19,19 @@
           <th>Service Port</th>
           <th>Management Port</th>
           <th>Status</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let service of service_data">
           <td>{{service.name}}</td>
-          <td><span class='tag is-light'>{{service.type}} </span></td>
+          <td><span class='tag is-info'>{{service.type}} </span></td>
           <td>{{service.protocol}}</td>
           <td>{{service.address}}</td>
           <td>{{service.service_port}}</td>
           <td>{{service.management_port}}</td>
-          <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span><span class='tag is-light'>Last updated at: {{time|date:'MMM d, y HH:mm:ss'}}</span></td>
+          <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span></td>
+          <td><span class='tag is-light'>Updated at: {{time|date:'MMM d, y HH:mm:ss'}}</span></td>
         </tr>
       </tbody>
     </table>
