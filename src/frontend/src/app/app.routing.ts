@@ -5,7 +5,7 @@ import { LoginComponent } from './login/index';
 import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from './configuration-manager/index';
 import { ScheduledProcessComponent } from './scheduler/scheduled-process/index';
-import { AssetsComponent } from './assets/index';
+import { AssetsComponent } from './asset-readings/assets/index';
 import { AuditLogComponent } from './audit-log/index';
 import { SettingsComponent } from './settings/index';
 import { ServicesHealthComponent } from './services-health/index';

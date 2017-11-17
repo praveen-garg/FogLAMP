@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AssetsComponent } from '../assets/index';
 
 @Component({
     selector: 'my-pagination',

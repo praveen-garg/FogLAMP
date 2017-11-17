@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
   sentChart: string;
   sentValues: any;
+  public chartOptions: any;
 
   constructor(private statisticsService: StatisticsService, private alertService: AlertService) {
 
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit {
   public getStatistics(): void {
     this.statisticsService.getStatistics().
       subscribe(data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -52,18 +53,18 @@ export class DashboardComponent implements OnInit {
   }
 
   public getStatisticsHistory(): void {
-    let readingsValues = [];
-    let readingsLabels = [];
+    const readingsValues = [];
+    const readingsLabels = [];
 
-    let purgedValues = [];
-    let purgedLabels = [];
+    const purgedValues = [];
+    const purgedLabels = [];
 
-    let sentValues = [];
-    let sentLabels = [];
+    const sentValues = [];
+    const sentLabels = [];
 
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -74,17 +75,17 @@ export class DashboardComponent implements OnInit {
           Object.keys(element).forEach(aKey => {
             if (aKey.indexOf('READINGS') !== -1) {
               readingsValues.push(element[aKey]);
-              let tempDt = element['history_ts'];
+              const tempDt = element['history_ts'];
               readingsLabels.push(Utils.formateDate(tempDt));
             }
             if (aKey.indexOf('PURGED') !== -1 && aKey.indexOf('UNSNPURGED') === -1) {
               purgedValues.push(element[aKey]);
-              let tempDt = element['history_ts'];
+              const tempDt = element['history_ts'];
               purgedLabels.push(Utils.formateDate(tempDt));
             }
             if (aKey.indexOf('SENT_1') !== -1 && aKey.indexOf('UNSENT') === -1) {
               sentValues.push(element[aKey]);
-              let tempDt = element['history_ts'];
+              const tempDt = element['history_ts'];
               sentLabels.push(Utils.formateDate(tempDt));
             }
           });
@@ -108,6 +109,18 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+    this.chartOptions = {
+      legend: {
+        display: false // fixme: not working
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
   }
 
   statsHistoryPurgedGraph(labels, data): void {
@@ -122,6 +135,18 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+    this.chartOptions = {
+      legend: {
+        display: false // fixme: not working
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
   }
 
   statsHistorySentGraph(labels, data): void {
@@ -135,6 +160,18 @@ export class DashboardComponent implements OnInit {
           backgroundColor: 'rgb(144,238,144)'
         }
       ]
+    };
+    this.chartOptions = {
+      legend: {
+        display: false // fixme: not working
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     };
   }
 }

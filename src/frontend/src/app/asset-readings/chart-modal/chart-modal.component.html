@@ -1,0 +1,29 @@
+<div id="chart_modal_demo" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{assetCode}}</p>
+      <button class="delete" aria-label="close" (click)="toggleModal(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <div *ngIf='isValidData'>
+        <div class="field is-grouped is-grouped-multiline" *ngFor="let readings of assetReadingSummary">
+          <div class="control">
+            <div class="tags has-addons" *ngFor="let reading of readings.summary">
+              <span><b>{{readings.key}} &nbsp;</b></span>
+              <span class="tag is-light"> Avg </span>
+              <span class="tag is-info">{{reading.average}}</span> &nbsp;
+              <span class="tag is-light"> Min </span>
+              <span class="tag is-info">{{reading.min}}</span> &nbsp;
+              <span class="tag is-light"> Max </span>
+              <span class="tag is-info">{{reading.max}}</span> &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <p *ngIf='!isValidData'> Not Available </p>
+      <chart *ngIf='isValidData' [type]="assetChart" [data]="assetReadingValues" [options]=""></chart>
+    </section>
+  </div>
+</div>
