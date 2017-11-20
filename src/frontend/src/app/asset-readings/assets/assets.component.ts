@@ -137,7 +137,7 @@ export class AssetsComponent implements OnInit {
       this.page = 1;
     }
     if (offset === null) {
-      this.offset = 1;
+      offset = 1;
     }
     this.offset = offset;
     this.tempOffset = offset;
