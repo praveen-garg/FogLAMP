@@ -42,32 +42,25 @@
           <th>Details</th>
         </tr>
       </thead>
-      <tbody *ngFor="let logs of filterdData" >
-      <tr *ngFor="let log of logs.audit">
-        <td>{{log.source}}</td>
-        <td>
-          <small> {{log.severity}}</small>
-        </td>
-        <td>
-          <span class="tag is-rounded"> {{log.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
-        </td>
-        <td>
-          <small> {{log.details | json}}</small>
-        </td>
-      </tr>
+      <tbody *ngFor="let logs of filterdData">
+        <tr *ngFor="let log of logs.audit">
+          <td>{{log.source}}</td>
+          <td>
+            <small> {{log.severity}}</small>
+          </td>
+          <td>
+            <span class="tag is-rounded"> {{log.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+          </td>
+          <td>
+            <small> {{log.details | json}}</small>
+          </td>
+        </tr>
       </tbody>
     </table>
-      <div *ngIf= filterdData> 
-        <my-pagination
-          [count]= this.recordCount
-          [page]="page"
-          [perPage]= this.limit
-          (goPrev)="onPrev()"
-          (goNext)="onNext()"
-          (goFirst)="onFirst()"
-          (goLast)="onLast()"
-          (goPage)="goToPage($event)">
-        </my-pagination>
-      </div>  
+    <div *ngIf='totalPagesCount > 1'>
+      <app-pagination [count]="recordCount" [page]="page" [perPage]="limit" [totalPage]='totalPagesCount' (goPrev)="onPrev()" (goNext)="onNext()"
+        (goFirst)="onFirst()" (goLast)="onLast()" (goPage)="goToPage($event)">
+      </app-pagination>
+    </div>
   </nav>
 </div>

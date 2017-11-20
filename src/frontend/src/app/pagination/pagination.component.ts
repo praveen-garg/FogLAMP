@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { AssetsComponent } from '../asset-readings/assets/index';
 
 @Component({
-    selector: 'my-pagination',
+    selector: 'app-pagination',
     templateUrl: 'pagination.component.html'
 })
 
-export class PaginationComponent  {
+export class PaginationComponent implements OnInit, OnChanges {
     @Input() page: number; // the current page
     @Input() count: number; // how many total items there are in all pages
     @Input() perPage: number; // how many items we want to show per page
-    @Input() pagesToShow: number; // how many pages between next/prev
+    @Input() totalPage: number;
 
     @Output() goPrev = new EventEmitter<boolean>();
     @Output() goNext = new EventEmitter<boolean>();
@@ -18,19 +18,14 @@ export class PaginationComponent  {
     @Output() goFirst = new EventEmitter<boolean>();
     @Output() goLast = new EventEmitter<number>();
 
-    middlePg : any;
-    totalPg : any;
+    middlePg: any;
 
-    constructor(private cdRef:ChangeDetectorRef) {}
+    constructor() { }
 
-    ngAfterViewChecked()
-    {
-        this.cdRef.detectChanges();
-    }
+    ngOnInit() { }
 
-    ngOnInit() {
-        this.middlePg = this.middlePage();
-        this.totalPg = this.totalPages();
+    ngOnChanges(changes: SimpleChanges) {
+        this.totalPages();
     }
 
     onPage(n: number): void {
@@ -50,27 +45,23 @@ export class PaginationComponent  {
     }
 
     onLast(): void {
-        const n = this.totalPages();
-        this.goLast.emit(n);
+        this.goLast.emit(this.totalPage);
     }
 
-    public totalPages(): number {
-        console.log('count22', this.count);
-        console.log('perPage22', this.perPage);
-        const n = Math.ceil(this.count / this.perPage) || 0;
-        this.totalPg = n;
-        console.log('totalPages2', this.totalPg);
-        return n;
+    public totalPages() {
+        this.totalPage = Math.ceil(this.count / this.perPage) || 0;
+        if (this.totalPage > 2) {
+            this.middlePage();
+        } else {
+            this.middlePg = 0;
+        }
     }
 
     lastPage(): boolean {
         return this.perPage * this.page >= this.count;
     }
 
-    middlePage(): number {
-        const n = this.totalPages();
-        const p = Math.ceil(n/2);
-        this.middlePg = p;
-        return p;
+    middlePage() {
+        this.middlePg = Math.ceil(this.totalPage / 2);
     }
 }

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuditService, AlertService} from '../services/index';
-import { PaginationComponent } from '../pagination/index'
+import { Component, OnInit } from '@angular/core';
+import { AuditService, AlertService } from '../services/index';
 
 @Component({
   selector: 'app-audit-log',
@@ -18,10 +17,9 @@ export class AuditLogComponent implements OnInit {
   public severity: String = '';
 
   page = 1;             // Default page is 1 in pagination
-  recordCount = 0;      
+  recordCount = 0;
   tempOffset = 0;       // Temporary offset during pagination
-
-  @ViewChild(PaginationComponent) paginationComp:  PaginationComponent;
+  totalPagesCount = 0;
 
   constructor(private auditService: AuditService, private alertService: AlertService) { }
 
@@ -56,6 +54,13 @@ export class AuditLogComponent implements OnInit {
   }
 
   /**
+    *  Calculate number of pages for pagination based on total records;
+    */
+  public totalPages() {
+    this.totalPagesCount = Math.ceil(this.recordCount / this.limit) || 0;
+  }
+
+  /**
    *  Go to the last page
    */
   onLast(n: number): void {
@@ -84,9 +89,6 @@ export class AuditLogComponent implements OnInit {
     } else {
       this.tempOffset = ((this.page) - 1) * this.limit;
     }
-    console.log('limit: ', this.limit);
-    console.log('offset: ', this.offset);
-    console.log('temp offset: ', this.tempOffset);
     this.getAuditLogs();
   }
 
@@ -94,7 +96,7 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getLogSource().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -109,7 +111,7 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getLogSeverity().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -126,11 +128,12 @@ export class AuditLogComponent implements OnInit {
       this.tempOffset = this.offset;
     }
     if (limit === null || limit === 0) {
-      this.limit = 20;
+      this.limit = 0;
     } else {
       this.limit = limit;
     }
     console.log('Limit: ', limit);
+    this.totalPages();
     this.getAuditLogs();
   }
 
@@ -142,14 +145,13 @@ export class AuditLogComponent implements OnInit {
       offset = 0;
     }
     this.offset = offset;
+    console.log('Offset: ', this.offset);
     this.tempOffset = offset;
-    this.recordCount = this.filterdData[0].count - this.offset;
+    this.totalPages();
     this.getAuditLogs();
   }
 
   public getAuditLogs(): void {
-    console.log('Limit: ', this.limit);
-    console.log('offset: ', this.offset);
     if (this.limit == null) {
       this.limit = 0;
     }
@@ -173,12 +175,10 @@ export class AuditLogComponent implements OnInit {
   }
 
   auditLogSubscriber() {
-    console.log('tempOffset: ', this.tempOffset);
-    console.log('Limit: ', this.limit, 'Offset: ', this.offset);
     this.auditService.getAuditLogs(this.limit, this.tempOffset, this.source, this.severity).
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -187,9 +187,15 @@ export class AuditLogComponent implements OnInit {
           audit: data.audit,
           count: 100                // TODO: FOGL-714. For now it is hard coded.
         }];
-        this.recordCount = this.filterdData[0].count;
-        const n = this.paginationComp.totalPages();
-        console.log('totalPages: ', n, 'recordCount: ', this.recordCount);
+        console.log('Audit Logs', this.filterdData);
+        // TODO : FOGL-714
+        // Below logic need to be revisited after FOGL-714 fix.
+        if (this.offset !== 0) {
+          this.recordCount = this.filterdData[0].count - this.offset;
+        } else {
+          this.recordCount = this.filterdData[0].count;
+        }
+        this.totalPages();
       },
       error => { console.log('error', error); });
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { PaginationComponent } from '../../pagination/index'
 import { AssetsService, AlertService } from '../../services/index';
 import { AssetSummaryComponent } from './../asset-summary/asset-summary.component';
 import { ChartModalComponent } from './../chart-modal/chart-modal.component';
@@ -20,14 +19,13 @@ export class AssetsComponent implements OnInit {
   page = 1;           // Default page is 1 in pagination
   recordCount = 0;    // Total no. of records during pagination
   tempOffset = 0;     // Temporary offset during pagination
+  totalPagesCount = 0;
   assets = [];
   assetsReadingsData = [];
 
-  
   public assetData: Object;
   public isChart = false;
   public isSummary = false;
-  @ViewChild(PaginationComponent) paginationComp:  PaginationComponent;
   @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
   @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
@@ -76,6 +74,13 @@ export class AssetsComponent implements OnInit {
     const p = Math.ceil(this.recordCount / this.limit) || 0;
     this.page = p;
     this.setLimitOffset();
+  }
+
+  /**
+   *  Calculate number of pages for pagination based on total records;
+   */
+  public totalPages() {
+    this.totalPagesCount = Math.ceil(this.recordCount / this.limit) || 0;
   }
 
   /**
@@ -163,8 +168,6 @@ export class AssetsComponent implements OnInit {
     if (this.offset === 0) {
       this.recordCount = this.asset['count'];
     }
-    console.log('Limit: ', this.limit, 'Offset: ', this.offset, 'Asset code: ', this.asset['asset_code']);
-    console.log('tempOffset: ', this.tempOffset, 'recordCount: ', this.recordCount);
     this.assetsReadingsData = [];
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
@@ -182,8 +185,8 @@ export class AssetsComponent implements OnInit {
           count: this.recordCount,
           data: data
         }];
-        const n = this.paginationComp.totalPages();
-        console.log('This is the asset reading data ', this.assetsReadingsData, 'and totalPages', n);
+        this.totalPages();
+        console.log('This is the asset reading data ', this.assetsReadingsData);
       },
       error => { console.log('error', error); });
   }
@@ -203,5 +206,4 @@ export class AssetsComponent implements OnInit {
     this.chartModalComponent.plotReadingsGraph(asset_code);
     this.chartModalComponent.toggleModal(true);
   }
-
 }
