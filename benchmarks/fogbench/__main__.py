@@ -211,9 +211,10 @@ def read_out_file(_file=None, _keep=False, _iterations=1, _interval=0, payload_p
 
 
 async def send_to_http(payload):
+    headers = {'content-type': 'application/json'}
     async with aiohttp.ClientSession() as session:
         url = "{}://{}:{}/sensor-reading".format("http", arg_host, arg_port)
-        async with session.post(url, data=payload) as resp:
+        async with session.post(url, data=payload, headers=headers) as resp:
             # TODO: check, should we wait for acknowledgement response
             resp = await resp.text()
         # return resp
