@@ -169,7 +169,7 @@ export class AuditLogComponent implements OnInit {
       this.severity = event.target.value.trim().toLowerCase() === 'severity' ? '' : event.target.value.trim().toLowerCase();
     }
     if (this.offset !== 0) {
-      this.recordCount = this.filterdData[0].count - this.offset;
+      this.recordCount = this.filterdData[0].totalCount - this.offset;
     }
     this.auditLogSubscriber();
   }
@@ -183,17 +183,17 @@ export class AuditLogComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.filterdData = [{
-          audit: data.audit,
-          count: 100                // TODO: FOGL-714. For now it is hard coded.
-        }];
-        console.log('Audit Logs', this.filterdData);
         // TODO : FOGL-714
         // Below logic need to be revisited after FOGL-714 fix.
+        this.filterdData = [{
+          audit: data.audit,
+          totalCount: 100                // TODO: FOGL-714. For now it is hard coded.
+        }];
+        console.log('Audit Logs', this.filterdData);
         if (this.offset !== 0) {
-          this.recordCount = this.filterdData[0].count - this.offset;
+          this.recordCount = this.filterdData[0].totalCount - this.offset;
         } else {
-          this.recordCount = this.filterdData[0].count;
+          this.recordCount = this.filterdData[0].totalCount;
         }
         this.totalPages();
       },
