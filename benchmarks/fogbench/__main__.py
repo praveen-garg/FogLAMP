@@ -152,7 +152,9 @@ def _prepare_sensor_reading(data, supported_format_types):
 
         sensor_value_object = dict()
         sensor_value_object["asset"] = d['name']
-        sensor_value_object["sensor_values"] = x_sensor_values
+        # http listener gives error 400, invalid dict with key `sensor_values`
+        # sensor_value_object["sensor_values"] = x_sensor_values
+        sensor_value_object["readings"] = x_sensor_values
         sensor_value_object["timestamp"] = "{!s}".format(datetime.now(tz=timezone.utc))
         sensor_value_object["key"] = str(uuid.uuid4())
         # print(json.dumps(sensor_value_object))
