@@ -1,32 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
+import { AssetsComponent } from '../asset-readings/assets/index';
 
 @Component({
-    selector: 'my-pagination',
+    selector: 'app-pagination',
     templateUrl: 'pagination.component.html'
 })
 
-export class PaginationComponent  {
+export class PaginationComponent implements OnInit, OnChanges {
     @Input() page: number; // the current page
     @Input() count: number; // how many total items there are in all pages
     @Input() perPage: number; // how many items we want to show per page
-    @Input() pagesToShow: number; // how many pages between next/prev
+    @Input() totalPage: number;
 
     @Output() goPrev = new EventEmitter<boolean>();
     @Output() goNext = new EventEmitter<boolean>();
     @Output() goPage = new EventEmitter<number>();
+    @Output() goFirst = new EventEmitter<boolean>();
+    @Output() goLast = new EventEmitter<number>();
 
-    constructor() {}
+    middlePg: any;
 
-    getMin(): number {
-        return ((this.perPage * this.page) - this.perPage) + 1;
-    }
+    constructor() { }
 
-    getMax(): number {
-        let max = this.perPage * this.page;
-        if (max > this.count) {
-        max = this.count;
-        }
-        return max;
+    ngOnInit() { }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.totalPages();
     }
 
     onPage(n: number): void {
@@ -41,34 +40,28 @@ export class PaginationComponent  {
         this.goNext.emit(true);
     }
 
-    totalPages(): number {
-        return Math.ceil(this.count / this.perPage) || 0;
+    onFirst(): void {
+        this.goFirst.emit(true);
+    }
+
+    onLast(): void {
+        this.goLast.emit(this.totalPage);
+    }
+
+    public totalPages() {
+        this.totalPage = Math.ceil(this.count / this.perPage) || 0;
+        if (this.totalPage > 2) {
+            this.middlePage();
+        } else {
+            this.middlePg = 0;
+        }
     }
 
     lastPage(): boolean {
         return this.perPage * this.page >= this.count;
     }
 
-    getPages(): number[] {
-        const c = Math.ceil(this.count / this.perPage);
-        const p = this.page || 1;
-        const pagesToShow = this.pagesToShow || 9;
-        const pages: number[] = [];
-        pages.push(p);
-        const times = pagesToShow - 1;
-        for (let i = 0; i < times; i++) {
-        if (pages.length < pagesToShow) {
-            if (Math.min.apply(null, pages) > 1) {
-            pages.push(Math.min.apply(null, pages) - 1);
-            }
-        }
-        if (pages.length < pagesToShow) {
-            if (Math.max.apply(null, pages) < c) {
-            pages.push(Math.max.apply(null, pages) + 1);
-            }
-        }
-        }
-        pages.sort((a, b) => a - b);
-        return pages;
+    middlePage() {
+        this.middlePg = Math.ceil(this.totalPage / 2);
     }
 }

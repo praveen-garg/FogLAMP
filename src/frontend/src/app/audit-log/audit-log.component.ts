@@ -11,10 +11,15 @@ export class AuditLogComponent implements OnInit {
   public logSeverityList = [];
   public filterdData = [];
 
-  public limit: Number = 0;
-  public offset: Number = 0;
+  limit = 20;
+  offset = 0;
   public source: String = '';
   public severity: String = '';
+
+  page = 1;             // Default page is 1 in pagination
+  recordCount = 0;
+  tempOffset = 0;       // Temporary offset during pagination
+  totalPagesCount = 0;
 
   constructor(private auditService: AuditService, private alertService: AlertService) { }
 
@@ -24,11 +29,74 @@ export class AuditLogComponent implements OnInit {
     this.getAuditLogs();
   }
 
+  /**
+   *  Go to the page on which user clicked in pagination
+   */
+  goToPage(n: number): void {
+    this.page = n;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the next page
+   */
+  onNext(): void {
+    this.page++;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the first page
+   */
+  onFirst(): void {
+    this.page = 1;
+    this.setLimitOffset();
+  }
+
+  /**
+    *  Calculate number of pages for pagination based on total records;
+    */
+  public totalPages() {
+    this.totalPagesCount = Math.ceil(this.recordCount / this.limit) || 0;
+  }
+
+  /**
+   *  Go to the last page
+   */
+  onLast(n: number): void {
+    const p = Math.ceil(this.recordCount / this.limit) || 0;
+    this.page = p;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the previous page
+   */
+  onPrev(): void {
+    this.page--;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev(), onFirst(), onLast() methods)
+   */
+  setLimitOffset() {
+    if (this.limit === 0) {
+      this.limit = 20;
+    }
+    if (this.offset > 0) {
+      this.tempOffset = (((this.page) - 1) * this.limit) + this.offset;
+    } else {
+      this.tempOffset = ((this.page) - 1) * this.limit;
+    }
+    this.getAuditLogs();
+  }
+
   public getLogSource() {
     this.auditService.getLogSource().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -43,7 +111,7 @@ export class AuditLogComponent implements OnInit {
     this.auditService.getLogSeverity().
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
@@ -54,23 +122,36 @@ export class AuditLogComponent implements OnInit {
       error => { console.log('error', error); });
   }
 
-  public setLimit(limit: Number) {
-    this.limit = limit;
+  public setLimit(limit: number) {
+    if (this.page !== 1) {
+      this.page = 1;
+      this.tempOffset = this.offset;
+    }
+    if (limit === null || limit === 0) {
+      this.limit = 0;
+    } else {
+      this.limit = limit;
+    }
     console.log('Limit: ', limit);
+    this.totalPages();
     this.getAuditLogs();
   }
 
-  public setOffset(offset: Number) {
-    this.offset = offset;
-    console.log('offset:', offset);
-    if (this.limit != null) {
-      this.getAuditLogs();
+  public setOffset(offset: number) {
+    if (this.page !== 1) {
+      this.page = 1;
     }
+    if (offset === null) {
+      offset = 0;
+    }
+    this.offset = offset;
+    console.log('Offset: ', this.offset);
+    this.tempOffset = offset;
+    this.totalPages();
+    this.getAuditLogs();
   }
 
   public getAuditLogs(): void {
-    console.log('Limit: ', this.limit);
-    console.log('offset: ', this.offset);
     if (this.limit == null) {
       this.limit = 0;
     }
@@ -87,19 +168,34 @@ export class AuditLogComponent implements OnInit {
     if (type === 'severity') {
       this.severity = event.target.value.trim().toLowerCase() === 'severity' ? '' : event.target.value.trim().toLowerCase();
     }
+    if (this.offset !== 0) {
+      this.recordCount = this.filterdData[0].totalCount - this.offset;
+    }
     this.auditLogSubscriber();
   }
 
   auditLogSubscriber() {
-    this.auditService.getAuditLogs(this.limit, this.offset, this.source, this.severity).
+    this.auditService.getAuditLogs(this.limit, this.tempOffset, this.source, this.severity).
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
         }
-        this.filterdData = data.audit;
+        // TODO : FOGL-714
+        // Below logic need to be revisited after FOGL-714 fix.
+        this.filterdData = [{
+          audit: data.audit,
+          totalCount: 100                // TODO: FOGL-714. For now it is hard coded.
+        }];
+        console.log('Audit Logs', this.filterdData);
+        if (this.offset !== 0) {
+          this.recordCount = this.filterdData[0].totalCount - this.offset;
+        } else {
+          this.recordCount = this.filterdData[0].totalCount;
+        }
+        this.totalPages();
       },
       error => { console.log('error', error); });
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { AssetsService, AlertService } from '../../services/index';
 import { AssetSummaryComponent } from './../asset-summary/asset-summary.component';
 import { ChartModalComponent } from './../chart-modal/chart-modal.component';
@@ -15,16 +16,16 @@ export class AssetsComponent implements OnInit {
   limit = 20;
   offset = 0;
 
-  page = 1;                   // Default page is 1 in pagination
+  page = 1;           // Default page is 1 in pagination
   recordCount = 0;    // Total no. of records during pagination
   tempOffset = 0;     // Temporary offset during pagination
+  totalPagesCount = 0;
   assets = [];
   assetsReadingsData = [];
 
   public assetData: Object;
   public isChart = false;
   public isSummary = false;
-
   @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
   @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
@@ -59,7 +60,31 @@ export class AssetsComponent implements OnInit {
   }
 
   /**
-   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev() methods)
+   *  Go to the first page
+   */
+  onFirst(): void {
+    this.page = 1;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Go to the last page
+   */
+  onLast(n: number): void {
+    const p = Math.ceil(this.recordCount / this.limit) || 0;
+    this.page = p;
+    this.setLimitOffset();
+  }
+
+  /**
+   *  Calculate number of pages for pagination based on total records;
+   */
+  public totalPages() {
+    this.totalPagesCount = Math.ceil(this.recordCount / this.limit) || 0;
+  }
+
+  /**
+   *  Set limit and offset (it is internally called by goToPage(), onNext(), onPrev(), onFirst(), onLast()  methods)
    */
   setLimitOffset() {
     if (this.limit === 0) {
@@ -111,6 +136,9 @@ export class AssetsComponent implements OnInit {
     if (this.page !== 1) {
       this.page = 1;
     }
+    if (offset === null) {
+      offset = 1;
+    }
     this.offset = offset;
     this.tempOffset = offset;
     this.recordCount = this.asset['count'] - this.offset;
@@ -157,6 +185,7 @@ export class AssetsComponent implements OnInit {
           count: this.recordCount,
           data: data
         }];
+        this.totalPages();
         console.log('This is the asset reading data ', this.assetsReadingsData);
       },
       error => { console.log('error', error); });
@@ -177,5 +206,4 @@ export class AssetsComponent implements OnInit {
     this.chartModalComponent.plotReadingsGraph(asset_code);
     this.chartModalComponent.toggleModal(true);
   }
-
 }

@@ -91,10 +91,10 @@
         </table>
         <app-asset-summary></app-asset-summary>
         <app-chart-modal></app-chart-modal>
-        <div *ngIf=asset>
-          <my-pagination [count]=this.recordCount [page]="page" [perPage]=this.limit [pagesToShow]="3" (goPrev)="onPrev()" (goNext)="onNext()"
-            (goPage)="goToPage($event)">
-          </my-pagination>
+        <div *ngIf='totalPagesCount > 1'>
+          <app-pagination [count]='recordCount' [page]="page" [perPage]='limit' [totalPage]='totalPagesCount' (goPrev)="onPrev()" (goNext)="onNext()"
+            (goFirst)="onFirst()" (goLast)="onLast()" (goPage)="goToPage($event)">
+          </app-pagination>
         </div>
       </article>
     </div>
