@@ -9,7 +9,8 @@ import { AuditService, AlertService } from '../services/index';
 export class AuditLogComponent implements OnInit {
   public logSourceList = [];
   public logSeverityList = [];
-  public filterdData = [];
+  public audit: any;
+  public totalCount: any;
 
   limit = 20;
   offset = 0;
@@ -169,7 +170,7 @@ export class AuditLogComponent implements OnInit {
       this.severity = event.target.value.trim().toLowerCase() === 'severity' ? '' : event.target.value.trim().toLowerCase();
     }
     if (this.offset !== 0) {
-      this.recordCount = this.filterdData[0].totalCount - this.offset;
+      this.recordCount = this.totalCount - this.offset;
     }
     this.auditLogSubscriber();
   }
@@ -183,17 +184,14 @@ export class AuditLogComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        // TODO : FOGL-714
-        // Below logic need to be revisited after FOGL-714 fix.
-        this.filterdData = [{
-          audit: data.audit,
-          totalCount: 100                // TODO: FOGL-714. For now it is hard coded.
-        }];
-        console.log('Audit Logs', this.filterdData);
+        this.audit = data.audit;
+        this.totalCount = data.total_count;
+        console.log('Audit Logs', this.audit);
+        console.log('Total count', this.totalCount);
         if (this.offset !== 0) {
-          this.recordCount = this.filterdData[0].totalCount - this.offset;
+          this.recordCount = this.totalCount - this.offset;
         } else {
-          this.recordCount = this.filterdData[0].totalCount;
+          this.recordCount = this.totalCount;
         }
         this.totalPages();
       },
