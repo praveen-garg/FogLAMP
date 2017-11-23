@@ -186,8 +186,7 @@ export class AuditLogComponent implements OnInit {
         }
         this.audit = data.audit;
         this.totalCount = data.total_count;
-        console.log('Audit Logs', this.audit);
-        console.log('Total count', this.totalCount);
+        console.log('Audit Logs', this.audit, 'Total count', this.totalCount);
         if (this.offset !== 0) {
           this.recordCount = this.totalCount - this.offset;
         } else {
