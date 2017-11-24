@@ -42,8 +42,8 @@
           <th>Details</th>
         </tr>
       </thead>
-      <tbody *ngFor="let logs of filterdData">
-        <tr *ngFor="let log of logs.audit">
+       <tbody>
+        <tr *ngFor="let log of audit">
           <td>{{log.source}}</td>
           <td>
             <small> {{log.severity}}</small>
