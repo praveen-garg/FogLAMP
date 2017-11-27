@@ -3,12 +3,12 @@
 </div>
  <ng-sidebar-container contentClass="columns">
     <!-- A sidebar -->
-     <ng-sidebar #sidebar [(opened)]="_opened" sidebarClass="side column is-2">
+     <ng-sidebar #sidebar [(opened)]="_opened" sidebarClass="column is-2 test">
         <app-side-menu  (toggle)="toggleSidebar()"></app-side-menu>
     </ng-sidebar> 
 
     <!-- Page content -->
-    <div ng-sidebar-content class="column is-10 is-offset-2">
+    <div ng-sidebar-content class="column is-10 is-offset-2 fixed">
         <alert></alert>
         <router-outlet></router-outlet>
         <app-footer></app-footer>

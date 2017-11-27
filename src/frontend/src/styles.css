@@ -7,11 +7,15 @@ html, body, #app {
 }
 
 table.scroll {
-    overflow-x: auto;
-    display: block;
+  overflow-x: auto;
+  display: block;
 }
 
 table.scroll tbody {
-    overflow-y: scroll;
-    overflow-x: auto;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+ .fixed {
+  overflow-x: hidden;
 }
