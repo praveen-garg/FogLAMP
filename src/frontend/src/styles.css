@@ -16,6 +16,6 @@ table.scroll tbody {
   overflow-x: auto;
 }
 
- .fixed {
+ .fixed-overflow {
   overflow-x: hidden;
 }
