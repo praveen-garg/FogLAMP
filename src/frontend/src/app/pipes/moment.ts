@@ -11,6 +11,10 @@ import * as moment from 'moment';
 @Pipe({name: 'moment'})
 export class MomentPipe implements PipeTransform {
   transform(value: string, arg: string): string {
-     return moment(value).format(arg);
+      if (value !== "") {
+        return moment(value).format(arg);
+      } else {
+        return value;
+      }
   }
 }
