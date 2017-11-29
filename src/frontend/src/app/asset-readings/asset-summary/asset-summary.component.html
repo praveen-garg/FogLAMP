@@ -2,8 +2,30 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">{{assetCode}}</p>
-      <button class="delete" aria-label="close" (click)="toggleModal(false)"></button>
+      <div class="columns is-mobile">
+        <div class="column is-half is-narrow">
+          <p class="modal-card-title">{{assetCode}}</p>
+        </div>
+      </div>
+      <div *ngIf='isValidData' class="columns is-mobile">
+        <div class="column  is-narrow">
+          <div class="select">
+            <select #selectedType>
+                <option value="hours">Hours</option>
+                <option value="minutes">Minutes</option>
+                <option value="seconds">Seconds</option>
+            </select>
+          </div>
+        </div>
+        <div class="column">
+          <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value)"></input-debounce>
+        </div>
+      </div>
+       <div class="columns is-mobile is-8">
+          <div class="column is-narrow">
+            &nbsp; <button class="delete" aria-label="close" (click)="toggleModal(false); clear(timeValue, selectedType)"></button>
+          </div>
+        </div>
     </header>
     <section class="modal-card-body">
       <p *ngIf='!isValidData'> Not Available </p>

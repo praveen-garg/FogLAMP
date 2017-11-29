@@ -194,8 +194,11 @@ export class AssetsComponent implements OnInit {
   /**
  * Open asset summary modal dialog
  */
-  public showAssetSummary(asset_code) {
-    this.assetSummaryComponent.getReadingSummary(asset_code);
+  public showAssetSummary(assetCode) {
+    const dataObj = {
+            asset_code: assetCode,
+          };
+    this.assetSummaryComponent.getReadingSummary(dataObj);
     this.assetSummaryComponent.toggleModal(true);
   }
 

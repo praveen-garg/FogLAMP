@@ -13,12 +13,13 @@ export class AssetSummaryComponent implements OnInit {
   assetReadingSummary: any = [];
   assetCode: String = '';
   isValidData = false;
-
+  filterName: string;
   constructor(private assetService: AssetsService, private assetSummaryService: AssetSummaryService) { }
 
   ngOnInit() { }
 
   public toggleModal(shouldOpen: Boolean) {
+    this.filterName = '';
     const summary_modal = <HTMLDivElement>document.getElementById('summary_modal');
     if (shouldOpen) {
       summary_modal.classList.add('is-active');
@@ -27,10 +28,10 @@ export class AssetSummaryComponent implements OnInit {
     summary_modal.classList.remove('is-active');
   }
 
-  public getReadingSummary(assetCode) {
-    this.assetCode = assetCode;
+  public getReadingSummary(dataObj) {
+    this.assetCode = dataObj.asset_code;
     this.isValidData = true;
-    this.assetService.getAssetReadings(encodeURIComponent(assetCode)).
+    this.assetService.getAssetReadings(encodeURIComponent(dataObj.asset_code)).
       subscribe(
       data => {
         if (data.error) {
@@ -39,7 +40,12 @@ export class AssetSummaryComponent implements OnInit {
         }
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
-          this.assetSummaryService.getReadingSummary(assetCode, data[0]);
+          const record = {
+            asset_code: dataObj.asset_code,
+            readings: data[0],
+            time: dataObj.time_param
+          };
+          this.assetSummaryService.getReadingSummary(record);
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;
@@ -50,6 +56,20 @@ export class AssetSummaryComponent implements OnInit {
         }
       },
       error => { console.log('error', error); });
+  }
+
+  public getTimedBasedSummary(time, key) {
+    const dataObj = {
+      asset_code: this.assetCode,
+      time_param: { [key]: time }
+    };
+    this.getReadingSummary(dataObj);
+  }
+
+  clear(st, selectedType) {
+    console.log(selectedType);
+    selectedType !==  undefined ? selectedType.value = 'hours' : selectedType = ''; // reset to default
+    st !==  undefined ? st.inputValue = null : st = '';
   }
 }
 

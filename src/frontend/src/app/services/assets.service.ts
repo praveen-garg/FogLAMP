@@ -42,8 +42,12 @@ export class AssetsService {
   }
 
   public getAssetSummary(assetObject: any) {
-    // TODO: time based readings summary
-    return this.http.get(this.GET_ASSET + '/' + encodeURIComponent(assetObject.asset_code) + '/' + assetObject.reading + '/summary')
+    let _params = {};
+    if (assetObject.time !== undefined) {
+      _params = { params: assetObject.time };
+    }
+    return this.http.get(this.GET_ASSET + '/' + encodeURIComponent(assetObject.asset_code)
+      + '/' + assetObject.reading + '/summary', _params)
       .map(response => response.json())
       .catch((error: Response) => Observable.throw(error.json().message || 'Server error'));
   }
