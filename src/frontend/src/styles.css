@@ -16,6 +16,10 @@ table.scroll tbody {
   overflow-x: auto;
 }
 
- .fixed-overflow {
+.fixed-overflow {
   overflow-x: hidden;
+}
+
+.ng-sidebar[_ngcontent-c3] {
+  z-index: 10 !important;
 }
