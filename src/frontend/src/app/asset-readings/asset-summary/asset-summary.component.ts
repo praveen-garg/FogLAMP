@@ -13,13 +13,11 @@ export class AssetSummaryComponent implements OnInit {
   assetReadingSummary: any = [];
   assetCode: String = '';
   isValidData = false;
-  filterName: string;
   constructor(private assetService: AssetsService, private assetSummaryService: AssetSummaryService) { }
 
   ngOnInit() { }
 
   public toggleModal(shouldOpen: Boolean) {
-    this.filterName = '';
     const summary_modal = <HTMLDivElement>document.getElementById('summary_modal');
     if (shouldOpen) {
       summary_modal.classList.add('is-active');
@@ -67,9 +65,8 @@ export class AssetSummaryComponent implements OnInit {
   }
 
   clear(st, selectedType) {
-    console.log(selectedType);
-    selectedType !==  undefined ? selectedType.value = 'hours' : selectedType = ''; // reset to default
-    st !==  undefined ? st.inputValue = null : st = '';
+    selectedType.value = 'hours'; // reset to default
+    st.inputValue = null;
   }
 }
 

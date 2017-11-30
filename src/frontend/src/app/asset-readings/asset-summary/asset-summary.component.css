@@ -1,0 +1,12 @@
+.close {
+  margin: 0;
+  position: absolute;
+  top: 2px;
+  right: -1px;
+  width: 23px;
+  height: 23px;
+}
+
+[hidden] {
+  display: none !important;
+}

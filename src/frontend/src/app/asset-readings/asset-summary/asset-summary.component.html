@@ -2,13 +2,11 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <div class="columns is-mobile">
+      <div [hidden]='!isValidData' class="columns">
         <div class="column is-half is-narrow">
           <p class="modal-card-title">{{assetCode}}</p>
         </div>
-      </div>
-      <div *ngIf='isValidData' class="columns is-mobile">
-        <div class="column  is-narrow">
+        <div class="column is-one-fifth is-three-quarters-mobile">
           <div class="select">
             <select #selectedType>
                 <option value="hours">Hours</option>
@@ -17,14 +15,12 @@
             </select>
           </div>
         </div>
-        <div class="column">
+        <div class="column is-three-quarters-mobile">
           <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value)"></input-debounce>
         </div>
       </div>
-       <div class="columns is-mobile is-8">
-          <div class="column is-narrow">
-            &nbsp; <button class="delete" aria-label="close" (click)="toggleModal(false); clear(timeValue, selectedType)"></button>
-          </div>
+       <div class="close">
+          <button class="delete" aria-label="close" (click)="toggleModal(false); clear(timeValue, selectedType)"></button>
         </div>
     </header>
     <section class="modal-card-body">
@@ -41,9 +37,9 @@
         <tbody *ngFor="let readings of assetReadingSummary">
           <tr *ngFor="let reading of readings.summary">
             <td>{{readings.key}}</td>
-            <td>{{reading.average}}</td>
-            <td>{{reading.min}}</td>
-            <td>{{reading.max}}</td>
+            <td>{{reading.average == ""? 'None' : reading.average}}</td>
+            <td>{{reading.min == ""? 'None' : reading.min}}</td>
+            <td>{{reading.max== ""? 'None' : reading.max}}</td>
           </tr>
         </tbody>
       </table>
