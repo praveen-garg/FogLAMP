@@ -60,9 +60,10 @@ export class AssetSummaryComponent implements OnInit {
     if (key === 'select') {
       return;
     }
+
     const dataObj = {
       asset_code: this.assetCode,
-      time_param: { [key]: time }
+      time_param: (time == null ? undefined : {[key] : time })
     };
     this.getReadingSummary(dataObj);
   }

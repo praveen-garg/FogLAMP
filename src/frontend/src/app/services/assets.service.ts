@@ -43,7 +43,7 @@ export class AssetsService {
 
   public getAssetSummary(assetObject: any) {
     let _params = {};
-    if (assetObject.time !== undefined) {
+    if (assetObject.time !== undefined ) {
       _params = { params: assetObject.time };
     }
     return this.http.get(this.GET_ASSET + '/' + encodeURIComponent(assetObject.asset_code)
