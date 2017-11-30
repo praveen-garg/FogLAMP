@@ -85,7 +85,6 @@ export class DashboardComponent implements OnInit {
             if (aKey.indexOf('READINGS') !== -1) {
               readingsValues.push(element[aKey]);
               const tempDt = element['history_ts'];
-              datePipe.transform(data.timestamp, 'HH:mm:ss:SSS');
               readingsLabels.push( datePipe.transform(data.timestamp, 'HH:mm:ss:SSS'));
             }
             if (aKey.indexOf('PURGED') !== -1 && aKey.indexOf('UNSNPURGED') === -1) {
