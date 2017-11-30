@@ -1,39 +1,41 @@
-<div class="tile is-parent">
-  <article class="tile is-child">
-    <div class="columns">
-      <div class="column">
-        <strong class="is-medium">Service Status</strong>
-      </div>
-      <div class="column">
-        <button (click)="getServiceData()" class="button is-pulled-right"> Refresh &nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></button>
-      </div>
+<nav class="level is-mobile">
+  <div class="level-item has-text-centered">
+    <div>
+      <strong class="is-medium">Service Status</strong>
     </div>
-    <hr align="center">
-    <table class="table is-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Protocol</th>
-          <th>Address</th>
-          <th>Service Port</th>
-          <th>Management Port</th>
-          <th>Status</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let service of service_data">
-          <td>{{service.name}}</td>
-          <td><span class='tag is-info'>{{service.type}} </span></td>
-          <td>{{service.protocol}}</td>
-          <td>{{service.address}}</td>
-          <td>{{service.service_port}}</td>
-          <td>{{service.management_port}}</td>
-          <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span></td>
-          <td><span class='tag is-light'>Updated at: {{time|date:'MMM d, y HH:mm:ss'}}</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </article>
-</div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <button (click)="getServiceData()" class="button is-pulled-right"> Refresh &nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></button>
+    </div>
+  </div>
+</nav>
+<hr align="center">
+<div class="tile is-parent">
+<article class="tile is-child">
+  <table class="table is-bordered is-striped is-fullwidth scroll" cellpadding="0" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Protocol</th>
+        <th>Address</th>
+        <th>Service Port</th>
+        <th>Management Port</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let service of service_data">
+        <td>{{service.name}}</td>
+        <td><span class='tag is-info'>{{service.type}} </span></td>
+        <td>{{service.protocol}}</td>
+        <td>{{service.address}}</td>
+        <td>{{service.service_port}}</td>
+        <td>{{service.management_port}}</td>
+        <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span></td>
+        <td><span class='tag is-light'>Updated at: {{time|date:'MMM d, y HH:mm:ss'}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
