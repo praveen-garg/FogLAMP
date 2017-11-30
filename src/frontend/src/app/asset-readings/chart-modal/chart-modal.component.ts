@@ -55,7 +55,11 @@ export class ChartModalComponent implements OnInit {
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.getAssetTimeReading(data);
-          this.assetSummaryService.getReadingSummary(assetCode, data[0]);
+           const dataObj = {
+            asset_code: assetCode,
+            readings: data[0],
+          };
+          this.assetSummaryService.getReadingSummary(dataObj);
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;
