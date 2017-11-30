@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService, AlertService } from '../services/index';
 import Utils from '../utils';
+import { MomentDatePipe } from './../pipes/moment-date';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -68,7 +70,7 @@ export class DashboardComponent implements OnInit {
 
     const sentValues = [];
     const sentLabels = [];
-
+    const datePipe = new MomentDatePipe();
     this.statisticsService.getStatisticsHistory().
       subscribe(data => {
         if (data.error) {
@@ -83,17 +85,18 @@ export class DashboardComponent implements OnInit {
             if (aKey.indexOf('READINGS') !== -1) {
               readingsValues.push(element[aKey]);
               const tempDt = element['history_ts'];
-              readingsLabels.push(Utils.formateDate(tempDt));
+              datePipe.transform(data.timestamp, 'HH:mm:ss:SSS');
+              readingsLabels.push( datePipe.transform(data.timestamp, 'HH:mm:ss:SSS'));
             }
             if (aKey.indexOf('PURGED') !== -1 && aKey.indexOf('UNSNPURGED') === -1) {
               purgedValues.push(element[aKey]);
               const tempDt = element['history_ts'];
-              purgedLabels.push(Utils.formateDate(tempDt));
+              purgedLabels.push( datePipe.transform(data.timestamp, 'HH:mm:ss:SSS'));
             }
             if (aKey.indexOf('SENT_1') !== -1 && aKey.indexOf('UNSENT') === -1) {
               sentValues.push(element[aKey]);
               const tempDt = element['history_ts'];
-              sentLabels.push(Utils.formateDate(tempDt));
+              sentLabels.push( datePipe.transform(data.timestamp, 'HH:mm:ss:SSS'));
             }
           });
         });
