@@ -13,7 +13,6 @@ export class AssetSummaryComponent implements OnInit {
   assetReadingSummary: any = [];
   assetCode: String = '';
   isValidData = false;
-
   constructor(private assetService: AssetsService, private assetSummaryService: AssetSummaryService) { }
 
   ngOnInit() { }
@@ -27,10 +26,10 @@ export class AssetSummaryComponent implements OnInit {
     summary_modal.classList.remove('is-active');
   }
 
-  public getReadingSummary(assetCode) {
-    this.assetCode = assetCode;
+  public getReadingSummary(dataObj) {
+    this.assetCode = dataObj.asset_code;
     this.isValidData = true;
-    this.assetService.getAssetReadings(encodeURIComponent(assetCode)).
+    this.assetService.getAssetReadings(encodeURIComponent(dataObj.asset_code)).
       subscribe(
       data => {
         if (data.error) {
@@ -39,7 +38,12 @@ export class AssetSummaryComponent implements OnInit {
         }
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
-          this.assetSummaryService.getReadingSummary(assetCode, data[0]);
+          const record = {
+            asset_code: dataObj.asset_code,
+            readings: data[0],
+            time: dataObj.time_param
+          };
+          this.assetSummaryService.getReadingSummary(record);
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;
@@ -50,6 +54,23 @@ export class AssetSummaryComponent implements OnInit {
         }
       },
       error => { console.log('error', error); });
+  }
+
+  public getTimedBasedSummary(time, key) {
+    if (key === 'select') {
+      return;
+    }
+
+    const dataObj = {
+      asset_code: this.assetCode,
+      time_param: (time == null ? undefined : {[key] : time })
+    };
+    this.getReadingSummary(dataObj);
+  }
+
+  clear(st, selectedType) {
+    selectedType.value = 'select'; // reset to default
+    st.inputValue = null;
   }
 }
 
