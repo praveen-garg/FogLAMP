@@ -57,6 +57,9 @@ export class AssetSummaryComponent implements OnInit {
   }
 
   public getTimedBasedSummary(time, key) {
+    if (key === 'select') {
+      return;
+    }
     const dataObj = {
       asset_code: this.assetCode,
       time_param: { [key]: time }
@@ -65,7 +68,7 @@ export class AssetSummaryComponent implements OnInit {
   }
 
   clear(st, selectedType) {
-    selectedType.value = 'hours'; // reset to default
+    selectedType.value = 'select'; // reset to default
     st.inputValue = null;
   }
 }
