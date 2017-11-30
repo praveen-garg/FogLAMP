@@ -14,3 +14,7 @@
 thead {
   text-align: center;
 }
+
+select {
+  width: 200px;
+}

@@ -8,17 +8,17 @@
         <div class="column">
           <div class="select">
             <select (change)="filterSource('source', $event)">
-            <option selected="selected" >Source</option>
-            <option *ngFor="let source of logSourceList"  [value]='source.code'>{{source.code}}</option>
-          </select>
+              <option selected="selected" >Source</option>
+              <option *ngFor="let source of logSourceList"  [value]='source.code'>{{source.code}}</option>
+            </select>
           </div>
         </div>
         <div class="column">
           <div class="select">
             <select (change)="filterSource('severity', $event)">
-            <option selected="selected">Severity</option>
-            <option *ngFor="let severity of logSeverityList"  [value]='severity.name'>{{severity.name}}</option>
-          </select>
+              <option selected="selected">Severity</option>
+              <option *ngFor="let severity of logSeverityList"  [value]='severity.name'>{{severity.name}}</option>
+            </select>
           </div>
         </div>
         <div class="column">
@@ -33,12 +33,12 @@
 
     <br>
     <br>
-    <table class="table is-bordered is-striped is-fullwidth" cellpadding="0" cellspacing="0">
+     <table class="table is-bordered is-striped is-fullwidth" cellpadding="0" cellspacing="0"> 
       <thead>
         <tr>
           <th>Source</th>
           <th>Severity</th>
-          <th>Timestamp</th>
+          <th>Timestamp&nbsp;&nbsp;<i class="fa fa-info-circle tooltip is-tooltip-right" data-tooltip="DD-MM-YYYY HH:mm:ss"></i></th>
           <th>Details</th>
         </tr>
       </thead>
@@ -49,7 +49,7 @@
             <small> {{log.severity}}</small>
           </td>
           <td>
-            <span class="tag is-rounded"> {{log.timestamp | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+            <span class="tag is-rounded"> {{log.timestamp | dateparser: 'DD-MM-YYYY HH:mm:ss'}}</span>
           </td>
           <td>
             <small> {{log.details | json}}</small>
