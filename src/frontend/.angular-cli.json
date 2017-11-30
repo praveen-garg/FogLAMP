@@ -20,7 +20,8 @@
       "styles": [
         "styles.css",
         "assets/css/bulma.min.css",
-        "assets/css/font-awesome.min.css"
+        "assets/css/font-awesome.min.css",
+        "assets/css/bulma-tooltip.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
