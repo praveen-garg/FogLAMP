@@ -16,7 +16,7 @@ import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
-import { KeysPipe, FilterPipe, MomentPipe } from './pipes/index';
+import { KeysPipe, FilterPipe, MomentDatePipe } from './pipes/index';
 import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from '../app/configuration-manager/index';
@@ -63,7 +63,7 @@ import { AssetSummaryService } from './asset-readings/asset-summary/asset-summar
     FooterComponent,
     KeysPipe,
     FilterPipe,
-    MomentPipe,
+    MomentDatePipe,
     DashboardComponent,
     ConfigurationManagerComponent,
     ScheduledProcessComponent,
