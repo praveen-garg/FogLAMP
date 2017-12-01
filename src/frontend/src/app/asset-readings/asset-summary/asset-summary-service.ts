@@ -8,15 +8,15 @@ export class AssetSummaryService {
     assetReadingSummary: Subject<Array<any>> = new Subject<Array<any>>();
     constructor(private assetService: AssetsService) { }
 
-    public getReadingSummary(assetCode, assetReadingsdata) {
+    public getReadingSummary(data: any) {
         const assetSummary = [];
-        const keys = Object.keys(assetReadingsdata.reading);
+        const keys = Object.keys(data.readings.reading);
         let count = 0;
         keys.forEach(key => {
             const assetObj: object = {
-                asset_code: assetCode,
-                time: '',   // TODO fix time based summary
-                reading: key
+                asset_code: data.asset_code,
+                reading: key,
+                time: data.time
             };
             this.assetService.getAssetSummary(assetObj)
                 .subscribe(
@@ -27,7 +27,7 @@ export class AssetSummaryService {
                     }
                     count++;
                     assetSummary.push({
-                        asset_code: assetCode,
+                        asset_code: data.asset_code,
                         data: summaryData
                     });
                     if (count === keys.length) {

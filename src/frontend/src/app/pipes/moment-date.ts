@@ -11,7 +11,7 @@ import * as moment from 'moment';
 @Pipe({name: 'dateparser'})
 export class MomentDatePipe implements PipeTransform {
   transform(value: string, arg: string): string {
-      if (value !== "") {
+      if (value !== '') {
         return moment(value).format(arg);
       } else {
         return value;

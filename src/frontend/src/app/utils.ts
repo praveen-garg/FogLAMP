@@ -4,27 +4,6 @@ export const POLLING_INTERVAL = 2000;   // milliseconds
 
 export default class Utils {
 
-  public static formateDate(dt: string) {
-    const date = new Date(dt.replace(/\s/, 'T')); // had to remove the colon (:) after the T in order to make it work
-    // let day = date.getDate();
-    // let monthIndex = date.getMonth();
-    // let year = date.getFullYear();
-    const formattedDate = Utils.pad(date.getHours(), 2, 0) + ':' + Utils.pad(
-      date.getMinutes(), 2, 0) + ':' + Utils.pad(date.getSeconds(), 2, 0);
-    return formattedDate;
-  }
-
-   public static formateDateWithMs(dt: string) {
-    const date = new Date(dt.replace(/\s/, 'T')); // had to remove the colon (:) after the T in order to make it work
-    // let day = date.getDate();
-    // let monthIndex = date.getMonth();
-    // let year = date.getFullYear();
-    const formattedDate = Utils.pad(date.getHours(), 2, 0) + ':' + Utils.pad(
-      date.getMinutes(), 2, 0) + ':' + Utils.pad(date.getSeconds(), 2, 0)
-      +  ':' +  Utils.pad(date.getMilliseconds(), 3, 0);
-    return formattedDate;
-  }
-
   public static pad(n, width, z) {
     z = z || '0';
     n = n + '';
@@ -105,18 +84,5 @@ export default class Utils {
     return _.fromPairs(
       _.map(sortedKeys, key => [key, object[key]])
     );
-  }
-
-  public static parseDate(dateStr) {
-    if (isNaN(dateStr)) { // Checked for numeric
-      const dt = new Date(dateStr);
-      if (isNaN(dt.getTime())) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
   }
 }
