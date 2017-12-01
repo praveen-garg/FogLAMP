@@ -39,13 +39,13 @@ export class ChartModalComponent implements OnInit {
     }
   }
 
-  public plotReadingsGraph(assetCode, limit = 0) {
-    if (limit < 0) { // check for negative limit
+  public plotReadingsGraph(assetCode, limit = 0, offset = 0) {
+    if (limit < 0 || limit > 1000 || offset < 0 ) { // check for limit range
       return;
     }
     this.isValidData = true;
     this.assetCode = assetCode;
-    this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit).
+    this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit, offset).
       subscribe(
       data => {
         if (data.error) {
@@ -197,7 +197,8 @@ export class ChartModalComponent implements OnInit {
     };
   }
 
-clearField(input) {
-    input.inputValue = '';
+clearField(limitField, offsetField) {
+    limitField.inputValue = '';
+    offsetField.inputValue = '';
   }
 }
