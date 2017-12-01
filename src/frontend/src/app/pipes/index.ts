@@ -1,3 +1,3 @@
 export * from './keys';
 export * from './filter';
-export * from './moment';
+export * from './moment-date';
