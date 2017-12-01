@@ -2,8 +2,17 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">{{assetCode}}</p>
-      <button class="delete" aria-label="close" (click)="toggleModal(false)"></button>
+      <div [hidden]='!isValidData' class="columns">
+        <div class="column is-8">
+          <p class="modal-card-title">{{assetCode}}</p>
+        </div>
+        <div class="column">
+          <input-debounce placeholder="Limit" #limit (value)="plotReadingsGraph(assetCode, $event)"></input-debounce>
+        </div>
+      </div>
+      <div class="close">
+        <button class="delete" aria-label="close" (click)="toggleModal(false); clearField(limit)"></button>
+      </div>
     </header>
     <section class="modal-card-body">
       <div *ngIf='isValidData'>

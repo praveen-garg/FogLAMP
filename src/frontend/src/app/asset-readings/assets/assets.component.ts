@@ -102,7 +102,6 @@ export class AssetsComponent implements OnInit {
   }
 
   public setAssetCode(assetData) {
-    console.log(assetData);
     this.isChart = true;
     this.isSummary = true;
     this.asset = assetData;
@@ -205,8 +204,8 @@ export class AssetsComponent implements OnInit {
   /**
   * Open asset chart modal dialog
   */
-  public showAssetChart(asset_code) {
-    this.chartModalComponent.plotReadingsGraph(asset_code);
+  public showAssetChart(asset_code, limit) {
+    this.chartModalComponent.plotReadingsGraph(asset_code, limit);
     this.chartModalComponent.toggleModal(true);
   }
 }
