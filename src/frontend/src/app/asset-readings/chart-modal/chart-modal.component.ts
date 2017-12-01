@@ -4,6 +4,8 @@ import Utils from '../../utils';
 import { ChartComponent } from '../../chart/chart.component';
 import { AssetSummaryService } from './../asset-summary/asset-summary-service';
 import ReadingsValidator from '../assets/readings-validator';
+import { MomentDatePipe } from './../../pipes/moment-date';
+
 
 @Component({
   selector: 'app-chart-modal',
@@ -79,6 +81,7 @@ export class ChartModalComponent implements OnInit {
     let d1;
     let d2;
     let d3;
+    const datePipe = new MomentDatePipe();
     assetChartRecord.reverse().forEach(data => {
       let count = 0;
       Object.keys(data.reading).forEach(key => {
@@ -109,9 +112,7 @@ export class ChartModalComponent implements OnInit {
             break;
         }
       });
-      if (Utils.parseDate(data.timestamp)) {
-        assetTimeLabels.push(Utils.formateDateWithMs(data.timestamp));
-      }
+      assetTimeLabels.push(datePipe.transform(data.timestamp, 'HH:mm:ss:SSS'));
     });
     assetReading.push(d1);
     assetReading.push(d2);
