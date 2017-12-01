@@ -34,8 +34,8 @@
         </div>
       </div>
       <br>
-      <p *ngIf='!isValidData'> Not Available </p>
-      <chart *ngIf='isValidData' [type]="assetChart" [data]="assetReadingValues" [options]=""></chart>
+      <p *ngIf='!isValidData || !isReadingsAvailable'> Not Available </p>
+      <chart *ngIf='isValidData  && isReadingsAvailable' [type]="assetChart" [data]="assetReadingValues" [options]=""></chart>
     </section>
   </div>
 </div>

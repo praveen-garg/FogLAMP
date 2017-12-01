@@ -18,6 +18,7 @@ export class ChartModalComponent implements OnInit {
   public assetCode;
   public isValidData = false;
   public assetReadingSummary = [];
+  public isReadingsAvailable = false;
 
   @ViewChild(ChartComponent) private chartComp;
 
@@ -36,16 +37,17 @@ export class ChartModalComponent implements OnInit {
     }
     chart_modal.classList.remove('is-active');
     this.assetCode = '';
-    if (this.isValidData) {
+    if (this.isValidData && this.isReadingsAvailable) {
       this.chartComp.ngOnDestroy();
     }
   }
 
   public plotReadingsGraph(assetCode, limit = 0, offset = 0) {
-    if (limit < 0 || limit > 1000 || offset < 0 ) { // check for limit range
+    if (limit < 0 || limit > 1000 || offset < 0) { // check for limit range
       return;
     }
     this.isValidData = true;
+    this.isReadingsAvailable = true;
     this.assetCode = assetCode;
     this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit, offset).
       subscribe(
@@ -54,11 +56,14 @@ export class ChartModalComponent implements OnInit {
           this.isValidData = false;
           console.log('error in response', data.error);
           return;
+        } else if (data.length === 0) {
+          this.isReadingsAvailable = false;
+          return;
         }
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.getAssetTimeReading(data);
-           const dataObj = {
+          const dataObj = {
             asset_code: assetCode,
             readings: data[0],
           };
@@ -180,7 +185,6 @@ export class ChartModalComponent implements OnInit {
         borderColor: '#82E0AA',
       }];
     } else {
-      console.log('Data 1', assetReading[0].data);
       ds = [{
         label: assetReading[0].label,
         data: assetReading[0].data,
@@ -198,7 +202,7 @@ export class ChartModalComponent implements OnInit {
     };
   }
 
-clearField(limitField, offsetField) {
+  clearField(limitField, offsetField) {
     limitField.inputValue = '';
     offsetField.inputValue = '';
   }
