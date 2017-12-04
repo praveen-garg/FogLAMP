@@ -8,7 +8,7 @@
         </div>
         <div class="column is-one-fifth is-three-quarters-mobile">
           <div class="select">
-            <select #selectedType (change)='getTimedBasedSummary(timeValue.inputValue, selectedType.value)'>
+            <select #selectedType (change)='getTimedBasedSummary(timeValue.inputValue, selectedType.value); isShow = false'>
                <option value="select" disabled>Select</option>
                 <option value="hours">Hours</option>
                 <option value="minutes">Minutes</option>
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="column is-three-quarters-mobile">
-          <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value)"></input-debounce>
+          <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value); isShow = false"></input-debounce>
         </div>
       </div>
       <div class="close">

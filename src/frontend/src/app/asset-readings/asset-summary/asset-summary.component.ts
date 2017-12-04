@@ -100,9 +100,12 @@ export class AssetSummaryComponent implements OnInit {
       labels[1] = labels[2];
       labels[2] = temp;
     }
-
     for (const value of summaryData) {
       const summary = value.summary[0];
+      if (summary['min'] === '' && summary['average'] === '' && summary['max'] === '') {
+        this.isShow = false;
+        return;
+      }
       count++;
       switch (count) {
         case 1:
