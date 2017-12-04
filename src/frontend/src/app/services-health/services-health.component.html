@@ -31,7 +31,7 @@
         <td>{{service.service_port}}</td>
         <td>{{service.management_port}}</td>
         <td><span [ngClass]="service.status == 1 ?'tag is-success':'tag is-danger'">{{ service.status==1? "up" : "down"}}</span></td>
-        <td><span class='tag is-light'>Updated at: {{time|date:'MMM d, y HH:mm:ss'}}</span></td>
+        <td><span class='tag is-light'>{{time|date:'MMM d, y HH:mm:ss'}}</span></td>
       </tr>
     </tbody>
   </table>
