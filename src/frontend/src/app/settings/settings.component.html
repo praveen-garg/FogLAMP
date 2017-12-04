@@ -1,38 +1,33 @@
-<div class='container is-fluid'>
-  <nav class="panel is-mobile">
-    <p class="panel-heading">
-      <small> Settings </small>
-    </p>
-    <div class="panel-block"> 
-      <div class='columns'>
-        <div class='column is-2'>
-          <label class='label'>&nbsp;</label>
-          <div class='select'>
-            <select id="protocol" [ngModel]='protocol'>
-                <option>http</option>
-                <option>https</option>
-              </select>
-          </div>
-        </div>
-        <div class='column'>
-          <label class='label'>Host</label>
-          <input id='host' class='input' type='text' placeholder='0.0.0.0' [ngModel]='host'>
-        </div>
-        <div class='column'>
-          <label class="label">Port</label>
-          <input id='service_port' class='input' type='number' maxlength="4" placeholder='8081' [ngModel]='service_port'>
-        </div>
-        <div class='column'>
-          <label class="label">Management Port</label>
-          <input id='management_port' class='input' type='number' maxlength="5" placeholder='0' [ngModel]='management_port'>
+<nav class="panel is-mobile">
+  <p class="panel-heading">
+    <small> Settings </small>
+  </p>
+  <div class="panel-block"> 
+    <div class='columns'>
+      <div class='column is-2'>
+        <label class='label'>&nbsp;</label>
+        <div class='select'>
+          <select id="protocol" [ngModel]='protocol'>
+              <option>http</option>
+              <option>https</option>
+            </select>
         </div>
       </div>
+      <div class='column'>
+        <label class='label'>Host</label>
+        <input id='host' class='input' type='text' placeholder='0.0.0.0' [ngModel]='host'>
+      </div>
+      <div class='column'>
+        <label class="label">Port</label>
+        <input id='service_port' class='input' type='number' maxlength="4" placeholder='8081' [ngModel]='service_port'>
+      </div>
+      <div class='column'>
+        <label class="label">Management Port</label>
+        <input id='management_port' class='input' type='number' maxlength="5" placeholder='0' [ngModel]='management_port'>
+      </div>
     </div>
-  </nav>
-  <nav class="level is-mobile">
-    <div class="level-item has-text-centered">
-      <button class='button is-primary is-pulled-right' (click)='resetEndPoint()'>Set the URL &amp; Restart</button>
-    </div>
-  </nav>
-  <br>
-</div>
+  </div>
+  <div class="panel-block">
+    <button class="button is-primary is-pulled-left" (click)='resetEndPoint()'>Set the URL &amp; Restart</button>
+  </div>
+</nav>
