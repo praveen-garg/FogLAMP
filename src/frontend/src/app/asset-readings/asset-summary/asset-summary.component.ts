@@ -13,11 +13,17 @@ export class AssetSummaryComponent implements OnInit {
   assetReadingSummary: any = [];
   assetCode: String = '';
   isValidData = false;
+  isShow = false;
+  public assetChart: string;
+  public summaryValues: any;
+  public chartOptions: any;
+
   constructor(private assetService: AssetsService, private assetSummaryService: AssetSummaryService) { }
 
   ngOnInit() { }
 
   public toggleModal(shouldOpen: Boolean) {
+    this.isShow = false;
     const summary_modal = <HTMLDivElement>document.getElementById('summary_modal');
     if (shouldOpen) {
       summary_modal.classList.add('is-active');
@@ -27,8 +33,8 @@ export class AssetSummaryComponent implements OnInit {
   }
 
   public getReadingSummary(dataObj) {
-    this.assetCode = dataObj.asset_code;
     this.isValidData = true;
+    this.assetCode = dataObj.asset_code;
     this.assetService.getAssetReadings(encodeURIComponent(dataObj.asset_code)).
       subscribe(
       data => {
@@ -63,7 +69,7 @@ export class AssetSummaryComponent implements OnInit {
 
     const dataObj = {
       asset_code: this.assetCode,
-      time_param: (time == null ? undefined : {[key] : time })
+      time_param: (time == null ? undefined : { [key]: time })
     };
     this.getReadingSummary(dataObj);
   }
@@ -72,5 +78,144 @@ export class AssetSummaryComponent implements OnInit {
     selectedType.value = 'select'; // reset to default
     st.inputValue = null;
   }
-}
 
+  statsAssetReadingsSummaryGraph(summaryData): void {
+    this.isShow = true;
+    this.isValidData = true;
+    const first_dataset = [];
+    const second_dataset = [];
+    const third_dataset = [];
+    const labels = []; // chart labels array
+    const assetSummaryData = [];
+    let d1;
+    let d2;
+    let d3;
+    let count = 0;
+    for (const key in summaryData[0].summary[0]) {
+      labels.push(key);  // keys for chart label values
+    }
+    // code block to swap keys
+    {
+      const temp = labels[1];
+      labels[1] = labels[2];
+      labels[2] = temp;
+    }
+
+    for (const value of summaryData) {
+      const summary = value.summary[0];
+      count++;
+      switch (count) {
+        case 1:
+          first_dataset.push(summary['min']);
+          first_dataset.push(summary['average']);
+          first_dataset.push(summary['max']);
+          d1 = {
+            data: first_dataset,
+            label: value.key
+          };
+          break;
+        case 2:
+          second_dataset.push(summary['min']);
+          second_dataset.push(summary['average']);
+          second_dataset.push(summary['max']);
+          d2 = {
+            data: second_dataset,
+            label: value.key
+          };
+          break;
+        case 3:
+          third_dataset.push(summary['min']);
+          third_dataset.push(summary['average']);
+          third_dataset.push(summary['max']);
+          d3 = {
+            data: third_dataset,
+            label: value.key
+          };
+          break;
+        default:
+          break;
+      }
+    }
+    let ds = [];
+    if (count === 3) {
+      ds = [{
+        label: d1.label,
+        data: d1.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#3498DB',
+        borderColor: '#85C1E9'
+      },
+      {
+        label: d2.label,
+        data: d2.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#239B56',
+        borderColor: '#82E0AA',
+      },
+      {
+        label: d3.label,
+        data: d3.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#B03A2E',
+        borderColor: '#F1948A',
+      }];
+    } else if (count === 2) {
+      ds = [{
+        label: d1.label,
+        data: d1.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#3498DB',
+        borderColor: '#85C1E9'
+      },
+      {
+        label: d2.label,
+        data: d2.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#239B56',
+        borderColor: '#82E0AA',
+      }];
+    } else {
+      ds = [{
+        label: d1.label,
+        data: d1.data,
+        fill: false,
+        lineTension: 0.1,
+        spanGaps: true,
+        backgroundColor: '#239B56',
+        borderColor: '#82E0AA',
+      }];
+    }
+    this.assetChart = 'line';
+    this.summaryValues = {
+      labels: labels,
+      datasets: ds
+    };
+    this.chartOptions = {
+      scales: {
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+            beginAtZero: true
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            autoSkip: false,
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+    console.log('summary values', this.summaryValues);
+  }
+}

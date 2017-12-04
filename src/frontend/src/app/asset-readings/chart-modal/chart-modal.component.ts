@@ -177,7 +177,6 @@ export class ChartModalComponent implements OnInit {
         borderColor: '#82E0AA',
       }];
     } else {
-      console.log('Data 1', assetReading[0].data);
       ds = [{
         label: assetReading[0].label,
         data: assetReading[0].data,
