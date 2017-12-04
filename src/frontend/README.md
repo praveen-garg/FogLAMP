@@ -86,3 +86,4 @@ core-js       |  2.5.1        |        Yes            | MIT
 loadash       |  4.17.4       |        Yes            | MIT
 ngx-mask      |  1.0.3        |        Yes            | MIT 
 ng-sidebar    |  6.0.2        |        Yes            | MIT 
+moment        |  2.19.2       |        Yes            | MIT
