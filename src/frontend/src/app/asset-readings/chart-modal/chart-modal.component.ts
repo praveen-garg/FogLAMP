@@ -19,6 +19,7 @@ export class ChartModalComponent implements OnInit {
   public isValidData = false;
   public assetReadingSummary = [];
   public isReadingsAvailable = false;
+  public isInvalidInput = false;
 
   @ViewChild(ChartComponent) private chartComp;
 
@@ -43,11 +44,13 @@ export class ChartModalComponent implements OnInit {
   }
 
   public plotReadingsGraph(assetCode, limit = 0, offset = 0) {
-    if (limit < 0 || limit > 1000 || offset < 0) { // check for limit range
-      return;
-    }
     this.isValidData = true;
     this.isReadingsAvailable = true;
+    this.isInvalidInput = false;
+
+    if (limit < 0 || limit > 1000 || offset < 0) { // check for limit range
+      return this.isInvalidInput = true;
+    }
     this.assetCode = assetCode;
     this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit, offset).
       subscribe(
