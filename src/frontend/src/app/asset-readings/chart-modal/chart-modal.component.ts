@@ -47,8 +47,14 @@ export class ChartModalComponent implements OnInit {
     this.isValidData = true;
     this.isReadingsAvailable = true;
     this.isInvalidInput = false;
-
-    if (limit < 0 || limit > 1000 || offset < 0) { // check for limit range
+    if (limit == null) {
+      limit = 0;
+    }
+    if (offset == null) {
+      offset = 0;
+    }
+    if (limit < 0 || limit > 1000 || offset < 0 || !Number.isInteger(limit)
+      || !Number.isInteger(offset)) { // check for limit range
       return this.isInvalidInput = true;
     }
     this.assetCode = assetCode;
