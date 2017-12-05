@@ -94,8 +94,9 @@ export class AssetSummaryComponent implements OnInit {
     for (const key in summaryData[0].summary[0]) {
       labels.push(key);  // keys for chart label values
     }
-    // code block to swap keys
+    // code block to put 'average' key in thie middle of array
     {
+      labels.sort().reverse();
       const temp = labels[1];
       labels[1] = labels[2];
       labels[2] = temp;
