@@ -23,6 +23,7 @@ export class AlertService {
         });
     }
 
+    // TODO: Fix delete button
     success(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'success', text: message});
