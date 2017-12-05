@@ -1,4 +1,7 @@
 #alert {
-    margin-left: 5%;
-    width: 80%;
+    position: fixed; 
+    padding: 2em;
+    bottom: 1%;
+    right: 1%;
+    z-index: 9999999;     
 }
