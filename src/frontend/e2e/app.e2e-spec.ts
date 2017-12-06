@@ -68,7 +68,8 @@ describe('foglampapp App', () => {
     ];
     page.navToServiceHealth();
     expect(page.getServiceStatusTitle()).toEqual('Service Status');
-    expect(page.getRefreshButton()).toContain('Refresh');
+    expect(page.getRefreshButton()).toEqual(true);
+
     for (var ColumnName in ColumnsName) {
       expect(page.getServiceHealthColNames()).toContain(ColumnsName[ColumnName]);
     }

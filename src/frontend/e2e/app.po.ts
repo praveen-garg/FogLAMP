@@ -31,7 +31,7 @@ export class FogLAMPPage {
 
   getNavTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('#app .navbar-start b')).getText();
+    return element(by.css('#app .navbar-brand .navbar-item b')).getText();
   }
 
   getAppStatus() {
@@ -61,7 +61,7 @@ export class FogLAMPPage {
 
   getAuditLogsTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('app-audit-log nav small')).getText();
+    return element(by.css('#app .panel .panel-heading small')).getText();
   }
 
   getAuditLogsSelectTag() {
@@ -91,7 +91,7 @@ export class FogLAMPPage {
 
   getRefreshButton() {
     browser.ignoreSynchronization = true;
-    return element(by.css('app-services-health button')).getText();
+    return element(by.css('#app app-services-health i')).isDisplayed();
   }
 
   getServiceHealthColNames() {
