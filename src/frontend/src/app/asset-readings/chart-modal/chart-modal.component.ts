@@ -38,25 +38,30 @@ export class ChartModalComponent implements OnInit {
     }
     chart_modal.classList.remove('is-active');
     this.assetCode = '';
-    if (this.isValidData && this.isReadingsAvailable) {
-      this.chartComp.ngOnDestroy();
-    }
   }
 
-  public plotReadingsGraph(assetCode, limit = 0, offset = 0) {
+  public plotReadingsGraph(assetCode, limit: any, offset: any) {
     this.isValidData = true;
     this.isReadingsAvailable = true;
     this.isInvalidInput = false;
-    if (limit == null) {
+
+    if (limit === undefined || limit === '') {
       limit = 0;
     }
-    if (offset == null) {
+    if (offset === undefined || offset === '') {
       offset = 0;
     }
-    if (limit < 0 || limit > 1000 || offset < 0 || !Number.isInteger(limit)
-      || !Number.isInteger(offset)) { // check for limit range
+
+    // change string to integer values
+    limit = Number.parseInt(limit);
+    offset = Number.parseInt(offset);
+    if (!Number.isInteger(limit) || limit < 0 || limit > 1000) { // check for limit range
       return this.isInvalidInput = true;
     }
+    if (!Number.isInteger(offset) || offset < 0 || offset > 2147483647) {  // max limit of int in c++
+      return this.isInvalidInput = true;
+    }
+
     this.assetCode = assetCode;
     this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit, offset).
       subscribe(
@@ -72,11 +77,11 @@ export class ChartModalComponent implements OnInit {
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.getAssetTimeReading(data);
-          const dataObj = {
-            asset_code: assetCode,
-            readings: data[0],
-          };
-          this.assetSummaryService.getReadingSummary(dataObj);
+          this.assetSummaryService.getReadingSummary(
+            {
+              asset_code: assetCode,
+              readings: data[0],
+            });
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;

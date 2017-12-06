@@ -204,8 +204,8 @@ export class AssetsComponent implements OnInit {
   /**
   * Open asset chart modal dialog
   */
-  public showAssetChart(asset_code, limit) {
-    this.chartModalComponent.plotReadingsGraph(asset_code, limit);
+  public showAssetChart(asset_code) {
+    this.chartModalComponent.plotReadingsGraph(asset_code, 0, 0);
     this.chartModalComponent.toggleModal(true);
   }
 }

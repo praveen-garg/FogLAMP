@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Rx';
 
 @Component({
     selector: 'input-debounce',
-    template: '<input class="input" type="number" min="0" [max]="max" [placeholder]="placeholder" name="limit" [(ngModel)]="inputValue">',
+    template: '<input class="input" type="text" min="0" [max]="max" [placeholder]="placeholder" name="limit" [(ngModel)]="inputValue">',
     styleUrls: ['./input-debounce.component.css']
 })
 export class InputDebounceComponent {
