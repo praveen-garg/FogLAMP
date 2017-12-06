@@ -1,6 +1,6 @@
 # FogLAMP frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
 ## Development server
 
@@ -52,7 +52,7 @@ Run `yarn build` to build the project. The build artifacts will be stored in the
 To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
 
 
-## start with nginx
+## Starting with nginx
 start: `nginx -c nginx.conf -p $(pwd)`
 
 stop: `nginx -s stop`
@@ -62,10 +62,27 @@ you should be able to access it on 0.0.0.0:8080
 ## REST API URL Configuration:
 
 ### Dev Mode:
-Set api base URL in `environments/environment.ts` file  
+Set default API base URL in `environments/environment.ts`, you can always change it and restart the from settings. 
 
 ### Production Mode:
-Set api base URL in `environments/environment.prod.ts` file  
+Set API base URL in `environments/environment.prod.ts`, you can always change it and restart the from settings. 
+
+### Running using Docker 
+1) Install Docker CE for Mac or Windows (http://docker.com)
+
+2) git clone https://github./praveen-garg/foglamp/FogLAMP
+
+3) Move to `src/frontend` directory and run `yarn install`.
+
+4) Run `yarn build`
+
+5) Run `docker-compose build`
+
+6) Run `docker-compose up` (or `docker-compose up -d` to run in daemon mode)
+
+7) Navigate to http://localhost:8080
+
+8) To stop `docker-compose down` 
 
 ## Used Libraries:
 
@@ -80,10 +97,10 @@ Set api base URL in `environments/environment.prod.ts` file
 #### Dev:
  Library      |   Version     | Latest Stable (? Y/n) | License
 ------------- | ------------- | --------------------  | ------------
-canvas-gauges |  2.1.4        |        Yes            | MIT 
-chart.js      |  2.7.0        |        Yes            | MIT 
-core-js       |  2.5.1        |        Yes            | MIT 
-loadash       |  4.17.4       |        Yes            | MIT
-ngx-mask      |  1.0.3        |        Yes            | MIT 
-ng-sidebar    |  6.0.2        |        Yes            | MIT 
-moment        |  2.19.2       |        Yes            | MIT
+canvas-gauges |  2.1.4        |        2.1.4          | MIT 
+chart.js      |  2.7.0        |        2.7.0          | MIT 
+core-js       |  2.5.1        |        2.5.1          | MIT 
+loadash       |  4.17.4       |        4.17.4         | MIT
+ngx-mask      |  1.0.3        |        1.0.3          | MIT 
+ng-sidebar    |  6.0.2        |        6.0.2          | MIT 
+moment        |  2.19.2       |        2.19.2         | MIT
