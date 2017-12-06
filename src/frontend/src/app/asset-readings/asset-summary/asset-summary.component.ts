@@ -67,13 +67,13 @@ export class AssetSummaryComponent implements OnInit {
   public getTimedBasedSummary(time, key) {
     this.invalidInputMessage = '';
     if (key === 'select') {
-      return this.invalidInputMessage = 'Please select a valid time format';
+      return this.invalidInputMessage = 'Please select a valid time unit | *Displaying default data';
     }
     if (time === '') {
       time = 0;
     }
     if (!Number.isInteger(+time) || +time < 0) { // check for limit range
-      return this.invalidInputMessage = 'Invalid time entry';
+      return this.invalidInputMessage = 'Please enter valid time | *Displaying default data';
     }
 
     const asset = {
