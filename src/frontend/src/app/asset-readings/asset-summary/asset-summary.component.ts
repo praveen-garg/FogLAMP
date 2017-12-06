@@ -14,6 +14,7 @@ export class AssetSummaryComponent implements OnInit {
   assetCode: String = '';
   isValidData = false;
   isShow = false;
+  invalidInputMessage = '';
   public assetChart: string;
   public summaryValues: any;
   public chartOptions: any;
@@ -30,12 +31,13 @@ export class AssetSummaryComponent implements OnInit {
       return;
     }
     summary_modal.classList.remove('is-active');
+    this.invalidInputMessage = '';
   }
 
-  public getReadingSummary(dataObj) {
+  public getReadingSummary(dt) {
     this.isValidData = true;
-    this.assetCode = dataObj.asset_code;
-    this.assetService.getAssetReadings(encodeURIComponent(dataObj.asset_code)).
+    this.assetCode = dt.asset_code;
+    this.assetService.getAssetReadings(encodeURIComponent(dt.asset_code)).
       subscribe(
       data => {
         if (data.error) {
@@ -45,9 +47,9 @@ export class AssetSummaryComponent implements OnInit {
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           const record = {
-            asset_code: dataObj.asset_code,
+            asset_code: dt.asset_code,
             readings: data[0],
-            time: dataObj.time_param
+            time: dt.time_param
           };
           this.assetSummaryService.getReadingSummary(record);
           this.assetSummaryService.assetReadingSummary.subscribe(
@@ -63,15 +65,24 @@ export class AssetSummaryComponent implements OnInit {
   }
 
   public getTimedBasedSummary(time, key) {
+    this.invalidInputMessage = '';
+    console.log(time, key);
     if (key === 'select') {
-      return;
+      return this.invalidInputMessage = 'Please select a valid time format';
+    }
+    if (time === '') {
+      time = 0;
+    }
+    time = Number.parseInt(time);
+    if (!Number.isInteger(time) || time < 0) { // check for limit range
+      return this.invalidInputMessage = 'Invalid time entry';
     }
 
-    const dataObj = {
+    const asset = {
       asset_code: this.assetCode,
-      time_param: (time == null ? undefined : { [key]: time })
+      time_param: (time === (null || 0) ? undefined : { [key]: time })
     };
-    this.getReadingSummary(dataObj);
+    this.getReadingSummary(asset);
   }
 
   clear(st, selectedType) {
