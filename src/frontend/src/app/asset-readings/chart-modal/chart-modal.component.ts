@@ -52,18 +52,17 @@ export class ChartModalComponent implements OnInit {
       offset = 0;
     }
 
-    // change string to integer values
-    limit = Number.parseInt(limit);
-    offset = Number.parseInt(offset);
-    if (!Number.isInteger(limit) || limit < 0 || limit > 1000) { // check for limit range
+    if (!Number.isInteger(+limit) || +limit < 0 || +limit > 1000) { // check for limit range
+      console.log('this.isInvalidInput', this.isInvalidInput);
       return this.isInvalidInput = true;
     }
-    if (!Number.isInteger(offset) || offset < 0 || offset > 2147483647) {  // max limit of int in c++
+    if (!Number.isInteger(+offset) || +offset < 0 || +offset > 2147483647) {  // max limit of int in c++
+      console.log('offset this.isInvalidInput', this.isInvalidInput);
       return this.isInvalidInput = true;
     }
 
     this.assetCode = assetCode;
-    this.assetService.getAssetReadings(encodeURIComponent(assetCode), limit, offset).
+    this.assetService.getAssetReadings(encodeURIComponent(assetCode), +limit, +offset).
       subscribe(
       data => {
         if (data.error) {
