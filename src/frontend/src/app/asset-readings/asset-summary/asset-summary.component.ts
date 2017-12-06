@@ -66,21 +66,19 @@ export class AssetSummaryComponent implements OnInit {
 
   public getTimedBasedSummary(time, key) {
     this.invalidInputMessage = '';
-    console.log(time, key);
     if (key === 'select') {
       return this.invalidInputMessage = 'Please select a valid time format';
     }
     if (time === '') {
       time = 0;
     }
-    time = Number.parseInt(time);
-    if (!Number.isInteger(time) || time < 0) { // check for limit range
+    if (!Number.isInteger(+time) || +time < 0) { // check for limit range
       return this.invalidInputMessage = 'Invalid time entry';
     }
 
     const asset = {
       asset_code: this.assetCode,
-      time_param: (time === (null || 0) ? undefined : { [key]: time })
+      time_param: (+time === (null || 0) ? undefined : { [key]: +time })
     };
     this.getReadingSummary(asset);
   }

@@ -23,12 +23,13 @@ export class AlertService {
         });
     }
 
+    // TODO: Fix delete button
     success(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'success', text: message });
         setTimeout(function () {
             this.closeMessage();
-        }.bind(this), 3000);
+        }.bind(this), 5000);
     }
 
     error(message: string, keepAfterNavigationChange = false) {
@@ -36,7 +37,7 @@ export class AlertService {
         this.subject.next({ type: 'error', text: message });
         setTimeout(function () {
             this.closeMessage();
-        }.bind(this), 3000);
+        }.bind(this), 15000);
     }
 
     warning(message: string, keepAfterNavigationChange = false) {
@@ -44,7 +45,7 @@ export class AlertService {
         this.subject.next({ type: 'warning', text: message });
         setTimeout(function () {
             this.closeMessage();
-        }.bind(this), 5000);
+        }.bind(this), 10000);
     }
 
     getMessage(): Observable<any> {

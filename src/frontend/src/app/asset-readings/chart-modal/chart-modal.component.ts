@@ -18,6 +18,8 @@ export class ChartModalComponent implements OnInit {
   public assetCode;
   public isValidData = false;
   public assetReadingSummary = [];
+  public isReadingsAvailable = false;
+  public isInvalidInput = false;
 
   @ViewChild(ChartComponent) private chartComp;
 
@@ -36,30 +38,49 @@ export class ChartModalComponent implements OnInit {
     }
     chart_modal.classList.remove('is-active');
     this.assetCode = '';
-    if (this.isValidData) {
-      this.chartComp.ngOnDestroy();
-    }
   }
 
-  public plotReadingsGraph(assetCode) {
+  public plotReadingsGraph(assetCode, limit: any, offset: any) {
     this.isValidData = true;
+    this.isReadingsAvailable = true;
+    this.isInvalidInput = false;
+
+    if (limit === undefined || limit === '') {
+      limit = 0;
+    }
+    if (offset === undefined || offset === '') {
+      offset = 0;
+    }
+
+    if (!Number.isInteger(+limit) || +limit < 0 || +limit > 1000) { // check for limit range
+      console.log('this.isInvalidInput', this.isInvalidInput);
+      return this.isInvalidInput = true;
+    }
+    if (!Number.isInteger(+offset) || +offset < 0 || +offset > 2147483647) {  // max limit of int in c++
+      console.log('offset this.isInvalidInput', this.isInvalidInput);
+      return this.isInvalidInput = true;
+    }
+
     this.assetCode = assetCode;
-    this.assetService.getAssetReadings(encodeURIComponent(assetCode)).
+    this.assetService.getAssetReadings(encodeURIComponent(assetCode), +limit, +offset).
       subscribe(
       data => {
         if (data.error) {
           this.isValidData = false;
           console.log('error in response', data.error);
           return;
+        } else if (data.length === 0) {
+          this.isReadingsAvailable = false;
+          return;
         }
         const validRecord = ReadingsValidator.validate(data);
         if (validRecord) {
           this.getAssetTimeReading(data);
-           const dataObj = {
-            asset_code: assetCode,
-            readings: data[0],
-          };
-          this.assetSummaryService.getReadingSummary(dataObj);
+          this.assetSummaryService.getReadingSummary(
+            {
+              asset_code: assetCode,
+              readings: data[0],
+            });
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;
@@ -192,5 +213,10 @@ export class ChartModalComponent implements OnInit {
       labels: labels,
       datasets: ds
     };
+  }
+
+  clearField(limitField, offsetField) {
+    limitField.inputValue = '';
+    offsetField.inputValue = '';
   }
 }

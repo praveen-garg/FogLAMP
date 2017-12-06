@@ -11,7 +11,6 @@ export default class ReadingsValidator {
                     const val = readings[Object.keys(readings)[0]];
                     if (!this.isNumber(val)) {
                         isValid = false;
-                        console.log('NaN', val);
                         break;
                     }
                     break;
@@ -20,7 +19,6 @@ export default class ReadingsValidator {
                     const second = readings[Object.keys(readings)[1]];
                     if (!this.isNumber(first) || !this.isNumber(second)) {
                         isValid = false;
-                        console.log('NaN', first, second);
                         break;
                     }
                     break;
@@ -31,7 +29,6 @@ export default class ReadingsValidator {
 
                     if (!this.isNumber(val1) || !this.isNumber(val2) || !this.isNumber(val3)) {
                         isValid = false;
-                        console.log('NaN', val1, val2, val3);
                         break;
                     }
                     break;
