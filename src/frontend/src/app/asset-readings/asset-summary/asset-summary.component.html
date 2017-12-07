@@ -8,7 +8,7 @@
         </div>
         <div class="column is-one-fifth is-three-quarters-mobile">
           <div class="select is-fullwidth">
-            <select #selectedType (change)='getTimedBasedSummary(timeValue.inputValue, selectedType.value)'>
+            <select #selectedType (change)='getTimedBasedSummary(timeValue.inputValue, selectedType.value); isShow = false'>
                <option value="select" disabled>Select</option>
                 <option value="hours">Hours</option>
                 <option value="minutes">Minutes</option>
@@ -17,12 +17,13 @@
           </div>
         </div>
         <div class="column is-three-quarters-mobile is-fullwidth">
-          <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value)"></input-debounce>
+          <input-debounce placeholder="time" #timeValue type="text" (value)="getTimedBasedSummary(timeValue.inputValue, selectedType.value); isShow = false"></input-debounce>
+          <p *ngIf='invalidInputMessage?.length > 0' class='help is-danger'>{{invalidInputMessage}}</p>
         </div>
       </div>
-       <div class="close">
-          <button class="delete" aria-label="close" (click)="toggleModal(false); clear(timeValue, selectedType)"></button>
-        </div>
+      <div class="close">
+        <button class="delete" aria-label="close" (click)="toggleModal(false); clear(timeValue, selectedType)"></button>
+      </div>
     </header>
     <section class="modal-card-body">
       <p *ngIf='!isValidData'> Not Available </p>
@@ -33,6 +34,11 @@
             <th>Average</th>
             <th>Min</th>
             <th>Max</th>
+            <th>
+              <a (click)="statsAssetReadingsSummaryGraph(assetReadingSummary)" class="is-pulled-right">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+              </a>
+            </th>
           </tr>
         </thead>
         <tbody *ngFor="let readings of assetReadingSummary">
@@ -43,6 +49,7 @@
             <td><span class="tag is-light">{{reading.max== ""? 'Not Available' : reading.max}}</span></td>
           </tr>
         </tbody>
+        <chart *ngIf='isShow' [type]="assetChart" [data]="summaryValues" [options]="chartOptions"></chart>
       </table>
     </section>
   </div>
