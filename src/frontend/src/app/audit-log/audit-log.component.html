@@ -6,7 +6,7 @@
     <div class="panel-block">
       <div class="columns">
         <div class="column">
-          <div class="select">
+          <div class="select is-fullwidth">
             <select (change)="filterSource('source', $event)">
               <option selected="selected" >Source</option>
               <option *ngFor="let source of logSourceList"  [value]='source.code'>{{source.code}}</option>
@@ -14,18 +14,18 @@
           </div>
         </div>
         <div class="column">
-          <div class="select">
+          <div class="select is-fullwidth">
             <select (change)="filterSource('severity', $event)">
               <option selected="selected">Severity</option>
               <option *ngFor="let severity of logSeverityList"  [value]='severity.name'>{{severity.name}}</option>
             </select>
           </div>
         </div>
-        <div class="column">
+        <div class="column is-fullwidth">
           <input-debounce placeholder="limit" type="number" (value)="setLimit($event)"></input-debounce>
         </div>
 
-        <div class="column">
+        <div class="column is-fullwidth">
           <input-debounce placeholder="offset" type='number' (value)="setOffset($event)"></input-debounce>
         </div>
       </div>
