@@ -62,27 +62,13 @@ you should be able to access it on 0.0.0.0:8080
 ## REST API URL Configuration:
 
 ### Dev Mode:
-Set default API base URL in `environments/environment.ts`, you can always change it and restart the from settings. 
+Set default API base URL in `environments/environment.ts`, you can always change it and restart the app from settings. 
 
 ### Production Mode:
-Set API base URL in `environments/environment.prod.ts`, you can always change it and restart the from settings. 
+Set API base URL in `environments/environment.prod.ts`, you can always change it and restart the app from settings. 
 
 ### Running using Docker 
-1) Install Docker CE for Mac or Windows (http://docker.com)
-
-2) git clone https://github./praveen-garg/foglamp/FogLAMP
-
-3) Move to `src/frontend` directory and run `yarn install`.
-
-4) Run `yarn build`
-
-5) Run `docker-compose build`
-
-6) Run `docker-compose up` (or `docker-compose up -d` to run in daemon mode)
-
-7) Navigate to http://localhost:8080
-
-8) To stop `docker-compose down` 
+  [Prerequisite](docker-readme.md)
 
 ## Used Libraries:
 
@@ -97,7 +83,7 @@ Set API base URL in `environments/environment.prod.ts`, you can always change it
 #### Dev:
  Library      |   Version     | Latest Stable (? Y/n) | License
 ------------- | ------------- | --------------------  | ------------
-canvas-gauges |  2.1.4        |        2.1.4          | MIT 
+canvas-gauges |  2.1.4        |        2.1.4          | MIT   (TODO: Remove)
 chart.js      |  2.7.0        |        2.7.0          | MIT 
 core-js       |  2.5.1        |        2.5.1          | MIT 
 loadash       |  4.17.4       |        4.17.4         | MIT
