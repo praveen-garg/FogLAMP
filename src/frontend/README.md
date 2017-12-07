@@ -2,6 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
+## Prerequisite to setup
+ [Prerequisite](prerequisite.md)
+
 ## Development server
 
 Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -68,7 +71,7 @@ Set default API base URL in `environments/environment.ts`, you can always change
 Set API base URL in `environments/environment.prod.ts`, you can always change it and restart the app from settings. 
 
 ### Running using Docker 
-  [Prerequisite](docker-readme.md)
+  [instructions](docker-readme.md)
 
 ## Used Libraries:
 
