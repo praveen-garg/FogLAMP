@@ -12,11 +12,12 @@
 ```
     $ sudo apt install docker-compose
 ```
-#### Run app in docker container
+#### Run app
 ```
     $ sudo docker-compose build
     $ sudo docker-compose up (or deamon mode: sudo docker-compose up -d)
 ```
+
 #### Navigate to http://localhost:8080
 #### Stop docker-compose
 ```

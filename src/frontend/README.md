@@ -50,7 +50,19 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. It uses the `-prod` flag with `ng` for a production build.
 
 ## Deploy with nginx
-`yarn build` and start nginx from frontend directory with given conf file; see next section. 
+
+#### Install nginx on mac 
+```
+brew install nginx 
+```
+
+#### Install nginx-light on ubuntu
+```
+  sudo apt-get update
+  sudo apt-get install nginx-light
+```
+
+run `yarn build` and start nginx from frontend directory with given conf file;see next section. 
 
 To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
 
