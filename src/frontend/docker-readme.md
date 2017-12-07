@@ -1,25 +1,36 @@
-# How to run app in docker
-
 ## Installation 
-#### Mac & Windows
-  _Install Docker CE for Mac and Windows (http://docker.com)_
 
-#### Ubuntu
-  _To install Docker CE follow instruction give here_
-      https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/
+### Mac & Windows
 
-  _Install docker-compose (required step#3 first)_
+Install Docker CE for Mac and Windows (http://docker.com)
+
+### Ubuntu
+
+To install Docker CE follow the instructions given here:
+
+https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/
+
+#### Install docker-compose
+
 ```
     $ sudo apt install docker-compose
 ```
-#### Run app
+### Run app
+
 ```
     $ sudo docker-compose build
-    $ sudo docker-compose up (or deamon mode: sudo docker-compose up -d)
 ```
 
-#### Navigate to http://localhost:8080
-#### Stop docker-compose
+```
+    $ sudo docker-compose up 
+```
+
+
+> To run in deamon mode: `sudo docker-compose up -d`
+
+Navigate to http://localhost:8080
+
+### Stopping docker-compose
 ```
     $ sudo docker-compose down
 ```

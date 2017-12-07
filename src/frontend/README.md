@@ -1,50 +1,28 @@
-# FogLAMP frontend
+# FogLAMP (UI Client) frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
-## Prerequisite to setup
+## Prerequisites
+
  [Prerequisite](prerequisite.md)
-
-## Development server
-
-Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
-## Installing yarn
 
-To install yarn follow the instruction provided on https://yarnpkg.com/en/docs/install
+> To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-To enable Yarn for Angular CLI, run the following command inside root directory: 
-`ng set packageManager=yarn`
-To install dependencies run the following command inside root directory:
-`yarn`  
-
-#### Why Yarn?
-* Yarn parallelizes operations to maximize resource utilization so install times are faster than ever.
-* Offline cache: package installation using Yarn, it places the package on your disk. During the next install, this package will be used instead of sending an HTTP request to get the tarball from the registry.
-* Deterministic Installs: Yarn uses lockfiles (yarn.lock) and a deterministic install algorithm. We can say goodbye to the "but it works on my machine" bugs.
-
-#### Yarn commands
-* `yarn`                    # Install all dependencies from package.json
-* `yarn install`            # Alias for yarn
-* `yarn add [package]`      # Install npm package
-* `yarn upgrade [package]`  # Upgrade npm package
-* `yarn remove [package]`   # Uninstall npm package
-
-To read more about yarn read https://yarnpkg.com/en/
+## Development server
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Running unit tests
 Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 Run `yarn e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure app is able to communication with web API.
 
-## Further help
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+> Before running the tests make sure app is able to communication with web API.
 
 ## Build
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. It uses the `-prod` flag with `ng` for a production build.
@@ -62,10 +40,9 @@ brew install nginx
   sudo apt-get install nginx-light
 ```
 
-run `yarn build` and start nginx from frontend directory with given conf file;see next section. 
+run `yarn build` and start nginx from frontend directory with given conf file; See next section. 
 
-To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
-
+> To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
 
 ## Starting with nginx
 start: `nginx -c nginx.conf -p $(pwd)`
