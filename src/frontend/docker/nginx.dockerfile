@@ -1,9 +1,9 @@
 FROM nginx:alpine
 
-LABEL author="Mohd. Shariq" 
+LABEL author="Mohd. Shariq"
 
 # Copy custom nginx config
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx-docker.conf /etc/nginx/nginx.conf
 
 EXPOSE 8080
 
