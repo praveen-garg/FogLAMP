@@ -16,7 +16,7 @@ Install nodejs (version 8)
 ```    
 ### Install yarn (prefered over npm)
 
-## Installing yarn
+#### Installing yarn
 
 To install yarn follow the instruction provided on https://yarnpkg.com/en/docs/install
 
@@ -24,7 +24,7 @@ To install yarn follow the instruction provided on https://yarnpkg.com/en/docs/i
 ```    
     brew install yarn --without-node
 ```
-#### On ubuntu
+#### On Ubuntu
 ```
     $ sudo npm install -g yarn
 ``` 
@@ -32,7 +32,7 @@ To install yarn follow the instruction provided on https://yarnpkg.com/en/docs/i
 To enable Yarn for Angular CLI, run the following command inside root directory: 
 `ng set packageManager=yarn`
 To install dependencies run the following command inside root directory:
-`yarn`  
+`yarn`  or `yarn install`
 
 #### Why Yarn?
 * Yarn parallelizes operations to maximize resource utilization so install times are faster than ever.

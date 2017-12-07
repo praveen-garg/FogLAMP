@@ -10,8 +10,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
-## Further help
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+> To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## Development server
 Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -21,7 +21,8 @@ Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.githu
 
 ## Running end-to-end tests
 Run `yarn e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure app is able to communication with web API.
+
+> Before running the tests make sure app is able to communication with web API.
 
 ## Build
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. It uses the `-prod` flag with `ng` for a production build.
@@ -39,9 +40,9 @@ brew install nginx
   sudo apt-get install nginx-light
 ```
 
-run `yarn build` and start nginx from frontend directory with given conf file;see next section. 
+run `yarn build` and start nginx from frontend directory with given conf file; See next section. 
 
-To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
+> To deploy on another machine, you shall need to copy build artifacts stored in the `dist/` directory and provided `nginx.conf`; Make sure you have nginx-light installed on the deployment machine.
 
 ## Starting with nginx
 start: `nginx -c nginx.conf -p $(pwd)`

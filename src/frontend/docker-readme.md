@@ -19,8 +19,14 @@ https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/
 
 ```
     $ sudo docker-compose build
-    $ sudo docker-compose up (or deamon mode: sudo docker-compose up -d)
 ```
+
+```
+    $ sudo docker-compose up 
+```
+
+
+> To run in deamon mode: `sudo docker-compose up -d`
 
 Navigate to http://localhost:8080
 
