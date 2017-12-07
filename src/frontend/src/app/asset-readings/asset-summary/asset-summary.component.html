@@ -7,7 +7,7 @@
           <p class="modal-card-title">{{assetCode}}</p>
         </div>
         <div class="column is-one-fifth is-three-quarters-mobile">
-          <div class="select">
+          <div class="select is-fullwidth">
             <select #selectedType (change)='getTimedBasedSummary(timeValue.inputValue, selectedType.value)'>
                <option value="select" disabled>Select</option>
                 <option value="hours">Hours</option>
@@ -16,7 +16,7 @@
             </select>
           </div>
         </div>
-        <div class="column is-three-quarters-mobile">
+        <div class="column is-three-quarters-mobile is-fullwidth">
           <input-debounce placeholder="time" #timeValue (value)="getTimedBasedSummary($event, selectedType.value)"></input-debounce>
         </div>
       </div>

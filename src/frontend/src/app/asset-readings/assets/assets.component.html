@@ -41,17 +41,17 @@
         <h5 class="title"><small> Asset Readings </small></h5>
         <div class="columns">
           <div class="column">
-            <div class="select">
+            <div class="select is-fullwidth">
               <select (ngModelChange)="setAssetCode($event)" [(ngModel)]="selectedAsset">
                 <option disabled>Select</option>
                 <option *ngFor="let asset of assets" [ngValue]='asset'>{{asset.asset_code}} ({{asset.count}})</option>
               </select>
             </div>
           </div>
-          <div class="column">
+          <div class="column is-fullwidth">
             <input-debounce placeholder="limit" (value)="setLimit($event)"></input-debounce>
           </div>
-          <div class="column">
+          <div class="column is-fullwidth">
             <input-debounce placeholder="offset" (value)="setOffset($event)"></input-debounce>
           </div>
         </div>
