@@ -56,5 +56,4 @@ https://github.com/praveen-garg/FogLAMP.git
 ### Move to `src/frontend` directory and run
 ```
     $ yarn install
-    $ yarn build
 ```  

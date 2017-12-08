@@ -75,7 +75,6 @@ Set API base URL in `environments/environment.prod.ts`, you can always change it
 #### Dev:
  Library      |   Version     | Latest Stable (? Y/n) | License
 ------------- | ------------- | --------------------  | ------------
-canvas-gauges |  2.1.4        |        2.1.4          | MIT   (TODO: Remove)
 chart.js      |  2.7.0        |        2.7.0          | MIT 
 core-js       |  2.5.1        |        2.5.1          | MIT 
 loadash       |  4.17.4       |        4.17.4         | MIT

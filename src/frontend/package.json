@@ -21,8 +21,6 @@
     "@angular/platform-browser": "^4.4.3",
     "@angular/platform-browser-dynamic": "^4.4.3",
     "@angular/router": "^4.4.3",
-    "@types/canvas-gauges": "^2.1.0",
-    "canvas-gauges": "^2.1.4",
     "chart.js": "^2.7.0",
     "core-js": "^2.5.1",
     "lodash": "^4.17.4",
