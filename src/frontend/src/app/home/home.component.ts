@@ -23,7 +23,6 @@ export class HomeComponent implements OnDestroy {
             // width: 300,
             // height: 300
         };
-        this.options['data-type'] = 'radial-gauge';
     }
 
     /**
