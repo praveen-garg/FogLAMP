@@ -175,10 +175,6 @@
   version "0.0.38"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.0.38.tgz#6131569a9fe21fe7bad8abf4a3174ea5a8647bbd"
 
-"@types/canvas-gauges@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@types/canvas-gauges/-/canvas-gauges-2.1.0.tgz#45340a88dfa4b22b034401f55809f4098723283e"
-
 "@types/jasmine@*", "@types/jasmine@~2.5.53":
   version "2.5.54"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.54.tgz#a6b5f2ae2afb6e0307774e8c7c608e037d491c63"
@@ -832,10 +828,6 @@ caniuse-api@^1.5.2:
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000743"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000743.tgz#bc8df2a257cf91ba024322266295af3ded852306"
-
-canvas-gauges@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/canvas-gauges/-/canvas-gauges-2.1.4.tgz#4b54ecbf3b1a94b41e01a4a9ecd0e4bacad1f13a"
 
 caseless@~0.12.0:
   version "0.12.0"

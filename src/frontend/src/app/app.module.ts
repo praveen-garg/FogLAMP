@@ -17,7 +17,6 @@ import { LoginComponent } from './login/index';
 import { FooterComponent } from './footer/index';
 
 import { KeysPipe, FilterPipe, MomentDatePipe } from './pipes/index';
-import { NgzioGaugeComponentModule } from './ngzio-gauge/ngzio-gauge.module';
 import { DashboardComponent } from './dashboard/index';
 import { ConfigurationManagerComponent } from '../app/configuration-manager/index';
 
@@ -50,7 +49,6 @@ import { AssetSummaryService } from './asset-readings/asset-summary/asset-summar
     ReactiveFormsModule,
     HttpModule,
     routing,
-    NgzioGaugeComponentModule,
     ChartModule,
     NgxMaskModule,
     SidebarModule.forRoot()
