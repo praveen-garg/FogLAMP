@@ -40,6 +40,7 @@ import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component'
 import { AssetSummaryComponent } from './asset-readings/asset-summary/asset-summary.component';
 import { ChartModalComponent } from './asset-readings/chart-modal/chart-modal.component';
 import { AssetSummaryService } from './asset-readings/asset-summary/asset-summary-service';
+import { NumberOnlyDirective } from './directives/number-only.directive';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { AssetSummaryService } from './asset-readings/asset-summary/asset-summar
     CreateScheduleComponent,
     ListTasksComponent,
     AssetSummaryComponent,
-    ChartModalComponent
+    ChartModalComponent,
+    NumberOnlyDirective
   ],
   providers: [
     AuthGuard,

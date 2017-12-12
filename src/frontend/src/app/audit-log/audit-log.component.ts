@@ -128,12 +128,11 @@ export class AuditLogComponent implements OnInit {
       this.page = 1;
       this.tempOffset = this.offset;
     }
-    if (limit === null || limit === 0) {
-      this.limit = 0;
-    } else {
-      this.limit = limit;
+    if (limit === null || limit === 0 || limit === undefined) {
+      limit = this.limit;
     }
-    console.log('Limit: ', limit);
+    this.limit = limit;
+    console.log('Limit: ', this.limit);
     this.totalPages();
     this.getAuditLogs();
   }
@@ -142,7 +141,7 @@ export class AuditLogComponent implements OnInit {
     if (this.page !== 1) {
       this.page = 1;
     }
-    if (offset === null) {
+    if (offset === null || offset === undefined) {
       offset = 0;
     }
     this.offset = offset;

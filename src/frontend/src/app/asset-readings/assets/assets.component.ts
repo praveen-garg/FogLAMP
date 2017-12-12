@@ -119,12 +119,12 @@ export class AssetsComponent implements OnInit {
       this.page = 1;
       this.tempOffset = this.offset;
     }
-    if (limit === null || limit === 0) {
+    if (limit === null || limit === 0 || limit === undefined) {
       this.limit = 20;
     } else {
       this.limit = limit;
     }
-    console.log('Limit: ', limit);
+    console.log('Limit: ', this.limit);
     this.getAssetReading();
   }
 
@@ -138,9 +138,13 @@ export class AssetsComponent implements OnInit {
     if (offset === null) {
       offset = 1;
     }
+    if (offset === undefined) {
+      offset = 0;
+    }
     this.offset = offset;
     this.tempOffset = offset;
     this.recordCount = this.asset['count'] - this.offset;
+    console.log('Offset: ', this.offset);
     this.getAssetReading();
   }
 
