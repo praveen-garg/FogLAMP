@@ -7,7 +7,7 @@
     </header>
     <section class="modal-card-body">
       <div class="card-content">
-        <form [formGroup]="form" (ngSubmit)="updateSchedule()" #f="ngForm" novalidate>
+        <form [formGroup]="form" (ngSubmit)="f.form.valid && updateSchedule()" #f="ngForm" novalidate>
           <div class="columns">
             <div class="column">
               <div class="field" [ngClass]="{ 'has-error': !form.controls.name.valid }">

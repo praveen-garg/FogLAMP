@@ -22,23 +22,22 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
-  isValidRepeatRange: boolean = false;
-  isValidTimeRange: boolean = false;
   public selectedTypeValue: string;
   constructor(private schedulesService: SchedulesService, public fb: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
+    let regExp = '^\\d{2}:\\d{2}:\\d{2}'  // Regex to varify time format 00:00:00
     this.form = this.fb.group({
       name: ['', [<any>Validators.required]],
       repeatDay: ['', [<any>Validators.required]],
-      repeat: ['', [<any>Validators.required]],
+      repeat: ['', [<any>Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
       process_name: [Validators.required],
       type: [Validators.required],
       day: [Validators.required],
-      time: ['', Validators.required],
+      time: ['', [Validators.required, Validators.pattern(regExp)]],
     });
 
     if (changes['childData']) {
@@ -129,20 +128,13 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   }
 
   public updateSchedule() {
-    console.log("Repeat", this.form.controls['repeat'].value);
-    this.isValidRepeatRange = Utils.not_between(this.form.controls['repeat'].value);
-    if (this.isValidRepeatRange) {
-      return;
-    }
-    this.isValidTimeRange = Utils.not_between(this.form.controls['time'].value);
-    if (this.isValidTimeRange) {
-      return;
-    }
     let RepeatTime = this.form.get('repeat').value != ('None' || undefined) ? Utils.convertTimeToSec(
       this.form.get('repeat').value, this.form.get('repeatDay').value) : 0;
+
     this.form.controls['repeat'].setValue(RepeatTime);
     this.selected_schedule_type = this.setScheduleTypeKey(this.form.get('type').value);
     this.form.controls['type'].setValue(this.selected_schedule_type);
+
     if (this.form.get('type').value == '2') {   // If Type is TIMED == 2
       let time = Utils.convertTimeToSec(this.form.get('time').value);
       this.form.controls['time'].setValue(time);
@@ -169,9 +161,12 @@ export class UpdateModalComponent implements OnInit, OnChanges {
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
+        } else {
+          this.alertService.success('Record updated successfully.');
         }
         this.notify.emit();
         this.toggleModal(false);
+
       },
       error => { console.log('error', error); });
   }
