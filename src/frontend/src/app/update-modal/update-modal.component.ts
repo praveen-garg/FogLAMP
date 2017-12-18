@@ -129,6 +129,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   }
 
   public updateSchedule() {
+    console.log("Repeat", this.form.controls['repeat'].value);
     this.isValidRepeatRange = Utils.not_between(this.form.controls['repeat'].value);
     if (this.isValidRepeatRange) {
       return;
