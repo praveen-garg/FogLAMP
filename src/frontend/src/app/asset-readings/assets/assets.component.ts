@@ -114,12 +114,12 @@ export class AssetsComponent implements OnInit {
   /**
    *  Set limit
    */
-  public setLimit(limit: number) {
+  public setLimit(limit) {
     if (this.page !== 1) {
       this.page = 1;
       this.tempOffset = this.offset;
     }
-    if (limit === null || limit === 0 || limit === undefined) {
+    if (limit === '' || limit == 0) {
       this.limit = 20;
     } else {
       this.limit = limit;
@@ -135,10 +135,7 @@ export class AssetsComponent implements OnInit {
     if (this.page !== 1) {
       this.page = 1;
     }
-    if (offset === null) {
-      offset = 0;
-    }
-    if (offset === undefined) {
+    if (offset === null || offset === undefined) {
       offset = 0;
     }
     this.offset = offset;
