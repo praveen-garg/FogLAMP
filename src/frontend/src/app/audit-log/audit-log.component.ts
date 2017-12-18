@@ -123,13 +123,13 @@ export class AuditLogComponent implements OnInit {
       error => { console.log('error', error); });
   }
 
-  public setLimit(limit: number) {
+  public setLimit(limit) {
     if (this.page !== 1) {
       this.page = 1;
       this.tempOffset = this.offset;
     }
-    if (limit === null || limit === 0 || limit === undefined) {
-      limit = this.limit;
+    if (limit === '' || limit == 0) {
+      limit = 20;
     }
     this.limit = limit;
     console.log('Limit: ', this.limit);

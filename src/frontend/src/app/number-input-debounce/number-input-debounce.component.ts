@@ -2,13 +2,12 @@ import {Component, Input, Output, ElementRef, EventEmitter} from '@angular/core'
 import {Observable} from 'rxjs/Rx';
 
 @Component({
-    selector: 'input-debounce',
-    template: '<input class="input" appNumberOnly [type]="type" min="0" [max]="max" [placeholder]="placeholder" name="limit" [(ngModel)]="inputValue">',
-    styleUrls: ['./input-debounce.component.css']
+    selector: 'number-input-debounce',
+    template: '<input class="input" appNumberOnly min="0" [max]="max" [placeholder]="placeholder" name="limit" [(ngModel)]="inputValue">',
+    styleUrls: ['./number-input-debounce.component.css']
 })
-export class InputDebounceComponent {
+export class NumberInputDebounceComponent {
     @Input() placeholder: string;
-    @Input() type: string;
     @Input() max: string;
     @Input() delay = 2000;
     @Output() value: EventEmitter<any> = new EventEmitter();

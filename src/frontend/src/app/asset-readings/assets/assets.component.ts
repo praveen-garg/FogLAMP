@@ -120,10 +120,9 @@ export class AssetsComponent implements OnInit {
       this.tempOffset = this.offset;
     }
     if (limit === '' || limit == 0) {
-      this.limit = 20;
-    } else {
-      this.limit = limit;
+      limit = 20;
     }
+    this.limit = limit;
     console.log('Limit: ', this.limit);
     this.getAssetReading();
   }
