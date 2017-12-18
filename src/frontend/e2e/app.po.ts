@@ -61,7 +61,7 @@ export class FogLAMPPage {
 
   getAuditLogsTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('#app .panel .panel-heading small')).getText();
+    return element(by.css('app-audit-log .container.is-fluid .card-header-title .subtitle')).getText();
   }
 
   getAuditLogsSelectTag() {
@@ -101,7 +101,7 @@ export class FogLAMPPage {
 
   getServiceHealthSelectTag() {
     browser.ignoreSynchronization = true;
-    return element.all(by.css('app-settings .column div')).count();
+    return element.all(by.css('app-settings .column .select')).count();
   }
 
   getServiceHealthInputTag() {
