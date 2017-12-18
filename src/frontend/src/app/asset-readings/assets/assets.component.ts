@@ -136,7 +136,7 @@ export class AssetsComponent implements OnInit {
       this.page = 1;
     }
     if (offset === null) {
-      offset = 1;
+      offset = 0;
     }
     if (offset === undefined) {
       offset = 0;
