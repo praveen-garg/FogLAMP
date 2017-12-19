@@ -162,7 +162,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
         } else {
-          this.alertService.success('Record updated successfully.');
+          this.alertService.success('Schedule updated successfully.');
         }
         this.notify.emit();
         this.toggleModal(false);
