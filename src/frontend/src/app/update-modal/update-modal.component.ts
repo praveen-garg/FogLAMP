@@ -31,7 +31,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
     let regExp = '^\\d{2}:\\d{2}:\\d{2}'  // Regex to varify time format 00:00:00
     this.form = this.fb.group({
       name: ['', [<any>Validators.required]],
-      repeatDay: ['', [<any>Validators.required]],
+      repeatDay: [''],
       repeat: ['', [<any>Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
       process_name: [Validators.required],

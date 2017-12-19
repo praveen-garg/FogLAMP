@@ -10,7 +10,7 @@
         <form [formGroup]="form" (ngSubmit)="f.form.valid && updateSchedule()" #f="ngForm" novalidate>
           <div class="columns">
             <div class="column">
-              <div class="field" [ngClass]="{ 'has-error': !form.controls.name.valid }">
+              <div class="field">
                 <div class="form-group">
                   <label class="label">Name</label>
                   <p class="control is-fullwidth">
@@ -57,7 +57,7 @@
           </div>
           <div class="columns">
             <div class="column">
-              <div class="field" [ngClass]="{ 'has-error':  !form.controls.repeat.valid }">
+              <div class="field">
                 <label class="label">Repeat (Interval)</label>
                 <div class="columns">
                   <div class="column is-fullwidth">
@@ -65,7 +65,7 @@
                     <input id="repeat_time" class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00'>
                   </div>
                 </div>
-                <small *ngIf="!form.controls.repeat.valid" class="help is-danger level-left">Repeat must be in 00:00:00 or greater</small>
+                <small *ngIf="!form.controls.repeat.valid" class="help is-danger level-left">&nbsp; Repeat must be in the format 00:00:00 </small>
               </div>
             </div>
           </div>
@@ -83,12 +83,12 @@
               </div>
             </div>
             <div class="column">
-              <div *ngIf="selected_schedule_type == 2" class="field" [ngClass]="{ 'has-error': !form.controls.time.valid }">
+              <div *ngIf="selected_schedule_type == 2" class="field">
                 <label class="label">Time</label>
                 <p class="control is-fullwidth">
                   <input class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00' formControlName="time">
                 </p>
-                <small *ngIf="!form.controls.time.valid" class="help is-danger level-left">Time must be in 00:00:00 or 23:59:59 range</small>
+                <small *ngIf="!form.controls.time.valid" class="help is-danger level-left">&nbsp; Time must be in 00:00:00 or 23:59:59 range</small>
               </div>
             </div>
           </div>
