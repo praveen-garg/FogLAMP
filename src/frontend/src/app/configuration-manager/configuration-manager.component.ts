@@ -20,6 +20,9 @@ export class ConfigurationManagerComponent implements OnInit {
     this.configService.getCategories().
       subscribe(
       data => {
+         /** request completed */
+         this.ngProgress.done();
+         
          if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
@@ -28,11 +31,14 @@ export class ConfigurationManagerComponent implements OnInit {
         console.log('This is the congfigurationData ', data.categories);
         data.categories.forEach(element => {
           this.getCategory(element.key, element.description);
-        });
+        });    
+      },
+      error => {
         /** request completed */
         this.ngProgress.done();
-      },
-      error => { console.log('error', error); });
+        console.log('error', error);
+        this.alertService.error(error); 
+      });
   }
 
   private getCategory(category_name: string, category_desc: string): void {

@@ -42,6 +42,9 @@ export class ServicesHealthComponent implements OnInit {
         this.alertService.warning('Could not connect to Core Managment API, ' +
             'Make sure to set correct <a href="/settings"> core management port </a>');
         console.log('error: ', error);
+        /** request completed */
+        this.ngProgress.done();
       });
+
   }
 }
