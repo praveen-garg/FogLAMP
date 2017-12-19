@@ -10,7 +10,7 @@ export class FogLAMPPage {
   }
 
   navToScheduledTasks() {
-    return browser.get('/scheduled-tasks');
+    return browser.get('/scheduled-task');
   }
 
   navToAuditLogs() {
@@ -18,7 +18,7 @@ export class FogLAMPPage {
   }
 
   navToAssetReadings() {
-    return browser.get('/assets');
+    return browser.get('/asset');
   }
 
   navToServiceHealth() {
@@ -26,7 +26,7 @@ export class FogLAMPPage {
   }
 
   navToSettings() {
-    return browser.get('/settings');
+    return browser.get('/setting');
   }
 
   getNavTitle() {

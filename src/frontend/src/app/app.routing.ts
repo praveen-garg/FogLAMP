@@ -15,10 +15,10 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', component: DashboardComponent },
     { path: 'configuration', component: ConfigurationManagerComponent },
-    { path: 'scheduled-tasks', component: ScheduledProcessComponent },
-    { path: 'assets', component: AssetsComponent },
+    { path: 'scheduled-task', component: ScheduledProcessComponent },
+    { path: 'asset', component: AssetsComponent },
     { path: 'audit', component: AuditLogComponent },
-    { path: 'settings', component: SettingsComponent },
+    { path: 'setting', component: SettingsComponent },
     { path: 'services-health', component: ServicesHealthComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: ''}
