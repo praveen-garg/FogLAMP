@@ -128,7 +128,7 @@ export class AuditLogComponent implements OnInit {
       this.page = 1;
       this.tempOffset = this.offset;
     }
-    if (limit === '' || limit == 0) {
+    if (limit === '' || limit == 0 || limit === null || limit === undefined) {
       limit = 20;
     }
     this.limit = limit;
