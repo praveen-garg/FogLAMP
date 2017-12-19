@@ -7,10 +7,10 @@
           <p class="modal-card-title">{{assetCode}}</p>
         </div>
         <div class="column is-4">
-          <input-debounce placeholder="Limit(max 1000)" type="text" #limit (value)="plotReadingsGraph(assetCode, limit.inputValue, offset.inputValue)" max="1000"></input-debounce>
+          <number-input-debounce placeholder="Limit(max 1000)" #limit (value)="plotReadingsGraph(assetCode, limit.inputValue, offset.inputValue)" max="1000"></number-input-debounce>
         </div>
         <div class="column is-2">
-          <input-debounce placeholder="offset" type="text" #offset (value)="plotReadingsGraph(assetCode, limit.inputValue, offset.inputValue)"></input-debounce>
+          <number-input-debounce placeholder="offset" #offset (value)="plotReadingsGraph(assetCode, limit.inputValue, offset.inputValue)"></number-input-debounce>
           <p *ngIf='isInvalidInput' class='help is-danger'>Invalid input</p>
         </div>
       </div>
