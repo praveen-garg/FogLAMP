@@ -28,10 +28,10 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    let regExp = '^\\d{2}:\\d{2}:\\d{2}'  // Regex to varify time format 00:00:00
+    let regExp = '^(2[0-3]|[01]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])$'  // Regex to varify time format 00:00:00
     this.form = this.fb.group({
       name: ['', [<any>Validators.required]],
-      repeatDay: [''],
+      repeatDay: ['', [Validators.min(0), Validators.max(365)]],
       repeat: ['', [<any>Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
       process_name: [Validators.required],
@@ -48,7 +48,6 @@ export class UpdateModalComponent implements OnInit, OnChanges {
     this.getSelectedDayIndex(this.days[0]);
     this.getSchedule(this.childData.id);
   }
-
 
   /**
    *  To set schedule type key globally for required field handling on UI
