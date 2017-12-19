@@ -26,7 +26,7 @@ import { SideMenuComponent } from '../app/side-menu/side-menu.component';
 import { NavbarComponent } from '../app/navbar/navbar.component';
 import { AssetsComponent } from '../app/asset-readings/assets/assets.component';
 import { AuditLogComponent } from '../app/audit-log/audit-log.component';
-import { InputDebounceComponent } from '../app/input-debounce/input-debounce.component';
+import { NumberInputDebounceComponent } from '../app/number-input-debounce/number-input-debounce.component';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { ModalComponent } from './modal/modal.component';
@@ -40,6 +40,7 @@ import { ListTasksComponent } from './scheduler/list-tasks/list-tasks.component'
 import { AssetSummaryComponent } from './asset-readings/asset-summary/asset-summary.component';
 import { ChartModalComponent } from './asset-readings/chart-modal/chart-modal.component';
 import { AssetSummaryService } from './asset-readings/asset-summary/asset-summary-service';
+import { NumberOnlyDirective } from './directives/number-only.directive';
 
 
 @NgModule({
@@ -69,7 +70,7 @@ import { AssetSummaryService } from './asset-readings/asset-summary/asset-summar
     NavbarComponent,
     AssetsComponent,
     AuditLogComponent,
-    InputDebounceComponent,
+    NumberInputDebounceComponent,
     ModalComponent,
     UpdateModalComponent,
     SettingsComponent,
@@ -78,7 +79,8 @@ import { AssetSummaryService } from './asset-readings/asset-summary/asset-summar
     CreateScheduleComponent,
     ListTasksComponent,
     AssetSummaryComponent,
-    ChartModalComponent
+    ChartModalComponent,
+    NumberOnlyDirective
   ],
   providers: [
     AuthGuard,
