@@ -10,13 +10,13 @@
         <form [formGroup]="form" (ngSubmit)="f.form.valid && updateSchedule()" #f="ngForm" novalidate>
           <div class="columns">
             <div class="column">
-              <div class="field" [ngClass]="{ 'has-error': f.submitted && !form.controls.name.valid }">
+              <div class="field">
                 <div class="form-group">
                   <label class="label">Name</label>
                   <p class="control is-fullwidth">
                     <input type="text" class="input" formControlName="name" placeholder="name" required/>
                   </p>
-                  <small *ngIf="f.submitted && !form.controls.name.valid" class="help is-danger level-left">Name is required</small>
+                  <small *ngIf="!form.controls.name.valid" class="help is-danger level-left">Name is required</small>
                 </div>
               </div>
             </div>
@@ -57,15 +57,16 @@
           </div>
           <div class="columns">
             <div class="column">
-              <div class="field" [ngClass]="{ 'has-error': f.submitted && isValidRepeatRange}">
+              <div class="field">
                 <label class="label">Repeat (Interval)</label>
                 <div class="columns">
                   <div class="column is-fullwidth">
-                    <input id="repeat_day" class="input" type='number' min="0" max="365" placeholder="days" formControlName="repeatDay">
-                    <input id="repeat_time" class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00'>
+                    <input id="repeat_day" class="input" type='number' appNumberOnly min="0" max="365" placeholder="days" formControlName="repeatDay" required>
+                    <input id="repeat_time" class="input" type='text' placeholder="hh:mm:ss" formControlName="repeat" mask='00:00:00' required>
                   </div>
                 </div>
-                <small *ngIf="f.submitted && isValidRepeatRange" class="help is-danger level-left">Repeat must be in 00:00:00 or greater</small>
+                <small *ngIf="form.controls.repeatDay.invalid" class="help is-danger level-left">&nbsp; Repeat days must be in 0, 365 range.</small>
+                <small *ngIf="form.controls.repeat.invalid" class="help is-danger level-left">&nbsp; Repeat hours must be in 00:00:00, 23:59:59 range</small>
               </div>
             </div>
           </div>
@@ -83,12 +84,12 @@
               </div>
             </div>
             <div class="column">
-              <div *ngIf="selected_schedule_type == 2" class="field" [ngClass]="{ 'has-error': f.submitted && isValidTimeRange}">
+              <div *ngIf="selected_schedule_type == 2" class="field">
                 <label class="label">Time</label>
                 <p class="control is-fullwidth">
                   <input class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00' formControlName="time">
                 </p>
-                <small *ngIf="f.submitted && isValidTimeRange" class="help is-danger level-left">Time must be in 00:00:00 or 23:59:59 range</small>
+                <small *ngIf="!form.controls.time.valid" class="help is-danger level-left">&nbsp; Time must be in 00:00:00 or 23:59:59 range</small>
               </div>
             </div>
           </div>
