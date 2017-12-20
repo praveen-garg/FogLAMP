@@ -32,7 +32,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       name: ['', [<any>Validators.required]],
       repeatDay: ['', [Validators.min(0), Validators.max(365)]],
-      repeat: ['', [<any>Validators.required, Validators.pattern(regExp)]],
+      repeat: ['', [Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
       process_name: [Validators.required],
       type: [Validators.required],
@@ -130,13 +130,12 @@ export class UpdateModalComponent implements OnInit, OnChanges {
     let RepeatTime = this.form.get('repeat').value != ('None' || undefined) ? Utils.convertTimeToSec(
       this.form.get('repeat').value, this.form.get('repeatDay').value) : 0;
 
-    this.form.controls['repeat'].setValue(RepeatTime);
     this.selected_schedule_type = this.setScheduleTypeKey(this.form.get('type').value);
     this.form.controls['type'].setValue(this.selected_schedule_type);
 
+    let time; 
     if (this.form.get('type').value == '2') {   // If Type is TIMED == 2
-      let time = Utils.convertTimeToSec(this.form.get('time').value);
-      this.form.controls['time'].setValue(time);
+      time = Utils.convertTimeToSec(this.form.get('time').value);
       let index = this.form.get('day').value != undefined ? this.days.indexOf(this.form.get('day').value) : 0;
       this.form.controls['day'].setValue(index + 1);
     } else {
@@ -148,9 +147,9 @@ export class UpdateModalComponent implements OnInit, OnChanges {
       'name': this.form.get('name').value,
       'process_name': this.form.get('process_name').value,
       'type': this.form.get('type').value,
-      'repeat': this.form.get('repeat').value,
+      'repeat': RepeatTime,
       'day': this.form.get('day').value,
-      'time': this.form.get('time').value,
+      'time': time,
       'exclusive': this.form.get('exclusive').value,
     };
 
