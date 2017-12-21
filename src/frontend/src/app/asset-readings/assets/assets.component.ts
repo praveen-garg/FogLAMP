@@ -13,12 +13,12 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: any = 'Select'; // Selected asset object (asset_coded, asset_count)
   asset: any;
-  limit = 20;
-  offset = 0;
+  limit:number = 20;
+  offset:number = 0;
 
   page = 1;           // Default page is 1 in pagination
   recordCount = 0;    // Total no. of records during pagination
-  tempOffset = 0;     // Temporary offset during pagination
+  tempOffset:number = 0;     // Temporary offset during pagination
   totalPagesCount = 0;
   assets = [];
   assetsReadingsData = [];
@@ -91,9 +91,9 @@ export class AssetsComponent implements OnInit {
       this.limit = 20;
     }
     if (this.offset > 0) {
-      this.tempOffset = (((this.page) - 1) * this.limit) + this.offset;
+      this.tempOffset = ((this.page - 1) * this.limit) + this.offset;
     } else {
-      this.tempOffset = ((this.page) - 1) * this.limit;
+      this.tempOffset = (this.page - 1) * this.limit;
     }
     console.log('limit: ', this.limit);
     console.log('offset: ', this.offset);
