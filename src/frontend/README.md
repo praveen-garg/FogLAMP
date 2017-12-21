@@ -73,11 +73,12 @@ Set API base URL in `environments/environment.prod.ts`, you can always change it
  rxjs         | 5.4.3         |        5.4.3          | Apache 2.0
 
 #### Dev:
- Library      |   Version     | Latest Stable (? Y/n) | License
-------------- | ------------- | --------------------  | ------------
-chart.js      |  2.7.0        |        2.7.0          | MIT 
-core-js       |  2.5.1        |        2.5.1          | MIT 
-loadash       |  4.17.4       |        4.17.4         | MIT
-ngx-mask      |  1.0.3        |        1.0.3          | MIT 
-ng-sidebar    |  6.0.2        |        6.0.2          | MIT 
-moment        |  2.19.2       |        2.19.2         | MIT
+ Library         |   Version     | Latest Stable (? Y/n) | License
+---------------- | ------------- | --------------------  | ------------
+chart.js         |  2.7.0        |        2.7.0          | MIT 
+core-js          |  2.5.1        |        2.5.1          | MIT 
+loadash          |  4.17.4       |        4.17.4         | MIT
+ngx-mask         |  1.0.3        |        1.0.3          | MIT 
+ng-sidebar       |  6.0.2        |        6.0.2          | MIT 
+moment           |  2.19.2       |        2.19.2         | MIT
+ngx-progressbar  |  2.1.1        |        2.1.1          | MIT

@@ -4,6 +4,7 @@ import { POLLING_INTERVAL } from '../utils';
 import { environment } from '../../environments/environment';
 import { AlertService } from './../services/alert.service';
 import Utils from '../utils';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-services-health',
@@ -13,7 +14,7 @@ import Utils from '../utils';
 export class ServicesHealthComponent implements OnInit {
   public timer: any = '';
   public service_data;
-  constructor(private servicesHealthService: ServicesHealthService, private alertService: AlertService) { }
+  constructor(private servicesHealthService: ServicesHealthService, private alertService: AlertService, public ngProgress: NgProgress) { }
 
   time: number;
   ngOnInit() {
@@ -21,22 +22,29 @@ export class ServicesHealthComponent implements OnInit {
   }
 
   public getServiceData() {
+    /** request started */
+    this.ngProgress.start();
     this.servicesHealthService.getAllServices()
       .subscribe(
       (data) => {
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.warning('Could not connect to Core Managment API, ' +
-            'Make sure to set correct <a href="/settings"> core management port </a>');
+            'Make sure to set correct <a href="/setting"> core management port </a>');
           return;
         }
         this.service_data = data.services;
         this.time = Utils.getCurrentDate();
+        /** request completed */
+        this.ngProgress.done();
       },
       (error) => {
         this.alertService.warning('Could not connect to Core Managment API, ' +
-            'Make sure to set correct <a href="/settings"> core management port </a>');
+            'Make sure to set correct <a href="/setting"> core management port </a>');
         console.log('error: ', error);
+        /** request completed */
+        this.ngProgress.done();
       });
+
   }
 }

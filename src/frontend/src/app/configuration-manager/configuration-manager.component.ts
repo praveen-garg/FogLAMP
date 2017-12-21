@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConfigurationService, AlertService } from '../services/index';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-configuration-manager',
@@ -8,15 +9,20 @@ import { ConfigurationService, AlertService } from '../services/index';
 })
 export class ConfigurationManagerComponent implements OnInit {
   public categoryData = [];
-  constructor(private configService: ConfigurationService, private alertService: AlertService) { }
+  constructor(private configService: ConfigurationService, private alertService: AlertService, public ngProgress: NgProgress) { }
   ngOnInit() {
     this.getCategories();
   }
 
   public getCategories(): void {
+    /** request started */
+    this.ngProgress.start();
     this.configService.getCategories().
       subscribe(
       data => {
+         /** request completed */
+         this.ngProgress.done();
+         
          if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
@@ -25,9 +31,14 @@ export class ConfigurationManagerComponent implements OnInit {
         console.log('This is the congfigurationData ', data.categories);
         data.categories.forEach(element => {
           this.getCategory(element.key, element.description);
-        });
+        });    
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+        // this.alertService.error(error); 
+      });
   }
 
   private getCategory(category_name: string, category_desc: string): void {
