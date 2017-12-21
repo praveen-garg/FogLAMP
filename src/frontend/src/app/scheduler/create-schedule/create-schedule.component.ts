@@ -78,7 +78,7 @@ export class CreateScheduleComponent implements OnInit {
 
     const payload = {
       'name': schedule_name_fld.value,
-      'processName': schedule_process_fld.value,
+      'process_name': schedule_process_fld.value,
       'type': schedule_type_fld.value,
       'repeat': total_repeat_time,
       'day': day,
