@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { SchedulesService, AlertService } from '../../services/index';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import Utils from '../../utils';
+import { CustomValidator } from '../../directives/custom-validator';
 
 @Component({
   selector: 'app-create-schedule',
@@ -8,12 +10,7 @@ import Utils from '../../utils';
   styleUrls: ['./create-schedule.component.css']
 })
 export class CreateScheduleComponent implements OnInit {
-  // To handle field validtion on UI
-  public invalidRepeat: Boolean = false;
-  public invalidTime: Boolean = false;
-
-  // Default selected schedule type is STARTUP = 1
-  public selected_schedule_type: Number = 1;
+  form: FormGroup;
 
   // variable to hold schedular name for data binding in DOM
   public scheduler_name;
@@ -24,97 +21,94 @@ export class CreateScheduleComponent implements OnInit {
 
   public scheduleProcess = [];
   public scheduleType = [];
-
-  constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
+  public selected_schedule_type = 1;
+  public typeIndex; // to hold schedule type index in html 
+  constructor(private schedulesService: SchedulesService, private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getScheduleType();
     this.getSchedulesProcesses();
+    let regExp = '^(2[0-3]|[01]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])$'  // Regex to varify time format 00:00:00
+    this.form = this.formBuilder.group({
+      name: ['', [CustomValidator.nospaceValidator]],
+      repeatDay: [Validators.min(0), Validators.max(365)],
+      repeatTime: ['', [Validators.required, Validators.pattern(regExp)]],
+      exclusive: [Validators.required],
+      processName: [Validators.required],
+      type: [Validators.required],
+      day: [Validators.required],
+      time: ['', [Validators.required, Validators.pattern(regExp)]],
+    });
+
+    // disable time and day field to bypass required validation   
+    this.form.get('day').disable();
+    this.form.get('time').disable();
+
+    // Set default values on form
+    this.form.get('type').setValue(1);
+    this.form.get('exclusive').setValue(true)
+    this.form.get('day').setValue(1)
   }
 
   public createSchedule() {
-    const schedule_name_fld = <HTMLInputElement>document.getElementById('name');
-    const schedule_process_fld = <HTMLSelectElement>document.getElementById('process');
-    const schedule_type_fld = <HTMLSelectElement>document.getElementById('type');
+    if (this.form.valid) {
+      // total time with days and hh:mm:ss
+      let RepeatTime = this.form.get('repeatTime').value != ('' || undefined) ? Utils.convertTimeToSec(
+        this.form.get('repeatTime').value, this.form.get('repeatDay').value) : 0;
 
-    const exclusive_state_fld = <HTMLInputElement>document.getElementById('exclusive');
-
-    const repeat_day_fld = <HTMLInputElement>document.getElementById('rday');
-    const repeat_time_fld = <HTMLInputElement>document.getElementById('rtime');
-
-    // check if time is in valid range
-    this.invalidRepeat = Utils.not_between(repeat_time_fld.value);
-    if (this.invalidRepeat) {
-      return;
-    }
-
-    const day_fld = <HTMLSelectElement>document.getElementById('day');
-    const time_fld = <HTMLInputElement>document.getElementById('time');
-    let day = 0;
-    let scheduled_time = 0;
-
-    // total time with days and hh:mm:ss
-    const total_repeat_time = repeat_time_fld.value !== '' ? Utils.convertTimeToSec(
-      repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined;
-
-    /**
-     *  "schedule_type": [
-     *      {"index": 1, "name": "STARTUP"},
-     *      {"index": 2,"name": "TIMED"},
-     *      {"index": 3,"name": "INTERVAL"},
-     *      {"index": 4,"name": "MANUAL"}]
-     *      For schedule type 'TIMED', show 'Day' and 'TIME' field on UI
-     */
-    if (this.selected_schedule_type == 2) {  // Condition to check if schedule type is TIMED == 2
-      day = Number(day_fld.value);
-      // check if time is in valid range
-      this.invalidTime = Utils.not_between(time_fld.value);
-      if (this.invalidTime) {
-        return;
+      let time;
+      if (this.form.get('type').value == '2') {   // If Type is TIMED == 2
+        time = this.form.get('time').value.length != 0 ? Utils.convertTimeToSec(this.form.get('time').value) : 0;
+      } else {
+        this.form.get('day').setValue(0);
+        time = 0;
       }
-      // Time value in seconds for TIMED schedule
-      scheduled_time = time_fld.value !== '' ? Utils.convertTimeToSec(time_fld.value) : undefined;
+
+      let payload = {
+        'name': this.form.get('name').value,
+        'process_name': this.form.get('processName').value,
+        'type': this.form.get('type').value,
+        'repeat': RepeatTime,
+        'day': this.form.get('day').value,
+        'time': time,
+        'exclusive': this.form.get('exclusive').value,
+      };
+
+      this.schedulesService.createSchedule(payload).
+        subscribe(
+        data => {
+          if (data.error) {
+            console.log('error in response', data.error);
+            this.alertService.error(data.error.message);
+            return;
+          }
+          this.notify.emit();
+          this.form.reset({ exclusive: true, processName: this.scheduleProcess[0], type: 1, repeatTime: 'hh:mm:ss', day: 1 });
+          this.selected_schedule_type = 1; // reset to default
+        },
+        error => { console.log('error', error); });
+    } else {
+      CustomValidator.validateAllFormFields(this.form);
     }
-
-    const payload = {
-      'name': schedule_name_fld.value,
-      'process_name': schedule_process_fld.value,
-      'type': schedule_type_fld.value,
-      'repeat': total_repeat_time,
-      'day': day,
-      'time': scheduled_time,
-      'exclusive': exclusive_state_fld.checked
-    };
-    this.schedulesService.createSchedule(payload).
-      subscribe(
-      data => {
-        if (data.error) {
-          console.log('error in response', data.error);
-          this.alertService.error(data.error.message);
-          return;
-        }
-        this.notify.emit();
-
-        // Clear form fields
-        schedule_name_fld.value = '';
-        repeat_day_fld.value = '';
-        repeat_time_fld.value = '';
-        schedule_process_fld.value = this.scheduleProcess[0]; // set process dropdown to 0 index value
-        schedule_type_fld.value = '1';
-        this.setScheduleTypeKey(1); // To set schedule type key globally for required field handling on UI
-      },
-      error => { console.log('error', error); });
   }
 
   /**
-  *  To set schedule type key globally for required field handling on UI
-  * @param value
-  */
-  public setScheduleTypeKey(value) {
-    this.selected_schedule_type = value;
+   *  To set schedule type key globally for required field handling on UI
+   * @param value
+   */
+  public setScheduleTypeKey() {
+    // enable, disable time and date field on schedule type change 
+    if (this.form.get('type').value == 2) {
+      this.form.get('day').enable();
+      this.form.get('time').enable();
+    } else {
+      this.form.get('day').disable();
+      this.form.get('time').disable();
+    }
+    return this.form.get('type').value;
   }
 
-   public getSchedulesProcesses(): void {
+  public getSchedulesProcesses(): void {
     this.scheduleProcess = [];
     this.schedulesService.getScheduledProcess().
       subscribe(
@@ -124,13 +118,14 @@ export class CreateScheduleComponent implements OnInit {
           return;
         }
         this.scheduleProcess = data.processes;
+        this.form.get('processName').setValue(this.scheduleProcess[0])
         console.log('This is the getScheduleProcess ', this.scheduleProcess);
         this.process.emit(this.scheduleProcess);
       },
       error => { console.log('error', error); });
   }
 
-   public getScheduleType(): void {
+  public getScheduleType(): void {
     this.schedulesService.getScheduleType().
       subscribe(
       data => {
@@ -139,10 +134,8 @@ export class CreateScheduleComponent implements OnInit {
           return;
         }
         this.scheduleType = data.schedule_type;
-        console.log(this.scheduleType);
         this.type.emit(this.scheduleType);
       },
       error => { console.log('error', error); });
   }
-
 }

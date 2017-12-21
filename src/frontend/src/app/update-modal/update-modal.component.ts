@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SchedulesService, AlertService } from '../services/index';
 import Utils from '../utils';
+import { CustomValidator } from '../directives/custom-validator';
 
 @Component({
   selector: 'app-update-modal',
@@ -30,7 +31,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     let regExp = '^(2[0-3]|[01]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])$'  // Regex to varify time format 00:00:00
     this.form = this.fb.group({
-      name: ['', [<any>Validators.required]],
+      name: ['', [CustomValidator.nospaceValidator]],
       repeatDay: ['', [Validators.min(0), Validators.max(365)]],
       repeat: ['', [Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
