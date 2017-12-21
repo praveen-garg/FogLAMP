@@ -37,7 +37,7 @@ export class ConfigurationManagerComponent implements OnInit {
         /** request completed */
         this.ngProgress.done();
         console.log('error', error);
-        this.alertService.error(error); 
+        // this.alertService.error(error); 
       });
   }
 
