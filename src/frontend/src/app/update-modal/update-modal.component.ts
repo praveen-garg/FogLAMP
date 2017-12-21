@@ -18,7 +18,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
   public scheduleType = [];
   public days = [];
 
-  @Input() childData: { id: Number, schedule_process: any, schedule_type: any, day: any };
+  @Input() childData: { id: Number, schedule_process: any, scheduleType: any, day: any };
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
@@ -34,7 +34,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
       repeatDay: ['', [Validators.min(0), Validators.max(365)]],
       repeat: ['', [Validators.required, Validators.pattern(regExp)]],
       exclusive: [Validators.required],
-      process_name: [Validators.required],
+      processName: [Validators.required],
       type: [Validators.required],
       day: [Validators.required],
       time: ['', [Validators.required, Validators.pattern(regExp)]],
@@ -42,7 +42,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
 
     if (changes['childData']) {
       this.scheduleProcess = this.childData.schedule_process;
-      this.scheduleType = this.childData.schedule_type;
+      this.scheduleType = this.childData.scheduleType;
       this.days = this.childData.day;
     }
     this.getSelectedDayIndex(this.days[0]);
@@ -108,7 +108,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
           repeatDay: repeatTimeObj.days,
           repeat: repeatTimeObj.time,
           exclusive: data.exclusive,
-          process_name: data.process_name,
+          processName: data.processName,
           type: data.type,
           day: schedule_day,
           time: timeObj.time
@@ -145,7 +145,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
 
     let updatePayload = {
       'name': this.form.get('name').value,
-      'process_name': this.form.get('process_name').value,
+      'processName': this.form.get('processName').value,
       'type': this.form.get('type').value,
       'repeat': RepeatTime,
       'day': this.form.get('day').value,

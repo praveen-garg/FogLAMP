@@ -58,7 +58,7 @@ export class CreateScheduleComponent implements OnInit {
       repeat_time_fld.value, Number(repeat_day_fld.value)) : undefined;
 
     /**
-     *  "schedule_type": [
+     *  "scheduleType": [
      *      {"index": 1, "name": "STARTUP"},
      *      {"index": 2,"name": "TIMED"},
      *      {"index": 3,"name": "INTERVAL"},
@@ -78,7 +78,7 @@ export class CreateScheduleComponent implements OnInit {
 
     const payload = {
       'name': schedule_name_fld.value,
-      'process_name': schedule_process_fld.value,
+      'processName': schedule_process_fld.value,
       'type': schedule_type_fld.value,
       'repeat': total_repeat_time,
       'day': day,
@@ -138,7 +138,7 @@ export class CreateScheduleComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.scheduleType = data.schedule_type;
+        this.scheduleType = data.scheduleType;
         console.log(this.scheduleType);
         this.type.emit(this.scheduleType);
       },

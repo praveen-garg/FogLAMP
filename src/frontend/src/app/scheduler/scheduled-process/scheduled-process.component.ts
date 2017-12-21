@@ -41,7 +41,7 @@ export class ScheduledProcessComponent implements OnInit {
 
     this.updateScheduleData = {
       schedule_process: this.scheduleProcess,
-      schedule_type: this.scheduleType,
+      scheduleType: this.scheduleType,
       day: this.days
     };
   }
@@ -99,7 +99,7 @@ export class ScheduledProcessComponent implements OnInit {
     this.updateScheduleData = {
       id: id,
       schedule_process: this.scheduleProcess,
-      schedule_type: this.scheduleType,
+      scheduleType: this.scheduleType,
       day: this.days
     };
     this.updateModal.toggleModal(true);
