@@ -10,7 +10,7 @@
         </a>
   </li>
   <li>
-    <a [ngClass]="{'is-active': step==='/scheduled-tasks'}" (click)="onToggle('/scheduled-tasks')">
+    <a [ngClass]="{'is-active': step==='/scheduled-task'}" (click)="onToggle('/scheduled-task')">
           Scheduled Tasks
         </a>
   </li>
@@ -21,7 +21,7 @@
   </li>
   <!-- TODO: These menu item should be dynamic -->
   <li>
-    <a [ngClass]="{'is-active': step==='/assets'}" (click)="onToggle('/assets')">
+    <a [ngClass]="{'is-active': step==='/asset'}" (click)="onToggle('/asset')">
            Assets &amp; Readings
         </a>
   </li>
@@ -33,7 +33,7 @@
   </li>
 
   <li>
-    <a [ngClass]="{'is-active': step==='/settings'}" (click)="onToggle('/settings')">
+    <a [ngClass]="{'is-active': step==='/setting'}" (click)="onToggle('/setting')">
            Settings
         </a>
   </li>

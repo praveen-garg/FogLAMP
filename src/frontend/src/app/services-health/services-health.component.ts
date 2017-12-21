@@ -30,7 +30,7 @@ export class ServicesHealthComponent implements OnInit {
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.warning('Could not connect to Core Managment API, ' +
-            'Make sure to set correct <a href="/settings"> core management port </a>');
+            'Make sure to set correct <a href="/setting"> core management port </a>');
           return;
         }
         this.service_data = data.services;
@@ -40,7 +40,7 @@ export class ServicesHealthComponent implements OnInit {
       },
       (error) => {
         this.alertService.warning('Could not connect to Core Managment API, ' +
-            'Make sure to set correct <a href="/settings"> core management port </a>');
+            'Make sure to set correct <a href="/setting"> core management port </a>');
         console.log('error: ', error);
         /** request completed */
         this.ngProgress.done();
