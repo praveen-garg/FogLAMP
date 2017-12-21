@@ -41,6 +41,7 @@ import { AssetSummaryComponent } from './asset-readings/asset-summary/asset-summ
 import { ChartModalComponent } from './asset-readings/chart-modal/chart-modal.component';
 import { AssetSummaryService } from './asset-readings/asset-summary/asset-summary-service';
 import { NumberOnlyDirective } from './directives/number-only.directive';
+import { NgProgressModule } from 'ngx-progressbar';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { NumberOnlyDirective } from './directives/number-only.directive';
     routing,
     ChartModule,
     NgxMaskModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    NgProgressModule
   ],
   declarations: [
     AppComponent,
