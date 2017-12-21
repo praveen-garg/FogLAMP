@@ -3,6 +3,7 @@ import { SchedulesService, AlertService } from '../../services/index';
 import { ModalComponent } from '../../modal/modal.component';
 import { UpdateModalComponent } from '../../update-modal/update-modal.component';
 import Utils from '../../utils';
+import { CreateScheduleComponent } from '../create-schedule/create-schedule.component';
 
 enum weekDays {
   Mon = 1,
@@ -32,6 +33,7 @@ export class ScheduledProcessComponent implements OnInit {
   public updateScheduleData: any;
   @ViewChild(ModalComponent) child: ModalComponent;
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
+  @ViewChild(CreateScheduleComponent) createModal: CreateScheduleComponent;
 
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
@@ -123,6 +125,14 @@ export class ScheduledProcessComponent implements OnInit {
     this.childData = {
       id: id
     };
+  }
+
+   /**
+   * Open create scheduler modal dialog
+   */
+  openCreateSchedulerModal(id) {
+    // call child component method to toggle modal
+    this.createModal.toggleModal(true);
   }
 
   /**

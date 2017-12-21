@@ -46,9 +46,21 @@ export class CreateScheduleComponent implements OnInit {
 
     // Set default values on form
     this.form.get('type').setValue(1);
-    this.form.get('exclusive').setValue(true)
-    this.form.get('day').setValue(1)
+    this.form.get('exclusive').setValue(true);
+    this.form.get('day').setValue(1);
   }
+
+  public toggleModal(isOpen: Boolean) {
+    let schedule_name = <HTMLDivElement>document.getElementById('create_schedule_modal');
+    if (isOpen) {
+      schedule_name.classList.add('is-active');
+      return;
+    }
+    schedule_name.classList.remove('is-active');
+    this.form.reset({ exclusive: true, processName: this.scheduleProcess[0], type: 1, repeatTime: 'hh:mm:ss', day: 1, time: 'hh:mm:ss' });
+    this.selected_schedule_type = 1; // reset to default
+  }
+
 
   public createSchedule() {
     if (this.form.valid) {
@@ -83,8 +95,8 @@ export class CreateScheduleComponent implements OnInit {
             return;
           }
           this.notify.emit();
-          this.form.reset({ exclusive: true, processName: this.scheduleProcess[0], type: 1, repeatTime: 'hh:mm:ss', day: 1 });
-          this.selected_schedule_type = 1; // reset to default
+          this.toggleModal(false);
+          this.alertService.success('Schedule created successfully.');
         },
         error => { console.log('error', error); });
     } else {
