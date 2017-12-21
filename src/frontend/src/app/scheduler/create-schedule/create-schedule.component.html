@@ -56,17 +56,17 @@
     <div class="columns">
       <div class="column">
         <input id="repeat_day" class="input" type='number' appNumberOnly min="0" max="365" placeholder="days" formControlName="repeatDay">
-        <small *ngIf="form.controls.repeatDay.invalid && form.controls.repeatDay.touched" class="help is-danger level-left">&nbsp; Repeat days must be in 0, 365 range.</small>
+        <small *ngIf="form.controls.repeatDay.invalid && form.controls.repeatDay.touched" class="help is-danger level-left">&nbsp; Repeat days must be in range 0 - 365.</small>
       </div>
       <div class="column">
         <input id="repeat_time" class="input" type='text' placeholder="hh:mm:ss" formControlName="repeatTime" mask='00:00:00'>
-        <small *ngIf="form.controls.repeatTime.invalid && form.controls.repeatTime.touched" class="help is-danger level-left">&nbsp; Repeat hours must be in 00:00:00, 23:59:59 range</small>
+        <small *ngIf="form.controls.repeatTime.invalid && form.controls.repeatTime.touched" class="help is-danger level-left">&nbsp; Repeat hours must be in range 00:00:00 - 23:59:59 </small>
       </div>
     </div>
     <div class="columns">
       <div class="column">
         <div [hidden]="!(selected_schedule_type == 2)" class="field">
-          <label class="label">Day</label>
+          <label class="label">Day &nbsp;<span class="tooltip is-tooltip-right" data-tooltip="ISO Days (1-7 Mon-Sun)"><i class="fa fa-info-circle"></i></span></label>
           <div class="control">
             <div class="select is-fullwidth">
               <select id="day" formControlName="day">
@@ -88,7 +88,7 @@
           <p class="control is-fullwidth">
             <input class="input" type='text' placeholder="hh:mm:ss" mask='00:00:00' formControlName="time">
           </p>
-          <small *ngIf="form.controls.time.invalid && form.controls.time.touched" class="help is-danger level-left">&nbsp; Time must be in 00:00:00 or 23:59:59 range</small>
+          <small *ngIf="form.controls.time.invalid && form.controls.time.touched" class="help is-danger level-left">&nbsp; Time must be in range 00:00:00 - 23:59:59</small>
         </div>
       </div>
     </div>
