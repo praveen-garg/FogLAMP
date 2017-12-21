@@ -5,13 +5,13 @@ import { UpdateModalComponent } from '../../update-modal/update-modal.component'
 import Utils from '../../utils';
 
 enum weekDays {
-  Monday = 1,
-  Tuesday = 2,
-  Wednesday = 3,
-  Thursday = 4,
-  Friday = 5,
-  Saturday = 6,
-  Sunday = 7
+  Mon = 1,
+  Tue = 2,
+  Wed = 3,
+  Thu = 4,
+  Fri = 5,
+  Sat = 6,
+  Sun = 7
 }
 
 @Component({
@@ -123,5 +123,13 @@ export class ScheduledProcessComponent implements OnInit {
     this.childData = {
       id: id
     };
+  }
+
+  /**
+   * 
+   * @param index value of the day
+   */
+  getISODay(index:number){
+    return weekDays[index];
   }
 }
