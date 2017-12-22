@@ -145,7 +145,8 @@ export class CreateScheduleComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.scheduleType = data.schedule_type;
+        this.scheduleType = data.scheduleType;
+        console.log(this.scheduleType);
         this.type.emit(this.scheduleType);
       },
       error => { console.log('error', error); });

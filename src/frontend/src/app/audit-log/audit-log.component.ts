@@ -102,7 +102,7 @@ export class AuditLogComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.logSourceList = data.log_code;
+        this.logSourceList = data.logCode;
         console.log('Log code', this.logSourceList);
       },
       error => { console.log('error', error); });
@@ -117,7 +117,7 @@ export class AuditLogComponent implements OnInit {
           this.alertService.error(data.error.message);
           return;
         }
-        this.logSeverityList = data.log_severity;
+        this.logSeverityList = data.logSeverity;
         console.log('Log severity ', this.logSeverityList);
       },
       error => { console.log('error', error); });
@@ -184,7 +184,7 @@ export class AuditLogComponent implements OnInit {
           return;
         }
         this.audit = data.audit;
-        this.totalCount = data.total_count;
+        this.totalCount = data.totalCount;
         console.log('Audit Logs', this.audit, 'Total count', this.totalCount);
         if (this.offset !== 0) {
           this.recordCount = this.totalCount - this.offset;

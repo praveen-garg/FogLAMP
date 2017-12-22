@@ -43,7 +43,7 @@ export class ScheduledProcessComponent implements OnInit {
 
     this.updateScheduleData = {
       schedule_process: this.scheduleProcess,
-      schedule_type: this.scheduleType,
+      scheduleType: this.scheduleType,
       day: this.days
     };
   }
