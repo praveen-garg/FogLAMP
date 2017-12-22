@@ -130,7 +130,7 @@ export class ScheduledProcessComponent implements OnInit {
    /**
    * Open create scheduler modal dialog
    */
-  openCreateSchedulerModal(id) {
+  openCreateSchedulerModal() {
     // call child component method to toggle modal
     this.createModal.toggleModal(true);
   }

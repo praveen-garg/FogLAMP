@@ -146,7 +146,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
 
     let updatePayload = {
       'name': this.form.get('name').value,
-      'processName': this.form.get('process_name').value,
+      'process_name': this.form.get('process_name').value,
       'type': this.form.get('type').value,
       'repeat': RepeatTime,
       'day': this.form.get('day').value,
