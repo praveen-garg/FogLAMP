@@ -1,12 +1,12 @@
-<div class="tile is-child card">
+<div class="card">
   <header class="card-header">
     <div class="card-header-title">
       Tasks &nbsp;
       <div class="select" (change)="getTasks($event.target.value)">
         <select ng-model="selectedTaskType" id="task-state">
-                <option>Latest</option>
-                <option>Running</option>
-              </select>
+          <option>Latest</option>
+          <option>Running</option>
+        </select>
       </div>
     </div>
   </header>
@@ -17,7 +17,11 @@
           <th>Process</th>
           <th>State</th>
           <th>Start time</th>
-          <th>End Time&nbsp;&nbsp;<span class="tooltip is-tooltip-right" data-tooltip="DD-MM-YYYY HH:mm:ss"><i class="fa fa-info-circle"></i></span></th>
+          <th>End Time&nbsp;
+            <span class="tooltip is-tooltip-right" data-tooltip="DD-MM-YYYY HH:mm:ss">
+              <i class="fa fa-info-circle"></i>
+            </span>
+          </th>
           <th>Exit Code</th>
           <th>Reason</th>
         </tr>

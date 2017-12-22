@@ -5,18 +5,3 @@ table.scroll {
 .fa-minus-circle {
     color: rgb(178, 34, 34)
 }
-
-#rday {
-    float: left;
-    width: 30%;
-}
-
-#rtime {
-    float: left;
-    width: 50%;
-    margin-left: 1%;
-}
-
-#error {
-    float: left;
-}

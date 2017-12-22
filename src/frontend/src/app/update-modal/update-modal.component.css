@@ -1,10 +1,9 @@
 #repeat_day{
-    float: LEFT;
+    float: left;
     width: 20%;
 }
 
 #repeat_time{
-    float: left;
     width: 50%;
     margin-left: 1%;
 }

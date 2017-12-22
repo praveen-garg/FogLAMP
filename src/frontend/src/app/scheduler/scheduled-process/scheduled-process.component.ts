@@ -3,15 +3,16 @@ import { SchedulesService, AlertService } from '../../services/index';
 import { ModalComponent } from '../../modal/modal.component';
 import { UpdateModalComponent } from '../../update-modal/update-modal.component';
 import Utils from '../../utils';
+import { CreateScheduleComponent } from '../create-schedule/create-schedule.component';
 
 enum weekDays {
-  Monday = 1,
-  Tuesday = 2,
-  Wednesday = 3,
-  Thursday = 4,
-  Friday = 5,
-  Saturday = 6,
-  Sunday = 7
+  Mon = 1,
+  Tue = 2,
+  Wed = 3,
+  Thu = 4,
+  Fri = 5,
+  Sat = 6,
+  Sun = 7
 }
 
 @Component({
@@ -32,6 +33,7 @@ export class ScheduledProcessComponent implements OnInit {
   public updateScheduleData: any;
   @ViewChild(ModalComponent) child: ModalComponent;
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
+  @ViewChild(CreateScheduleComponent) createModal: CreateScheduleComponent;
 
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
@@ -123,5 +125,21 @@ export class ScheduledProcessComponent implements OnInit {
     this.childData = {
       id: id
     };
+  }
+
+   /**
+   * Open create scheduler modal dialog
+   */
+  openCreateSchedulerModal() {
+    // call child component method to toggle modal
+    this.createModal.toggleModal(true);
+  }
+
+  /**
+   * 
+   * @param index value of the day
+   */
+  getISODay(index:number){
+    return weekDays[index];
   }
 }

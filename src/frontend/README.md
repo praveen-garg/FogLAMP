@@ -62,6 +62,13 @@ Set API base URL in `environments/environment.prod.ts`, you can always change it
 ### Running using Docker 
   [instructions](docker-readme.md)
 
+## Supported/Tested Browser Version
+Browser | Tested Version | Supported
+--------|-------- |-------
+Safari (mac)  | 11.0.x   | latest 1
+Chrome  |63.0.x (64-bit) | latest 2 
+Firefox |57.0.x (64-bit) | latest 2
+
 ## Used Libraries:
 
 #### Core:
