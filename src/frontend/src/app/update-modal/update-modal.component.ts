@@ -108,7 +108,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
           repeatDay: repeatTimeObj.days,
           repeat: repeatTimeObj.time,
           exclusive: data.exclusive,
-          process_name: data.process_name,
+          process_name: data.processName,
           type: data.type,
           day: schedule_day,
           time: timeObj.time
@@ -145,7 +145,7 @@ export class UpdateModalComponent implements OnInit, OnChanges {
 
     let updatePayload = {
       'name': this.form.get('name').value,
-      'process_name': this.form.get('process_name').value,
+      'processName': this.form.get('process_name').value,
       'type': this.form.get('type').value,
       'repeat': RepeatTime,
       'day': this.form.get('day').value,

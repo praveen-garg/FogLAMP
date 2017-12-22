@@ -23,11 +23,11 @@
         </tr>
       </thead>
       <tr *ngFor="let task of tasksData">
-        <td><small>{{task.process_name}}</small></td>
+        <td><small>{{task.processName}}</small></td>
         <td><small>{{task.state}}</small></td>
-        <td><small>{{task.start_time != 'None' ?(task.start_time | dateparser: 'DD-MM-YYYY HH:mm:ss') : task.start_time}}</small></td>
-        <td><small>{{task.end_time != 'None'?(task.end_time | dateparser: 'DD-MM-YYYY HH:mm:ss') : task.end_time}}</small></td>
-        <td><small>{{task.exit_code}}</small></td>
+        <td><small>{{task.startTime != 'None' ?(task.startTime | dateparser: 'DD-MM-YYYY HH:mm:ss') : task.startTime}}</small></td>
+        <td><small>{{task.endTime != 'None'?(task.endTime | dateparser: 'DD-MM-YYYY HH:mm:ss') : task.endTime}}</small></td>
+        <td><small>{{task.exitCode}}</small></td>
         <td><small>{{task.reason}}</small></td>
         <td><button *ngIf="'RUNNING' == task.state" class="button is-small is-danger" (click)="cancelRunninTask(task.id)">Cancel</button></td>
       </tr>
