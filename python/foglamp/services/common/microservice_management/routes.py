@@ -10,7 +10,6 @@ __license__ = "Apache 2.0"
 __version__ = "${VERSION}"
 
 
-
 def setup(app, obj):
     """ Common method to setup the microservice management api.
     Args:
@@ -24,13 +23,14 @@ def setup(app, obj):
     # Service Registration
     app.router.add_route('POST', '/foglamp/service', obj.register)
     app.router.add_route('DELETE', '/foglamp/service/{service_id}', obj.unregister)
-    app.router.add_route('GET', '/foglamp/service', obj.get_service)
+    app.router.add_route('GET', '/foglamp/service', obj.find_service)
     # Interest Registration
-    app.router.add_route('POST', '/foglamp/service/interest', obj.register_interest)
-    app.router.add_route('DELETE', '/foglamp/service/interest/{interest_id}', obj.unregister_interest)
+    app.router.add_route('POST', '/foglamp/service/interest', obj.add_interest)
+    app.router.add_route('DELETE', '/foglamp/service/interest/{interest_id}', obj.remove_interest)
 
     # enable cors support
     enable_cors(app)
+
 
 def enable_cors(app):
     """ implements Cross Origin Resource Sharing (CORS) support """
@@ -48,6 +48,7 @@ def enable_cors(app):
     # Configure CORS on all routes.
     for route in list(app.router.routes()):
         cors.add(route)
+
 
 def enable_debugger(app):
     """ provides a debug toolbar for server requests """

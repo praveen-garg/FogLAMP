@@ -136,7 +136,7 @@ class FoglampProcess(ABC):
     def unregister_service(self):
         """ UnRegister, with core, this process as a microservice.
         """
-        return self._m_client.unregister_service(self.microservice_id)
+        return self._m_client.unregister_service(self._microservice_id)
 
     def get_service(self, name=None, _type=None):
         return self._m_client.get_services(name, _type)

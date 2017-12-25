@@ -6,15 +6,15 @@
 
 """Common FoglampMicroservice Class"""
 
+from abc import abstractmethod
 import asyncio
 from aiohttp import web
-import http.client
-import json
+import time
+
 from foglamp.services.common.microservice_management import routes
 from foglamp.common.process import FoglampProcess
 from foglamp.common.web import middleware
-from abc import abstractmethod
-import time
+
 
 __author__ = "Ashwin Gopalakrishnan"
 __copyright__ = "Copyright (c) 2017 OSIsoft, LLC"
@@ -113,11 +113,11 @@ class FoglampMicroservice(FoglampProcess):
     async def unregister(self, request):
         pass
 
-    async def get_service(self, request):
+    async def find_service(self, request):
         pass
 
-    async def register_interest(self, request):
+    async def add_interest(self, request):
         pass
 
-    async def unregister_interest(self, request):
+    async def remove_interest(self, request):
         pass

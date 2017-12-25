@@ -19,7 +19,7 @@ fs = None
 
 name = "Foo"
 core_host = "localhost"
-core_port = "37061"
+core_port = "34981"
 
 
 @pytest.allure.feature("common")
@@ -36,9 +36,9 @@ class TestMicroservice:
     def test_failed_service_get_unregistered(self):
         global fs
         fs = foo.get_instance(name, core_host, core_port)
-        assert fs.microservice_id is not None
+        assert fs._microservice_id is not None
 
-        res = fs.find_services(name='Foo')
+        res = fs.get_service(name='Foo')
         found = res["services"]
         assert 1 == len(found)
 
@@ -50,5 +50,5 @@ class TestMicroservice:
         # wait for 1s + monitor.py' _DEFAULT_SLEEP_INTERVAL
         time.sleep(1+5)
 
-        res = fs.find_services(name='Foo')
+        res = fs.get_service(name='Foo')
         assert 400 == res["error"]["code"]
