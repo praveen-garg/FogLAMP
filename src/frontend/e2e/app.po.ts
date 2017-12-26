@@ -49,7 +49,7 @@ export class FogLAMPPage {
     return element(by.css('app-scheduled-process .card-header p.card-header-title')).getText();
   }
 
-  getCreateScheduleTitle() {
+  getCreateScheduleButton() {
     browser.ignoreSynchronization = true;
     return element(by.css('app-scheduled-process .card-header .button.is-light')).getText();
   }
