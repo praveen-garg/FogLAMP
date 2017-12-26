@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedulesService, AlertService } from '../../services/index';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-list-tasks',
@@ -10,7 +11,7 @@ export class ListTasksComponent implements OnInit {
   public tasksData = [];
   public selectedTaskType = 'Latest'; // Default is LATEST
 
-  constructor(private schedulesService: SchedulesService, private alertService: AlertService) {}
+  constructor(private schedulesService: SchedulesService, private alertService: AlertService, public ngProgress: NgProgress) {}
 
   ngOnInit() {
     this.getLatestTasks();
@@ -35,9 +36,13 @@ export class ListTasksComponent implements OnInit {
    */
   public getLatestTasks(): void {
     this.tasksData = [];
+    /** request started */
+    this.ngProgress.start();
     this.schedulesService.getLatestTask().
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           this.alertService.error(data.error.message);
           return;
@@ -45,7 +50,11 @@ export class ListTasksComponent implements OnInit {
         this.tasksData = data.tasks;
         console.log('Latest tasks ', data.tasks);
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 
   /**
@@ -53,16 +62,24 @@ export class ListTasksComponent implements OnInit {
    */
   public getRunningTasks(): void {
     this.tasksData = [];
+    /** request started */
+    this.ngProgress.start();
     this.schedulesService.getTasks('RUNNING').
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           this.alertService.error(data.error);
         }
         this.tasksData = data.tasks;
         console.log('Running tasks ', this.tasksData);
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 
   /**
@@ -71,9 +88,13 @@ export class ListTasksComponent implements OnInit {
    */
   public cancelRunninTask(id) {
     console.log('Task UUID:', id);
+    /** request started */
+    this.ngProgress.start();
     this.schedulesService.cancelTask(id).
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           this.alertService.error(data.error.message);
         }
@@ -90,6 +111,10 @@ export class ListTasksComponent implements OnInit {
           }, 5000);
         }
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 }

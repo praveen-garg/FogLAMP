@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { AssetsService, AlertService } from '../../services/index';
 import { AssetSummaryComponent } from './../asset-summary/asset-summary.component';
 import { ChartModalComponent } from './../chart-modal/chart-modal.component';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-assets',
@@ -29,7 +29,7 @@ export class AssetsComponent implements OnInit {
   @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
   @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
-  constructor(private assetService: AssetsService, private alertService: AlertService) { }
+  constructor(private assetService: AssetsService, private alertService: AlertService, public ngProgress: NgProgress) { }
 
   ngOnInit() {
     this.getAsset();
@@ -146,9 +146,13 @@ export class AssetsComponent implements OnInit {
 
   public getAsset(): void {
     this.assets = [];
+    /** request started */
+    this.ngProgress.start();
     this.assetService.getAsset().
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
@@ -157,7 +161,11 @@ export class AssetsComponent implements OnInit {
         this.assets = data;
         console.log('This is the asset data ', this.assets);
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 
   /**
@@ -171,9 +179,13 @@ export class AssetsComponent implements OnInit {
     if (this.asset['asset_code'].toLowerCase() === 'select') {
       return;
     }
+    /** request started */
+    this.ngProgress.start();
     this.assetService.getAssetReadings(encodeURIComponent(this.asset['asset_code']), this.limit, this.tempOffset).
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
@@ -187,7 +199,11 @@ export class AssetsComponent implements OnInit {
         this.totalPages();
         console.log('This is the asset reading data ', this.assetsReadingsData);
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 
   /**
