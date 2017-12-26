@@ -40,7 +40,7 @@ describe('foglampapp App', () => {
   it('Should Display Scheduled Tasks', () => {
     page.navToScheduledTasks();
     expect(page.getSchedulesTitle()).toEqual('Schedules');
-    expect(page.getCreateScheduleTitle()).toEqual('Create Schedule');
+    expect(page.getCreateScheduleTitle()).toContain('Create');
     expect(page.getTasksTitle()).toContain('Tasks');
   });
 
