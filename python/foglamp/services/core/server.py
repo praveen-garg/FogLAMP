@@ -15,6 +15,7 @@ import http.client
 import json
 import time
 from aiohttp import web
+import uuid
 
 from foglamp.common import logger
 from foglamp.common.configuration_manager import ConfigurationManager
@@ -29,7 +30,6 @@ from foglamp.services.core.interest_registry.interest_registry import InterestRe
 from foglamp.services.core.interest_registry import exceptions as interest_registry_exceptions
 from foglamp.services.core.scheduler.scheduler import Scheduler
 from foglamp.services.core.service_registry.monitor import Monitor
-from foglamp.services.core import connect
 from foglamp.services.common.service_announcer import ServiceAnnouncer
 
 __author__ = "Amarendra K. Sinha, Praveen Garg, Terris Linenbach"
@@ -40,8 +40,9 @@ __version__ = "${VERSION}"
 _logger = logger.setup(__name__, level=20)
 
 # FOGLAMP_ROOT env variable
-_FOGLAMP_ROOT= os.getenv("FOGLAMP_ROOT", default='/usr/local/foglamp')
-_SCRIPTS_DIR= os.path.expanduser(_FOGLAMP_ROOT + '/scripts')
+_FOGLAMP_ROOT = os.getenv("FOGLAMP_ROOT", default='/usr/local/foglamp')
+_SCRIPTS_DIR = os.path.expanduser(_FOGLAMP_ROOT + '/scripts')
+
 
 class Server:
     """ FOGLamp core server.
@@ -177,7 +178,8 @@ class Server:
             # see http://<core_mgt_host>:<core_mgt_port>/foglamp/service for registered services
 
             _logger.info('Announce management API service')
-            cls.management_announcer = ServiceAnnouncer('FogLAMP-Core', '_foglamp_core._tcp', cls.core_management_port,
+            unique_id = str(uuid.uuid4())
+            cls.management_announcer = ServiceAnnouncer('FogLAMP-Core-{}'.format(unique_id), '_foglampcore._tcp', cls.core_management_port,
                                                     ['The FogLAMP Core REST API'])
 
             # start storage
@@ -203,9 +205,11 @@ class Server:
             address, service_server_port = service_server.sockets[0].getsockname()
             _logger.info('Rest Server started on http://%s:%s', address, service_server_port)
 
-            cls.admin_announcer = ServiceAnnouncer('FogLAMP', '_foglamp._tcp', service_server_port, ['The FogLAMP Admin REST API'])
-            cls.user_announcer = ServiceAnnouncer('FogLAMP', '_foglamp_app._tcp', service_server_port,
-                                              ['The FogLAMP Application  REST API'])
+            cls.admin_announcer = ServiceAnnouncer('FogLAMP-{}'.format(unique_id), '_foglamp._tcp', service_server_port,
+                                                   ['The FogLAMP Admin REST API'])
+            # do we need this to announce as another service?
+            cls.user_announcer = ServiceAnnouncer('FogLAMP-App-{}'.format(unique_id), '_foglampapp._tcp', service_server_port,
+                                                  ['The FogLAMP Application  REST API'])
             # register core
             # a service with 2 web server instance,
             # registering now only when service_port is ready to listen the request
