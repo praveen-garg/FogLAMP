@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StatisticsService, AlertService } from '../services/index';
 import Utils from '../utils';
 import { MomentDatePipe } from './../pipes/moment-date';
-
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   sentValues: any;
   public chartOptions: any;
 
-  constructor(private statisticsService: StatisticsService, private alertService: AlertService) {
+  constructor(private statisticsService: StatisticsService, private alertService: AlertService, public ngProgress: NgProgress) {
 
     this.readingChart = 'line';
     this.readingValues = [];
@@ -41,24 +41,33 @@ export class DashboardComponent implements OnInit {
   }
 
   public getStatistics(): void {
+    /** request started */
+    this.ngProgress.start();
     this.statisticsService.getStatistics().
-      subscribe(data => {
-        if (data.error) {
-          console.log('error in response', data.error);
-          this.alertService.error(data.error.message);
-          return;
-        }
-        console.log('recived statisticsData ', data);
-        // this.statisticsData = data;
-        const o: object = {};
-        data.forEach(element => {
-          o[element.key] = element.value;
-        });
-        this.statisticsData = o;
+      subscribe(
+        data => {
+          /** request completed */
+          this.ngProgress.done();
 
-         console.log('This is the statisticsData ', this.statisticsData);
-      },
-      error => { console.log('error', error); });
+          if (data.error) {
+            console.log('error in response', data.error);
+            this.alertService.error(data.error.message);
+            return;
+          }
+          console.log('recived statisticsData ', data);
+          // this.statisticsData = data;
+          const o: object = {};
+          data.forEach(element => {
+            o[element.key] = element.value;
+          });
+          this.statisticsData = o;
+          console.log('This is the statisticsData ', this.statisticsData);
+        },
+        error => { 
+          /** request completed */
+          this.ngProgress.done();
+          console.log('error', error); 
+        });
   }
 
   public getStatisticsHistory(): void {

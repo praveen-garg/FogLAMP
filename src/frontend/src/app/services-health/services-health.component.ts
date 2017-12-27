@@ -27,7 +27,9 @@ export class ServicesHealthComponent implements OnInit {
     this.servicesHealthService.getAllServices()
       .subscribe(
       (data) => {
-        if (data.error) {
+        /** request completed */
+        this.ngProgress.done();
+        if (data.error) {  
           console.log('error in response', data.error);
           this.alertService.warning('Could not connect to Core Managment API, ' +
             'Make sure to set correct <a href="/setting"> core management port </a>');
@@ -35,8 +37,7 @@ export class ServicesHealthComponent implements OnInit {
         }
         this.service_data = data.services;
         this.time = Utils.getCurrentDate();
-        /** request completed */
-        this.ngProgress.done();
+        
       },
       (error) => {
         this.alertService.warning('Could not connect to Core Managment API, ' +
