@@ -19,7 +19,8 @@ export class ChartModalComponent implements OnInit {
   public isValidData = false;
   public assetReadingSummary = [];
   public isReadingsAvailable = false;
-  public isInvalidInput = false;
+  public isInvalidLimit = false;
+  public isInvalidOffset = false;
 
   @ViewChild(ChartComponent) private chartComp;
 
@@ -43,7 +44,8 @@ export class ChartModalComponent implements OnInit {
   public plotReadingsGraph(assetCode, limit: any, offset: any) {
     this.isValidData = true;
     this.isReadingsAvailable = true;
-    this.isInvalidInput = false;
+    this.isInvalidLimit = false;
+    this.isInvalidOffset = false;
 
     if (limit === undefined || limit === '') {
       limit = 0;
@@ -53,12 +55,10 @@ export class ChartModalComponent implements OnInit {
     }
 
     if (!Number.isInteger(+limit) || +limit < 0 || +limit > 1000) { // check for limit range
-      console.log('this.isInvalidInput', this.isInvalidInput);
-      return this.isInvalidInput = true;
+      return this.isInvalidLimit = true;
     }
     if (!Number.isInteger(+offset) || +offset < 0 || +offset > 2147483647) {  // max limit of int in c++
-      console.log('offset this.isInvalidInput', this.isInvalidInput);
-      return this.isInvalidInput = true;
+      return this.isInvalidOffset = true;
     }
 
     this.assetCode = assetCode;
