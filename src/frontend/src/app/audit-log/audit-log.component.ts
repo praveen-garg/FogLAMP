@@ -23,6 +23,9 @@ export class AuditLogComponent implements OnInit {
   tempOffset = 0;       // Temporary offset during pagination
   totalPagesCount = 0;
 
+  isInvalidLimit = false;
+  isInvalidOffset = false;
+
   constructor(private auditService: AuditService, private alertService: AlertService, public ngProgress: NgProgress) { }
 
   ngOnInit() {
@@ -125,6 +128,11 @@ export class AuditLogComponent implements OnInit {
   }
 
   public setLimit(limit) {
+    this.isInvalidLimit = false;
+    if (+limit > 1000) {
+      this.isInvalidLimit = true; // limit range validation 
+      return;
+    }
     if (this.page !== 1) {
       this.page = 1;
       this.tempOffset = this.offset;
@@ -139,6 +147,12 @@ export class AuditLogComponent implements OnInit {
   }
 
   public setOffset(offset: number) {
+    this.isInvalidOffset = false;
+    if (offset > 2147483647) {
+      this.isInvalidOffset = true; // offset range validation
+      return;
+    }
+
     if (this.page !== 1) {
       this.page = 1;
     }

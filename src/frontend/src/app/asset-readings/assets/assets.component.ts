@@ -13,12 +13,12 @@ export class AssetsComponent implements OnInit {
 
   selectedAsset: any = 'Select'; // Selected asset object (asset_coded, asset_count)
   asset: any;
-  limit:number = 20;
-  offset:number = 0;
+  limit: number = 20;
+  offset: number = 0;
 
   page = 1;           // Default page is 1 in pagination
   recordCount = 0;    // Total no. of records during pagination
-  tempOffset:number = 0;     // Temporary offset during pagination
+  tempOffset: number = 0;     // Temporary offset during pagination
   totalPagesCount = 0;
   assets = [];
   assetsReadingsData = [];
@@ -26,6 +26,10 @@ export class AssetsComponent implements OnInit {
   public assetData: Object;
   public isChart = false;
   public isSummary = false;
+
+  public isInvalidLimit = false;
+  public isInvalidOffset = false;
+
   @ViewChild(AssetSummaryComponent) assetSummaryComponent: AssetSummaryComponent;
   @ViewChild(ChartModalComponent) chartModalComponent: ChartModalComponent;
 
@@ -115,6 +119,14 @@ export class AssetsComponent implements OnInit {
    *  Set limit
    */
   public setLimit(limit) {
+    if (this.asset === undefined) {
+      return;
+    }
+    this.isInvalidLimit = false;
+    if (+limit > 1000) {
+      this.isInvalidLimit = true; // limit range validation 
+      return;
+    }
     if (this.page !== 1) {
       this.page = 1;
       this.tempOffset = this.offset;
@@ -131,6 +143,14 @@ export class AssetsComponent implements OnInit {
    *  Set offset
    */
   public setOffset(offset: number) {
+    if (this.asset === undefined) {
+      return;
+    }
+    this.isInvalidOffset = false;
+    if (offset > 2147483647) {
+      this.isInvalidOffset = true; // offset range validation
+      return;
+    }
     if (this.page !== 1) {
       this.page = 1;
     }
@@ -176,9 +196,6 @@ export class AssetsComponent implements OnInit {
       this.recordCount = this.asset['count'];
     }
     this.assetsReadingsData = [];
-    if (this.asset['asset_code'].toLowerCase() === 'select') {
-      return;
-    }
     /** request started */
     this.ngProgress.start();
     this.assetService.getAssetReadings(encodeURIComponent(this.asset['asset_code']), this.limit, this.tempOffset).
@@ -211,8 +228,8 @@ export class AssetsComponent implements OnInit {
  */
   public showAssetSummary(assetCode) {
     const dataObj = {
-            asset_code: assetCode,
-          };
+      asset_code: assetCode,
+    };
     this.assetSummaryComponent.getReadingSummary(dataObj);
     this.assetSummaryComponent.toggleModal(true);
   }
