@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuditService, AlertService } from '../services/index';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-audit-log',
@@ -25,7 +26,7 @@ export class AuditLogComponent implements OnInit {
   isInvalidLimit = false;
   isInvalidOffset = false;
 
-  constructor(private auditService: AuditService, private alertService: AlertService) { }
+  constructor(private auditService: AuditService, private alertService: AlertService, public ngProgress: NgProgress) { }
 
   ngOnInit() {
     this.getLogSource();
@@ -189,9 +190,13 @@ export class AuditLogComponent implements OnInit {
   }
 
   auditLogSubscriber() {
+    /** request started */
+    this.ngProgress.start();
     this.auditService.getAuditLogs(this.limit, this.tempOffset, this.source, this.severity).
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
@@ -207,6 +212,10 @@ export class AuditLogComponent implements OnInit {
         }
         this.totalPages();
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 }

@@ -4,6 +4,7 @@ import { ModalComponent } from '../../modal/modal.component';
 import { UpdateModalComponent } from '../../update-modal/update-modal.component';
 import Utils from '../../utils';
 import { CreateScheduleComponent } from '../create-schedule/create-schedule.component';
+import { NgProgress } from 'ngx-progressbar';
 
 enum weekDays {
   Mon = 1,
@@ -35,7 +36,7 @@ export class ScheduledProcessComponent implements OnInit {
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
   @ViewChild(CreateScheduleComponent) createModal: CreateScheduleComponent;
 
-  constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
+  constructor(private schedulesService: SchedulesService, private alertService: AlertService, public ngProgress: NgProgress) { }
 
   ngOnInit() {
     this.days = Object.keys(weekDays).map(key => weekDays[key]).filter(value => typeof value == 'string') as string[];
@@ -50,9 +51,13 @@ export class ScheduledProcessComponent implements OnInit {
 
   public getSchedules(): void {
     this.scheduleData = [];
+    /** request started */
+    this.ngProgress.start();
     this.schedulesService.getSchedules().
       subscribe(
       data => {
+        /** request completed */
+        this.ngProgress.done();
         if (data.error) {
           this.alertService.error(data.error.message);
           return;
@@ -72,7 +77,11 @@ export class ScheduledProcessComponent implements OnInit {
         });
         console.log('This is the getSchedule ', data.schedules);
       },
-      error => { console.log('error', error); });
+      error => {
+        /** request completed */
+        this.ngProgress.done();
+        console.log('error', error);
+      });
   }
 
   /**
