@@ -13,7 +13,7 @@
         </div>
         <div class="column is-2">
           <number-input-debounce placeholder="offset" #offset (value)="plotReadingsGraph(assetCode, limit.inputValue, offset.inputValue)"></number-input-debounce>
-          <p *ngIf='isInvalidOffset' class='help is-danger'>Invalid input</p>
+          <p *ngIf='isInvalidOffset' class='help is-danger'>Offset must be in range 1 - 2147483647</p>
         </div>
       </div>
       <div class="close">
@@ -39,8 +39,8 @@
         </div>
       </div>
       <br>
-      <p *ngIf='(isInvalidInput || !isValidData || !isReadingsAvailable)'> Not Available </p>
-      <chart *ngIf='(!isInvalidInput && isValidData  && isReadingsAvailable)' [type]="assetChart" [data]="assetReadingValues" [options]=""></chart>
+      <p *ngIf='(isInvalidOffset || isInvalidLimit || !isValidData || !isReadingsAvailable)'> Not Available </p>
+      <chart *ngIf='(!isInvalidOffset && !isInvalidLimit && isValidData  && isReadingsAvailable)' [type]="assetChart" [data]="assetReadingValues" [options]=""></chart>
     </section>
   </div>
 </div>

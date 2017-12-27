@@ -55,10 +55,14 @@ export class ChartModalComponent implements OnInit {
     }
 
     if (!Number.isInteger(+limit) || +limit < 0 || +limit > 1000) { // check for limit range
-      return this.isInvalidLimit = true;
+      this.isInvalidLimit = true;
     }
     if (!Number.isInteger(+offset) || +offset < 0 || +offset > 2147483647) {  // max limit of int in c++
-      return this.isInvalidOffset = true;
+      this.isInvalidOffset = true;
+    }
+
+    if( this.isInvalidLimit || this.isInvalidOffset) {
+      return; 
     }
 
     this.assetCode = assetCode;
@@ -84,6 +88,7 @@ export class ChartModalComponent implements OnInit {
           this.assetSummaryService.assetReadingSummary.subscribe(
             value => {
               this.assetReadingSummary = value;
+              console.log('readings data to show trends.', this.assetReadingSummary);
             });
         } else {
           this.isValidData = false;
