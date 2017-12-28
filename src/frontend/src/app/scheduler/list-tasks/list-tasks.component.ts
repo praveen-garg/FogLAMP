@@ -70,7 +70,7 @@ export class ListTasksComponent implements OnInit {
         /** request completed */
         this.ngProgress.done();
         if (data.error) {
-          this.alertService.error(data.error);
+          this.alertService.error(data.error.message);
         }
         this.tasksData = data.tasks;
         console.log('Running tasks ', this.tasksData);

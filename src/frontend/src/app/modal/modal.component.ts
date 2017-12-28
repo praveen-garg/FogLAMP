@@ -7,12 +7,12 @@ import { SchedulesService, AlertService } from '../services/index';
   templateUrl: './modal.component.html'
 })
 export class ModalComponent implements OnInit {
-  @Input() childData: { id: Number };
+  @Input() childData: { id: Number, name: any };
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private schedulesService: SchedulesService, private alertService: AlertService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public toggleModal(isOpen: Boolean) {
     let schedule_name = <HTMLDivElement>document.getElementById('modal-box');
@@ -23,14 +23,14 @@ export class ModalComponent implements OnInit {
     schedule_name.classList.remove('is-active');
   }
 
-/**
- *  Delete schedule
- */
+  /**
+   *  Delete schedule
+   */
   public delete() {
     this.schedulesService.deleteSchedule(this.childData.id).
       subscribe(
       data => {
-         if (data.error) {
+        if (data.error) {
           console.log('error in response', data.error);
           this.alertService.error(data.error.message);
           return;
