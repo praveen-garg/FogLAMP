@@ -26,11 +26,13 @@ export class ScheduledProcessComponent implements OnInit {
   public scheduleProcess = [];
   public scheduleType = [];
   public days = [];
-
   public scheduler_name: string;
 
-  // Object to hold schedule id to delete
-  public childData: any;
+  // Object to hold schedule id and name to delete
+  public childData = {
+    id: 0,
+    name: ''
+  };
   public updateScheduleData: any;
   @ViewChild(ModalComponent) child: ModalComponent;
   @ViewChild(UpdateModalComponent) updateModal: UpdateModalComponent;
@@ -126,19 +128,21 @@ export class ScheduledProcessComponent implements OnInit {
 
   /**
    * Open delete record modal dialog
-   * @param id  schedule id to delete
+   * @param id   schedule id to delete
+   * @param name schedule name
    */
-  openModal(id) {
+  openModal(id, name) {
+    this.childData = {
+      id: id,
+      name: name
+    };
     // call child component method to toggle modal
     this.child.toggleModal(true);
-    this.childData = {
-      id: id
-    };
   }
 
-   /**
-   * Open create scheduler modal dialog
-   */
+  /**
+  * Open create scheduler modal dialog
+  */
   openCreateSchedulerModal() {
     // call child component method to toggle modal
     this.createModal.toggleModal(true);
@@ -148,7 +152,7 @@ export class ScheduledProcessComponent implements OnInit {
    * 
    * @param index value of the day
    */
-  getISODay(index:number){
+  getISODay(index: number) {
     return weekDays[index];
   }
 }
