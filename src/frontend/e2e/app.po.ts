@@ -76,12 +76,12 @@ export class FogLAMPPage {
 
   getAssetsTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('app-assets div:nth-child(1) > div > article > h5 > small')).getText();
+    return element(by.css('app-assets > div > div:nth-child(2) > div > article > h5 > small')).getText();
   }
 
   getAssetReadingsTitle() {
     browser.ignoreSynchronization = true;
-    return element(by.css('app-assets div:nth-child(2) > div > article > h5 > small')).getText();
+    return element(by.css('app-assets > div > div:nth-child(3) > div > article > h5 > small')).getText();
   }
 
   getServiceStatusTitle() {
