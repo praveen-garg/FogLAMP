@@ -27,8 +27,8 @@ FogLAMP is built using a microservices architecture for major component areas, t
 
 FogLAMP makes extensive use of plugin components in order to increase the flexibility of the implementation:
 
-- **South plugins** are used to allow for the easy expansion of FogLAMP to deal with new devices and device connection buses.
-- **translator plugins** are used to allow for connection to different historians
+- **South plugins** are used to allow for the easy expansion of FogLAMP to deal with new South devices and South device connection buses.
+- **North plugins** are used to allow for connection to different historians
 - **datastore plugins** are used to allow FogLAMP to use different storage mechanisms for persisting meta data and the sensor data
 - **authentication provider plugins** are used to allow the authentication mechanism to be matched with enterprise requirements or provided internally by FogLAMP.
 
@@ -51,6 +51,7 @@ FogLAMP is currently based on C/C++ and Python code. The packages needed to buil
 - *python3-pip*
 - *python-dbus*
 - *postgresql*
+- *bluez*
 
 On Ubuntu-based Linux distributions the packages can be installed with *apt-get*:
 ::
@@ -60,6 +61,7 @@ On Ubuntu-based Linux distributions the packages can be installed with *apt-get*
    apt-get install python3-pip
    apt-get install python-dbus
    apt-get install postgresql
+   apt-get install bluez
 
 You may need to use *sudo* to allow *apt-get* to install packages dependent upon your access rights.
 

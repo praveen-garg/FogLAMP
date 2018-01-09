@@ -20,8 +20,8 @@ pytestmark = pytest.mark.asyncio
 # Module attributes
 __DB_NAME = "foglamp"
 # Needs foglamp to start,
-# replace 43325 with core_management_port
-BASE_URL = 'http://localhost:43325/foglamp'
+# replace 37935 with core_management_port
+BASE_URL = 'http://localhost:37935/foglamp'
 headers = {'Content-Type': 'application/json'}
 
 
@@ -55,7 +55,6 @@ class TestServicesRegistryApi:
         res = dict(r.json())
 
         assert 200 == r.status_code
-        print(res)
         assert str(uuid.UUID(res["id"], version=4)) == res["id"]
         assert "Service registered successfully" == res["message"]
 
@@ -66,7 +65,6 @@ class TestServicesRegistryApi:
         res = dict(r.json())
 
         assert 200 == r.status_code
-        print(res)
         assert str(uuid.UUID(res["id"], version=4)) == res["id"]
         assert "Service registered successfully" == res["message"]
 
@@ -89,7 +87,6 @@ class TestServicesRegistryApi:
         res = dict(r.json())
 
         assert 200 == r.status_code
-        print(res)
         assert str(uuid.UUID(res["id"], version=4)) == res["id"]
         assert "Service registered successfully" == res["message"]
 
@@ -110,7 +107,6 @@ class TestServicesRegistryApi:
         res = dict(r.json())
 
         assert 200 == r.status_code
-        print(res)
         assert str(uuid.UUID(res["id"], version=4)) == res["id"]
         assert "Service registered successfully" == res["message"]
 
@@ -136,10 +132,8 @@ class TestServicesRegistryApi:
         assert str(uuid.UUID(res["id"], version=4)) == res["id"]
 
         r = requests.post(BASE_URL + '/service', data=json.dumps(data), headers=headers)
-        res = dict(r.json())
-
-        assert 200 == r.status_code
-        assert "A Service with the same name already exists" == res["error"]["message"]
+        assert 400 == r.status_code
+        assert 'A Service with the same name already exists' == r.reason
 
     async def test_register_dup_address_and_service_port(self):
         data = {"type": "Storage", "name": "name-1", "address": "127.0.0.1", "service_port": 9001, "management_port": 1009}
@@ -152,21 +146,19 @@ class TestServicesRegistryApi:
 
         data = {"type": "Storage", "name": "name-2", "address": "127.0.0.1", "service_port": 9001, "management_port": 1010}
         r = requests.post(BASE_URL + '/service', data=json.dumps(data), headers=headers)
-        res = dict(r.json())
 
-        assert 200 == r.status_code
+        assert 400 == r.status_code
         assert "A Service is already registered on the same address: {} and service port: {}".format(
-            data['address'], data['service_port']) == res["error"]["message"]
+             data['address'], data['service_port']) == r.reason
 
     async def test_register_invalid_port(self):
         data = {"type": "Storage", "name": "Storage Services 2", "address": "127.0.0.1", "service_port": "80a1",
                 "management_port": 1009}
 
         r = requests.post(BASE_URL + '/service', data=json.dumps(data), headers=headers)
-        res = dict(r.json())
 
-        assert 200 == r.status_code
-        assert u"Service's service port can be a positive integer only" == res["error"]["message"]
+        assert 400 == r.status_code
+        assert "Service's service port can be a positive integer only" == r.reason
 
     async def test_register_dup_address_and_mgt_port(self):
         data = {"type": "Storage", "name": "name-1", "address": "127.0.0.1", "service_port": 9001, "management_port": 1009}
@@ -179,21 +171,19 @@ class TestServicesRegistryApi:
 
         data = {"type": "Storage", "name": "name-2", "address": "127.0.0.1", "service_port": 9002, "management_port": 1009}
         r = requests.post(BASE_URL + '/service', data=json.dumps(data), headers=headers)
-        res = dict(r.json())
 
-        assert 200 == r.status_code
+        assert 400 == r.status_code
         assert "A Service is already registered on the same address: {} and management port: {}".format(
-            data['address'], data['management_port']) == res["error"]["message"]
+            data['address'], data['management_port']) == r.reason
 
     async def test_register_non_numeric_m_port(self):
         data = {"type": "Storage", "name": "Storage Services 2", "address": "127.0.0.1", "service_port": 8089,
                 "management_port": "bx01"}
 
         r = requests.post(BASE_URL + '/service', data=json.dumps(data), headers=headers)
-        res = dict(r.json())
 
-        assert 200 == r.status_code
-        assert "Service management port can be a positive integer only" == res["error"]["message"]
+        assert 400 == r.status_code
+        assert "Service management port can be a positive integer only" == r.reason
 
     async def test_unregister(self):
         data = {"type": "Storage", "name": "Storage Services 2", "address": "127.0.0.1", "service_port": 8091, "management_port": 1009}
@@ -213,10 +203,9 @@ class TestServicesRegistryApi:
 
     async def test_unregister_non_existing(self):
         r = requests.delete(BASE_URL + '/service/any')
-        res = dict(r.json())
 
-        assert 200 == r.status_code
-        assert "Service with {} does not exist".format("any") == res["error"]["message"]
+        assert 404 == r.status_code
+        assert "Service with {} does not exist".format("any") == r.reason
 
     async def test_get(self):
         data1 = {"type": "Storage", "name": "Storage Services x", "address": "127.0.0.1", "service_port": 8091, "management_port": 1091}
@@ -226,11 +215,11 @@ class TestServicesRegistryApi:
         storage_service_id = retval["id"]
 
         # Create another service
-        data2 = {"type": "Southbound", "name": "Device Services y", "address": "127.0.0.1", "service_port": 8092, "management_port": 1092, "protocol": "https"}
+        data2 = {"type": "Southbound", "name": "South Services y", "address": "127.0.0.1", "service_port": 8092, "management_port": 1092, "protocol": "https"}
         r = requests.post(BASE_URL + '/service', data=json.dumps(data2), headers=headers)
         assert 200 == r.status_code
         res = dict(r.json())
-        device_service_id = res["id"]
+        south_service_id = res["id"]
 
         # data1 and data2 also ensure diff |address AND port, including mgt port| combinations work!
         l = requests.get(BASE_URL + '/service')
@@ -244,7 +233,7 @@ class TestServicesRegistryApi:
         for s in svc:
             if s["id"] == storage_service_id:
                 data1_svc = s
-            if s["id"] == device_service_id:
+            if s["id"] == south_service_id:
                 data2_svc = s
 
         assert data1_svc is not None
@@ -312,10 +301,9 @@ class TestServicesRegistryApi:
         assert 200 == r.status_code
 
         l = requests.get(BASE_URL + '/service?type={}&name={}'.format(data0["type"], data1["name"]))
-        assert 200 == l.status_code
 
-        res = dict(l.json())
-        assert "Invalid service name and/or type provided" == res['error']["message"]
+        assert 404 == l.status_code
+        assert "Service with name {} and type {} does not exist".format(data1["name"], data0["type"]) == l.reason
 
         l = requests.get(BASE_URL + '/service?type={}&name={}'.format(data0["type"], data0["name"]))
         assert 200 == l.status_code

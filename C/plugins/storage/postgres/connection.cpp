@@ -211,7 +211,15 @@ SQLBuffer	sql;
 		PQclear(res);
 		return true;
 	}
- 	raiseError("retrieve", PQerrorMessage(dbConnection));
+	char *SQLState = PQresultErrorField(res, PG_DIAG_SQLSTATE);
+	if (!strcmp(SQLState, "22P02"))	// Conversion error
+	{
+ 		raiseError("retrieve", "Unable to convert data to the required type");
+	}
+	else
+	{
+ 		raiseError("retrieve", PQerrorMessage(dbConnection));
+	}
 	PQclear(res);
 	return false;
 }
@@ -731,7 +739,7 @@ bool Connection::fetchReadings(unsigned long id, unsigned int blksize, std::stri
 char	sqlbuffer[100];
 
 	snprintf(sqlbuffer, sizeof(sqlbuffer),
-		"SELECT * FROM foglamp.readings WHERE id >= %ld LIMIT %d;", id, blksize);
+		"SELECT id, asset_code, read_key, reading, user_ts AT TIME ZONE 'UTC', ts AT TIME ZONE 'UTC' FROM foglamp.readings WHERE id >= %ld LIMIT %d;", id, blksize);
 	
 	PGresult *res = PQexec(dbConnection, sqlbuffer);
 	if (PQresultStatus(res) == PGRES_TUPLES_OK)
@@ -762,7 +770,7 @@ long numReadings = 0;
 		 * So set age based on the data we have and continue.
 		 */
 		SQLBuffer oldest;
-		oldest.append("SELECT round(extract(epoch FROM (now() - min(user_ts)))/360) from readings;");
+		oldest.append("SELECT round(extract(epoch FROM (now() - min(user_ts)))/360) from foglamp.readings;");
 		const char *query = oldest.coalesce();
 		PGresult *res = PQexec(dbConnection, query);
 		delete[] query;
