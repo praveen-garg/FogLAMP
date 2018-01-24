@@ -83,7 +83,7 @@ def plugin_start(data):
         future = asyncio.ensure_future(coro)
 
         def f_callback(f):
-            # _LOGGER.info(repr(fut.result()))
+            # _LOGGER.info(repr(f.result()))
             """ <Server sockets=
             [<socket.socket fd=17, family=AddressFamily.AF_INET, type=2049,proto=6, laddr=('0.0.0.0', 6683)>]>"""
             data['server'] = f.result()
