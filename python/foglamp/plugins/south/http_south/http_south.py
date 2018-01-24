@@ -80,11 +80,18 @@ def plugin_start(data):
         app.router.add_route('POST', '/{}'.format(uri), HttpSouthIngest.render_post)
         handler = app.make_handler()
         coro = loop.create_server(handler, host, port)
-        server = asyncio.ensure_future(coro)
+        future = asyncio.ensure_future(coro)
+
+        def f_callback(f):
+            # _LOGGER.info(repr(fut.result()))
+            """ <Server sockets=
+            [<socket.socket fd=17, family=AddressFamily.AF_INET, type=2049,proto=6, laddr=('0.0.0.0', 6683)>]>"""
+            data['server'] = f.result()
+
+        future.add_done_callback(f_callback)
 
         data['app'] = app
         data['handler'] = handler
-        data['server'] = server
     except Exception as e:
         _LOGGER.exception(str(e))
         sys.exit(1)
