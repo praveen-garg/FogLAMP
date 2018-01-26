@@ -191,23 +191,28 @@ class Server(FoglampMicroservice):
         if self._plugin is not None:
             try:
                 self._plugin.plugin_shutdown(self._plugin_handle)
-            except Exception:
+            except Exception as ex:
                 _LOGGER.exception("Unable to stop plugin '{}'".format(self._name))
+                raise ex
             finally:
                 self._plugin = None
                 self._plugin_handle = None
 
         try:
             await Ingest.stop()
-        except Exception:
-            _LOGGER.exception('Unable to stop the Ingest server')
-            return
+            _LOGGER.info('Stopped the Ingest server.')
+        except Exception as ex:
+            _LOGGER.exception('Unable to stop the Ingest server. %s', str(ex))
+            raise ex
 
         # Finish all pending asyncio tasks
         pending = asyncio.Task.all_tasks()
-        asyncio.gather(*pending)
+        for p in pending:
+            p.cancel()
 
-        # This deactivates event loop and helps aiohttp microservice server instance in graceful shutdown
+        # This deactivates event loop and
+        # helps aiohttp microservice server instance in graceful shutdown
+        _LOGGER.info('Stopping South Service Event Loop')
         loop.stop()
 
     async def shutdown(self, request):
@@ -219,10 +224,9 @@ class Server(FoglampMicroservice):
             self.unregister_service_with_core(self._microservice_id)
         except Exception as ex:
             _LOGGER.exception('Error in stopping South Service plugin {}, {}'.format(self._name, str(ex)))
-            raise web.HTTPException(reason=str(ex))
-        return web.json_response({"message":
-            "Successfully shutdown microservice id {} at url http://{}:{}/foglamp/service/shutdown".format(
-            self._microservice_id, self._microservice_management_host, self._microservice_management_port)})
+            raise web.HTTPInternalServerError(reason=str(ex))
+        return web.json_response({"message": "Successfully shutdown microservice id {} at "
+                                             "url http://{}:{}/foglamp/service/shutdown".format(self._microservice_id, self._microservice_management_host, self._microservice_management_port)})
 
     async def change(self, request):
         """implementation of abstract method form foglamp.common.microservice.
